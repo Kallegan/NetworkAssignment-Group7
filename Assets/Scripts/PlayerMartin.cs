@@ -43,6 +43,7 @@ public class PlayerMartin : Synchronizable
     void MyProcedureFunction(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
         Debug.Log("Hello");
+        Shoot();
     }
     
     void CallMyProcedure()
