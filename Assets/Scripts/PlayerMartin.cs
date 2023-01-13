@@ -24,7 +24,7 @@ public class PlayerMartin : AttributesSync
         controller.Move(move * (Time.deltaTime * speed));
         // hello
 
-        if (Input.GetKeyDown("Space"))
+        if (Input.GetKeyDown("space"))
             Create();
     }
 
