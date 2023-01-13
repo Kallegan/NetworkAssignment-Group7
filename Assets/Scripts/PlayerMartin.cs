@@ -1,12 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Alteruna;
-using Alteruna.Trinity;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
-using Quaternion = UnityEngine.Quaternion;
-using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 public class PlayerMartin : MonoBehaviour
@@ -22,6 +16,8 @@ public class PlayerMartin : MonoBehaviour
     // Movement
     [SerializeField] private CharacterController controller;
     [SerializeField] private float speed = 10f;
+    private bool stunned = false;
+    private float stunTime = 0.5f;
     
     // Attack    
     [SerializeField] private GameObject projectile;
@@ -34,15 +30,26 @@ public class PlayerMartin : MonoBehaviour
         cam = Camera.main;
     }
     
-    
     private void Update()
     {
         if (!avatar.IsMe)
             return;
-
         
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        controller.Move(move * (Time.deltaTime * speed));
+        if (!stunned)
+        {
+            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            controller.Move(move * (Time.deltaTime * speed));
+        }
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, transform.position + -transform.forward * 10, 0.5f);
+            stunTime -= Time.deltaTime;
+            if (stunTime <= 0)
+            {
+                stunned = false;
+                stunTime = 2f;
+            }
+        }
         
         Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
@@ -55,6 +62,8 @@ public class PlayerMartin : MonoBehaviour
  
             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
         }
+        
+        
     }
     
     private void Shoot()
@@ -62,6 +71,12 @@ public class PlayerMartin : MonoBehaviour
         Instantiate(projectile, transform.position + transform.forward, transform.rotation);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Projectile")
+            stunned = true;
+    }
+    
     public void TakeDamage(int damage)
     {
         health -= damage;
@@ -70,6 +85,11 @@ public class PlayerMartin : MonoBehaviour
     private void UpdateHealthBar()
     {
         // Update ui
+    }
+
+    private void KnockBack(Vector3 direction)
+    {
+        
     }
 
     /*

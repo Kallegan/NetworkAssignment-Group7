@@ -111,10 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d104c098b8601b241a9564d88856cdff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Multiplayer: {fileID: 0}
-  UID: {fileID: 0}
-  BucketBehaviors: []
-  SynchronizedPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &286972946836162637
 MonoBehaviour:
   m_ObjectHideFlags: 0
