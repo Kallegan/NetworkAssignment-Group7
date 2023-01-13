@@ -243,7 +243,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7051877682914781266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a1b03c184c676c4cb7612b6f1cd3466, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d256d8438b7f4498c9891db15971b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Multiplayer: {fileID: 0}
@@ -252,7 +252,7 @@ MonoBehaviour:
   avatar: {fileID: 7328716418821615349}
   SynchronizedPosition: {x: 0, y: 0, z: 0}
   controller: {fileID: 812899015305600708}
-  speed: 25
+  speed: 10
   projectile: {fileID: 9131524751451437667, guid: ef9145017a0dd1241874614e0f19a92a, type: 3}
 --- !u!143 &812899015305600708
 CharacterController:
