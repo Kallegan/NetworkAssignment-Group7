@@ -53,7 +53,10 @@ public class PlayerMartin : Synchronizable
     private void Update()
     {
         if (!avatar.IsMe)
+        {
+            transform.position = SynchronizedPosition;
             return;
+        }
         
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * (Time.deltaTime * speed));
