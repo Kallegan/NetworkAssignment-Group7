@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4837402013434990872}
   - component: {fileID: 5556551957827964522}
   - component: {fileID: 7328716418821615349}
+  - component: {fileID: 1335887655347173280}
+  - component: {fileID: 812899015305600708}
   m_Layer: 0
   m_Name: PlayerMartin
   m_TagString: Untagged
@@ -185,3 +187,35 @@ MonoBehaviour:
   OnUnpossessed:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1335887655347173280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7051877682914781266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a1b03c184c676c4cb7612b6f1cd3466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 812899015305600708}
+  speed: 10
+--- !u!143 &812899015305600708
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7051877682914781266}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
