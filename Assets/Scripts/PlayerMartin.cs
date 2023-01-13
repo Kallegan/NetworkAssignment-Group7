@@ -22,5 +22,6 @@ public class PlayerMartin : MonoBehaviour
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * (Time.deltaTime * speed));
+        // hello
     }
 }
