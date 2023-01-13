@@ -107,6 +107,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 9131524751451437667}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 961da37a146c64d45a323a0c075d9ef8, type: 3}
+  m_Script: {fileID: 11500000, guid: 64ae8b809e58e7e429c68f4385ae6352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  UID: {fileID: 0}
+  Reliability: 1
