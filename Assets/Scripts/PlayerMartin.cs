@@ -71,7 +71,7 @@ public class PlayerMartin : MonoBehaviour
         
         if (!avatar.IsMe)
         {
-            transform.position = SynchronizedPosition;
+            //transform.position = SynchronizedPosition;
             return;
         }
         
