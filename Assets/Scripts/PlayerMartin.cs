@@ -9,7 +9,7 @@ using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-public class PlayerMartin : Synchronizable
+public class PlayerMartin : MonoBehaviour
 {
     [SerializeField] private Avatar avatar;
     
@@ -36,23 +36,23 @@ public class PlayerMartin : Synchronizable
 
     void Start()
     {
-        Multiplayer.RegisterRemoteProcedure("MyProcedureName", MyProcedureFunction);
+        //Multiplayer.RegisterRemoteProcedure("MyProcedureName", MyProcedureFunction);
     }
     
     // Local function, on every client
     void MyProcedureFunction(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
         Debug.Log("Hello");
-        Shoot();
     }
     
     void CallMyProcedure()
     {
-        Multiplayer.InvokeRemoteProcedure("MyProcedureName", UserId.All);
+        //Multiplayer.InvokeRemoteProcedure("MyProcedureName", UserId.All);
     }
     
     private void Update()
     {
+        /*
         // Networking
         SynchronizedPosition = transform.position;
         // If the value of our float has changed, sync it with the other players in our playroom.
@@ -67,6 +67,8 @@ public class PlayerMartin : Synchronizable
         // Update the Synchronizable
         base.SyncUpdate();
 
+        */
+        
         if (!avatar.IsMe)
         {
             transform.position = SynchronizedPosition;
@@ -107,6 +109,7 @@ public class PlayerMartin : Synchronizable
         // Update ui
     }
 
+    /*
     public override void AssembleData(Writer writer, byte LOD)
     {
         // Write our data so that it can be sent to the other players in our playroom.
@@ -121,4 +124,5 @@ public class PlayerMartin : Synchronizable
         // Save the new data as our old data, otherwise we will immediatly think it changed again.
         _oldSynchronizedPosition = SynchronizedPosition;
     }
+    */
 }
