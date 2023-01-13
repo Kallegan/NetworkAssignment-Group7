@@ -52,7 +52,6 @@ public class PlayerMartin : Synchronizable
     
     private void Update()
     {
-        /*
         // Networking
         SynchronizedPosition = transform.position;
         // If the value of our float has changed, sync it with the other players in our playroom.
@@ -66,9 +65,12 @@ public class PlayerMartin : Synchronizable
         }
         // Update the Synchronizable
         base.SyncUpdate();
-        */
+
         if (!avatar.IsMe)
+        {
+            transform.position = SynchronizedPosition;
             return;
+        }
         
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * (Time.deltaTime * speed));
