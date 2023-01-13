@@ -42,4 +42,9 @@ public class ProjectileMoveMartin : Synchronizable
         // Write our data so that it can be sent to the other players in our playroom.
         writer.Write(SynchronizedPosition);
     }
+    
+    void OnBecameInvisible() 
+    {
+        Destroy(gameObject);
+    }
 }
