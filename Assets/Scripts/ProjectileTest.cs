@@ -5,18 +5,20 @@ using Alteruna;
 using Alteruna.Trinity;
 using UnityEngine;
 
-public class ProjectileTest : Synchronizable
+public class ProjectileTest : MonoBehaviour
 {
     public Vector3 SynchronizedPosition;
     private Vector3 _oldSynchronizedPosition;
-    
+
     void Update()
     {
         transform.position += transform.forward * (Time.deltaTime * 20);
         //SynchronizedPosition = transform.position;
-        
-        // If the value of our float has changed, sync it with the other players in our playroom.
-        if (SynchronizedPosition != _oldSynchronizedPosition)
+    }
+    
+    /*
+    // If the value of our float has changed, sync it with the other players in our playroom.
+    if (SynchronizedPosition != _oldSynchronizedPosition)
         {
             // Store the updated value
             _oldSynchronizedPosition = SynchronizedPosition;
@@ -43,14 +45,9 @@ public class ProjectileTest : Synchronizable
         // Write our data so that it can be sent to the other players in our playroom.
         writer.Write(SynchronizedPosition);
     }
-    
+    */
     void OnBecameInvisible() 
     {
         Destroy(gameObject);
-    }
-
-    void DebugPrint()
-    {
-        
     }
 }
