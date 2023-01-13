@@ -33,47 +33,13 @@ public class PlayerMartin : MonoBehaviour
     {
         cam = Camera.main;
     }
-
-    void Start()
-    {
-        //Multiplayer.RegisterRemoteProcedure("MyProcedureName", MyProcedureFunction);
-    }
     
-    // Local function, on every client
-    void MyProcedureFunction(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
-    {
-        Debug.Log("Hello");
-    }
-    
-    void CallMyProcedure()
-    {
-        //Multiplayer.InvokeRemoteProcedure("MyProcedureName", UserId.All);
-    }
     
     private void Update()
     {
-        /*
-        // Networking
-        SynchronizedPosition = transform.position;
-        // If the value of our float has changed, sync it with the other players in our playroom.
-        if (SynchronizedPosition != _oldSynchronizedPosition)
-        {
-            // Store the updated value
-            _oldSynchronizedPosition = SynchronizedPosition;
-
-            // Tell Alteruna that we want to commit our data.
-            Commit();
-        }
-        // Update the Synchronizable
-        base.SyncUpdate();
-
-        */
-        
         if (!avatar.IsMe)
-        {
-            //transform.position = SynchronizedPosition;
             return;
-        }
+
         
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * (Time.deltaTime * speed));
@@ -89,9 +55,6 @@ public class PlayerMartin : MonoBehaviour
  
             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
         }
-
-        if (Input.GetMouseButtonDown(0))
-            CallMyProcedure();
     }
     
     private void Shoot()
