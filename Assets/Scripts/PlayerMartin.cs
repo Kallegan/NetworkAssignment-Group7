@@ -5,7 +5,7 @@ using Alteruna;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
 
-public class PlayerMartin : MonoBehaviour
+public class PlayerMartin : AttributesSync
 {
 
     [SerializeField]
@@ -23,5 +23,14 @@ public class PlayerMartin : MonoBehaviour
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * (Time.deltaTime * speed));
         // hello
+
+        if (Input.GetKeyDown("Space"))
+            Create();
+    }
+
+    [SynchronizableMethod]
+    private void Create()
+    {
+        Instantiate(gameObject, transform.position, transform.rotation);
     }
 }
