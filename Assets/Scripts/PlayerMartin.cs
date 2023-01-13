@@ -35,21 +35,8 @@ public class PlayerMartin : MonoBehaviour
         if (!avatar.IsMe)
             return;
         
-        if (!stunned)
-        {
-            Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            controller.Move(move * (Time.deltaTime * speed));
-        }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, transform.position + -transform.forward * 10, 0.5f);
-            stunTime -= Time.deltaTime;
-            if (stunTime <= 0)
-            {
-                stunned = false;
-                stunTime = 2f;
-            }
-        }
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        controller.Move(move * (Time.deltaTime * speed));
         
         Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
@@ -62,8 +49,6 @@ public class PlayerMartin : MonoBehaviour
  
             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
         }
-        
-        
     }
     
     private void Shoot()
