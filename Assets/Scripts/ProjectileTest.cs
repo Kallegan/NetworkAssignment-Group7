@@ -10,15 +10,10 @@ public class ProjectileTest : Synchronizable
     public Vector3 SynchronizedPosition;
     private Vector3 _oldSynchronizedPosition;
     
-    private void Awake()
-    {
-        // säga hej vi har skapats
-    }
-    
     void Update()
     {
         transform.position += transform.forward * (Time.deltaTime * 20);
-        SynchronizedPosition = transform.position;
+        //SynchronizedPosition = transform.position;
         
         // If the value of our float has changed, sync it with the other players in our playroom.
         if (SynchronizedPosition != _oldSynchronizedPosition)
