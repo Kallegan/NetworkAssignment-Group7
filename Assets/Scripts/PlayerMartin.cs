@@ -52,11 +52,22 @@ public class PlayerMartin : Synchronizable
     
     private void Update()
     {
-        if (!avatar.IsMe)
+        // Networking
+        SynchronizedPosition = transform.position;
+        // If the value of our float has changed, sync it with the other players in our playroom.
+        if (SynchronizedPosition != _oldSynchronizedPosition)
         {
-            transform.position = SynchronizedPosition;
-            return;
+            // Store the updated value
+            _oldSynchronizedPosition = SynchronizedPosition;
+
+            // Tell Alteruna that we want to commit our data.
+            Commit();
         }
+        // Update the Synchronizable
+        base.SyncUpdate();
+        
+        if (!avatar.IsMe)
+            return;
         
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * (Time.deltaTime * speed));
@@ -76,19 +87,7 @@ public class PlayerMartin : Synchronizable
         if (Input.GetMouseButtonDown(0))
             Shoot();
         
-        // Networking
-        SynchronizedPosition = transform.position;
-        // If the value of our float has changed, sync it with the other players in our playroom.
-        if (SynchronizedPosition != _oldSynchronizedPosition)
-        {
-            // Store the updated value
-            _oldSynchronizedPosition = SynchronizedPosition;
 
-            // Tell Alteruna that we want to commit our data.
-            Commit();
-        }
-        // Update the Synchronizable
-        base.SyncUpdate();
     }
     
     private void Shoot()
