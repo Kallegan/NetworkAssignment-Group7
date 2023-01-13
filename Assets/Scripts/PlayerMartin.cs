@@ -88,9 +88,7 @@ public class PlayerMartin : Synchronizable
         }
 
         if (Input.GetMouseButtonDown(0))
-            Shoot();
-        
-
+            CallMyProcedure();
     }
     
     private void Shoot()
