@@ -298,6 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 812899015305600708}
+  projectile: {fileID: 9131524751451437667, guid: ef9145017a0dd1241874614e0f19a92a, type: 3}
   speed: 10
   avatar: {fileID: 7328716418821615349}
 --- !u!143 &812899015305600708
