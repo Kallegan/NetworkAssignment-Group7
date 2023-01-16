@@ -35,6 +35,21 @@ public class PlayerActions : AttributesSync
         
         if (Input.GetMouseButtonDown(0))
             OnAction();
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (canDeflect)
+            {
+                if (Physics.SphereCast(transform.position, deflectRadius, transform.forward, out var hit, deflectRange))
+                {
+                    if (hit.collider.gameObject.TryGetComponent(out Projectile p))
+                    {
+                        Deflect(p);
+                        return;
+                    }
+                }
+            }
+        }
+            
         
         if (!canAttack)
         {
@@ -59,18 +74,6 @@ public class PlayerActions : AttributesSync
 
     private void OnAction()
     {
-        if (canDeflect)
-        {
-            if (Physics.SphereCast(transform.position, deflectRadius, transform.forward, out var hit, deflectRange))
-            {
-                if (hit.collider.gameObject.TryGetComponent(out Projectile p))
-                {
-                    Deflect(p);
-                    return;
-                }
-            }
-        }
-        
         if (canAttack)
             BroadcastRemoteMethod("Shoot");
     }
