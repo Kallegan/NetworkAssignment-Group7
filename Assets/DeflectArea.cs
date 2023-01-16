@@ -6,6 +6,8 @@ public class DeflectArea : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Enter: " +other);
+        
         if (!other.gameObject.TryGetComponent(out Projectile proj))
             return;
 
@@ -14,6 +16,7 @@ public class DeflectArea : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        Debug.Log("Exit: " +other);
         player.deflectable = null;
     }
 }
