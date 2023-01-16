@@ -1,19 +1,31 @@
+using Alteruna;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlfonsTestScript : MonoBehaviour
+public class AlfonsTestScript : AttributesSync
 {
+    [SerializeField] private Alteruna.Avatar avatar;
+
+    [SynchronizableField]
+    float Health = 0;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Health = Random.Range(0, 10);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(1))
+            BroadcastRemoteMethod("DebugHealth");
+    }
+
+    [SynchronizableMethod]
+    void DebugHealth()
+    {
+        Debug.Log(Health);
     }
 }
 /*
