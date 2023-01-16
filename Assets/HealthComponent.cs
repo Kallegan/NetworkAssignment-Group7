@@ -3,19 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlfonsTestScript : AttributesSync
+public class HealthComponent : AttributesSync
 {
     [SerializeField] private Alteruna.Avatar avatar;
 
     [SynchronizableField]
-    float Health;
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (!avatar.IsMe)
-            return;
-        Health = Random.Range(0, 10);
-    }
+    float Health = 10;
+
 
     // Update is called once per frame
     void Update()
