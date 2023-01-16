@@ -40,7 +40,7 @@ public class PlayerActions : AttributesSync
             OnAction();
         if (Input.GetMouseButton(1))
         {
-            //if (deflectable)
+            if (deflectable)
                 Deflect(deflectable);
         }
         
