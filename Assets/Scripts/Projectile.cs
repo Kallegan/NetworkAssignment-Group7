@@ -10,7 +10,6 @@ public class Projectile : AttributesSync
 
     public float speed = 50.0f;
     
-    //TODO: only send on deflect/if changed, to reduce overhead
     public Vector3 direction;
     
     private void Start()

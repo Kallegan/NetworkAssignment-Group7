@@ -11,7 +11,8 @@ public class DeflectArea : MonoBehaviour
         if (!other.gameObject.TryGetComponent(out Projectile proj))
             return;
 
-        player.deflectable = proj;
+        if (player.deflectable)
+            player.deflectable = proj;
     }
 
     private void OnTriggerExit(Collider other)
