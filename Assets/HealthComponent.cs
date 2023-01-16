@@ -38,8 +38,14 @@ public class HealthComponent : AttributesSync
         Health -= damageAmount;
         if (Health <= 0)
         {
-            Destroy(transform.parent.gameObject);
+            Die();
         }
+    }
+
+    [SynchronizableMethod]
+    void Die()
+    {
+        Destroy(transform.parent.gameObject);
     }
 
 
