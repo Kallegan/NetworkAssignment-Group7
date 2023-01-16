@@ -81,6 +81,7 @@ public class PlayerActions : AttributesSync
     
     private void Deflect(Projectile proj)
     {
-        proj.BroadcastRemoteMethod("OnDeflect", transform.forward);
+        //proj.BroadcastRemoteMethod("OnDeflect", transform.forward);
+        proj.BroadcastRemoteMethod("Destroy");
     }
 }
