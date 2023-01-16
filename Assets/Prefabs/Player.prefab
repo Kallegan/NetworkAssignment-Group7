@@ -226,7 +226,7 @@ MonoBehaviour:
   deflectRadius: 1
   deflectCoolDown: 0.5
   deflectable: {fileID: 0}
-  deflectArea: {fileID: 0}
+  deflectArea: {fileID: 3263929097021584910}
 --- !u!1 &4706027095896428391
 GameObject:
   m_ObjectHideFlags: 0
