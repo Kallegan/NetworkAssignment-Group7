@@ -38,6 +38,7 @@ public class Projectile : AttributesSync
     {
         direction = new Vector3(x, y, z);
         speed *= 1.1f;
+        
     }
     
     [SynchronizableMethod]
