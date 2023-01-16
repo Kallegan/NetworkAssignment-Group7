@@ -22,6 +22,12 @@ public class AlfonsTestScript : AttributesSync
     {
         if (Input.GetMouseButtonDown(1))
             BroadcastRemoteMethod("DebugHealth");
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Health++;
+        }
+
     }
 
     [SynchronizableMethod]
@@ -29,6 +35,8 @@ public class AlfonsTestScript : AttributesSync
     {
         Debug.Log(Health);
     }
+
+
 }
 /*
  * According to all known laws
