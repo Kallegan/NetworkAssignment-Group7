@@ -35,6 +35,11 @@ public class HealthComponent : AttributesSync
             TakeDamage(1);
         }
 
+        //Update size of healthbar
+        Vector3 healthScale = new Vector3((Health / MaxHealth) * 2, HealthBar.localScale.y, HealthBar.localScale.z);
+        HealthBar.localScale = healthScale;
+
+
     }
 
     [SynchronizableMethod]
@@ -58,8 +63,7 @@ public class HealthComponent : AttributesSync
     {
         if (!avatar.IsMe)
             return;
-        Vector3 healthScale = new Vector3((Health / MaxHealth) * 2, HealthBar.localScale.y, HealthBar.localScale.z);
-        HealthBar.localScale = healthScale;
+        
     }
 
     [SynchronizableMethod]
