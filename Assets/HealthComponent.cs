@@ -17,6 +17,7 @@ public class HealthComponent : AttributesSync
 
     private void Start()
     {
+        //TODO: This sets the health for every character if someone joins?
         if (!avatar.IsMe)
             return;
         Health = MaxHealth;
@@ -35,10 +36,9 @@ public class HealthComponent : AttributesSync
             TakeDamage(1);
         }
 
-        //Update size of healthbar
+        //How much overhead does this come with to read from a synchronized field every frame?
         Vector3 healthScale = new Vector3((Health / MaxHealth) * 2, HealthBar.localScale.y, HealthBar.localScale.z);
         HealthBar.localScale = healthScale;
-
 
     }
 
@@ -50,25 +50,20 @@ public class HealthComponent : AttributesSync
 
     void TakeDamage(float damageAmount)
     {
+        //This is a local function since Health is synchronized anyways.
+
         Health -= damageAmount;
-        BroadcastRemoteMethod("UpdateHealth");
         if (Health <= 0)
         {
             BroadcastRemoteMethod("Die");
         }
     }
 
-    [SynchronizableMethod]
-    void UpdateHealth()
-    {
-        if (!avatar.IsMe)
-            return;
-        
-    }
 
     [SynchronizableMethod]
     void Die()
     {
+        //This should be changed later as abruptly deleting your avatar might come with some issues. Perhaps possess some spectator object?
         Destroy(transform.parent.gameObject);
     }
 
