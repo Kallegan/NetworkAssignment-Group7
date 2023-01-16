@@ -15,11 +15,15 @@ public class HealthComponent : AttributesSync
     [SerializeField]
     Transform HealthBar;
 
+    private Camera cam;
+
     private void Start()
     {
         if (!avatar.IsMe)
             return;
         Health = MaxHealth;
+        
+        cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -38,6 +42,10 @@ public class HealthComponent : AttributesSync
         //Update size of healthbar
         Vector3 healthScale = new Vector3((Health / MaxHealth) * 2, HealthBar.localScale.y, HealthBar.localScale.z);
         HealthBar.localScale = healthScale;
+        
+        //turns healthbars to player camera.
+        HealthBar.transform.LookAt(HealthBar.transform.position + cam.transform.rotation * Vector3.forward); 
+
 
 
     }
