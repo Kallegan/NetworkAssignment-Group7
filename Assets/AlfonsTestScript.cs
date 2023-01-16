@@ -12,6 +12,8 @@ public class AlfonsTestScript : AttributesSync
     // Start is called before the first frame update
     void Start()
     {
+        if (!avatar.IsMe)
+            return;
         Health = Random.Range(0, 10);
     }
 
