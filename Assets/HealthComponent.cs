@@ -8,7 +8,7 @@ public class HealthComponent : AttributesSync
     [SerializeField] private Alteruna.Avatar avatar;
 
     [SynchronizableField]
-    float Health = 10;
+    float Health;
 
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class HealthComponent : AttributesSync
         {
             if (!avatar.IsMe)
                 return;
-            Health++;
+            TakeDamage(1);
         }
 
     }
@@ -30,6 +30,16 @@ public class HealthComponent : AttributesSync
     void DebugHealth()
     {
         Debug.Log(Health);
+    }
+
+    void TakeDamage(float damageAmount)
+    {
+        
+        Health -= damageAmount;
+        if (Health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
 
