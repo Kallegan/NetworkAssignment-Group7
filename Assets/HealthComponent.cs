@@ -8,7 +8,7 @@ public class HealthComponent : AttributesSync
     [SerializeField] private Alteruna.Avatar avatar;
 
     [SynchronizableField]
-    float Health;
+    float Health = 10;
 
     float MaxHealth = 10;
 
