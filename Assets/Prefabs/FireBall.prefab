@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4346458487241359320}
   - component: {fileID: 2892207472432038557}
   - component: {fileID: 286972946836162637}
+  - component: {fileID: 2920284979537611539}
   m_Layer: 0
   m_Name: FireBall
   m_TagString: Untagged
@@ -111,6 +112,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d104c098b8601b241a9564d88856cdff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  UID: {fileID: 0}
+  Reliability: 1
+  playerIndex: 0
+  speed: 50
+  direction: {x: 0, y: 0, z: 0}
 --- !u!114 &286972946836162637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,3 +131,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   a: 4cc2ef6d-5623-4390-a4ad-67b5643f3775
+--- !u!54 &2920284979537611539
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9131524751451437667}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
