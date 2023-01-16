@@ -1,3 +1,4 @@
+using System;
 using Alteruna;
 using UnityEngine;
 
@@ -6,37 +7,70 @@ public class PlayerActions : AttributesSync
     [SerializeField] private GameObject projectile;
     [SerializeField] private Alteruna.Avatar avatar;
     
-    [SerializeField] private float coolDown = 0.5f;
+    // Attack
+    [SerializeField] private float attackCoolDown = 0.5f;
     private bool canAttack = true;
-    private float curCoolDown;
-
+    private float curAttackCoolDown;
+    
+    
+    // Deflect
+    [SerializeField] private float deflectRange = 2f;
+    [SerializeField] private float deflectRadius = 5f;
+    [SerializeField] private float deflectCoolDown = 0.5f;
+    private float curDeflectCoolDown;
+    private bool canDeflect = true;
+    
     private void Start()
     {
-        curCoolDown = coolDown;
+        curAttackCoolDown = attackCoolDown;
+        curDeflectCoolDown = deflectCoolDown;
     }
     
     private void Update()
     {
         if (!avatar.IsMe)
             return;
-
-
-        if (Input.GetMouseButtonDown(0) && canAttack)
-        {
-            BroadcastRemoteMethod("Shoot");
-            canAttack = false;
-        }
-
-        // Todo: clean up
+        
+        if (Input.GetMouseButtonDown(0))
+            OnAction();
+        
         if (!canAttack)
         {
-            curCoolDown -= Time.deltaTime;
-            if (curCoolDown <= 0)
+            curAttackCoolDown -= Time.deltaTime;
+            if (curAttackCoolDown <= 0)
             {
                 canAttack = true;
-                curCoolDown = coolDown;
+                curAttackCoolDown = attackCoolDown;
             }
         }
+        
+        if (!canDeflect)
+        {
+            curDeflectCoolDown -= Time.deltaTime;
+            if (curDeflectCoolDown <= 0)
+            {
+                canDeflect = true;
+                curDeflectCoolDown = deflectCoolDown;
+            }
+        }
+    }
+
+    private void OnAction()
+    {
+        if (canDeflect)
+        {
+            if (Physics.SphereCast(transform.position, deflectRadius, transform.forward, out var hit, deflectRange))
+            {
+                if (hit.collider.gameObject.TryGetComponent(out Projectile p))
+                {
+                    Deflect(p);
+                    return;
+                }
+            }
+        }
+        
+        if (canAttack)
+            BroadcastRemoteMethod("Shoot");
     }
     
     
@@ -48,9 +82,8 @@ public class PlayerActions : AttributesSync
             p.playerIndex = avatar.Possessor.Index;
     }
     
-    [SynchronizableMethod]
-    private void Deflect()
+    private void Deflect(Projectile proj)
     {
-        // 
+        proj.OnDeflect(transform.forward);
     }
 }
