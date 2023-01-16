@@ -36,9 +36,10 @@ public class Projectile : AttributesSync
     [SynchronizableMethod]
     public void OnDeflect(float x, float y, float z)
     {
-        direction = new Vector3(x, y, z);
+        direction.x = x;
+        direction.y = y;
+        direction.z = z;
         speed *= 1.1f;
-        
     }
     
     [SynchronizableMethod]
