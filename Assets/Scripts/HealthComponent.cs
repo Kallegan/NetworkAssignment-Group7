@@ -19,11 +19,13 @@ public class HealthComponent : AttributesSync
 
     private void Start()
     {
+        cam = Camera.main;
+        
         if (!avatar.IsMe)
             return;
         Health = MaxHealth;
         
-        cam = Camera.main;
+        
     }
 
     // Update is called once per frame
