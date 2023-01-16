@@ -19,8 +19,11 @@ public class PlayerActions : AttributesSync
     [Range(0, 5)]
     [SerializeField] private float deflectRadius = 1f;
     [SerializeField] private float deflectCoolDown = 0.5f;
+    
     private float curDeflectCoolDown;
     private bool canDeflect = true;
+    public Projectile deflectable = null;
+    [SerializeField] private BoxCollider deflectArea;
     
     private void Start()
     {
@@ -37,19 +40,9 @@ public class PlayerActions : AttributesSync
             OnAction();
         if (Input.GetMouseButtonDown(1))
         {
-            if (canDeflect)
-            {
-                if (Physics.SphereCast(transform.position, deflectRadius, transform.forward, out var hit, deflectRange))
-                {
-                    if (hit.collider.gameObject.TryGetComponent(out Projectile p))
-                    {
-                        Deflect(p);
-                        return;
-                    }
-                }
-            }
+            if (deflectable)
+                Deflect(deflectable);
         }
-            
         
         if (!canAttack)
         {
@@ -71,7 +64,6 @@ public class PlayerActions : AttributesSync
             }
         }
     }
-
     private void OnAction()
     {
         if (canAttack)
@@ -90,11 +82,5 @@ public class PlayerActions : AttributesSync
     private void Deflect(Projectile proj)
     {
         proj.BroadcastRemoteMethod("OnDeflect", transform.forward);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, deflectRadius);
-        Gizmos.DrawWireSphere(transform.position + transform.forward * deflectRange, deflectRadius);
     }
 }
