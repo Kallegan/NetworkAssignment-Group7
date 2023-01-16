@@ -13,9 +13,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CharacterController controller;
     [SerializeField] private float speed = 10f;
     
-    // Attack    
-    [SerializeField] private GameObject projectile;
-    
     private void Awake()
     {
         cam = Camera.main;
