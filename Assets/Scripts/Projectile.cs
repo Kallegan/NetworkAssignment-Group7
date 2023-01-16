@@ -16,7 +16,6 @@ public class Projectile : AttributesSync
     private void Start()
     {
         direction = transform.forward;
-        Debug.Log("Projectile player index: " + playerIndex);
     }
 
     void Update()
