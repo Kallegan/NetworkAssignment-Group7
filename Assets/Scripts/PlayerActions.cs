@@ -1,7 +1,7 @@
 using Alteruna;
 using UnityEngine;
 
-public class Attack : AttributesSync
+public class PlayerActions : AttributesSync
 {
     [SerializeField] private GameObject projectile;
     [SerializeField] private Alteruna.Avatar avatar;
@@ -43,6 +43,14 @@ public class Attack : AttributesSync
     [SynchronizableMethod]
     private void Shoot()
     {
-        Instantiate(projectile, transform.position + transform.forward, transform.rotation);
+        GameObject proj = Instantiate(projectile, transform.position + transform.forward, transform.rotation);
+        if (proj.TryGetComponent(out Projectile p))
+            p.playerIndex = avatar.Possessor.Index;
+    }
+    
+    [SynchronizableMethod]
+    private void Deflect()
+    {
+        // 
     }
 }
