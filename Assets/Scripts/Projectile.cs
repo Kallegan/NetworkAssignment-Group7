@@ -9,8 +9,9 @@ using Avatar = UnityEngine.Avatar;
 public class Projectile : AttributesSync
 {
     public int playerIndex;
+
+    public float speed = 20.0f;
     private Vector3 direction;
-    public float speed;
     
     private void Start()
     {
