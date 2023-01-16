@@ -10,6 +10,17 @@ public class HealthComponent : AttributesSync
     [SynchronizableField]
     float Health;
 
+    float MaxHealth = 10;
+
+    [SerializeField]
+    Transform HealthBar;
+
+    private void Start()
+    {
+        if (!avatar.IsMe)
+            return;
+        Health = MaxHealth;
+    }
 
     // Update is called once per frame
     void Update()
@@ -17,7 +28,7 @@ public class HealthComponent : AttributesSync
         if (Input.GetMouseButtonDown(1))
             BroadcastRemoteMethod("DebugHealth");
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!avatar.IsMe)
                 return;
@@ -34,12 +45,21 @@ public class HealthComponent : AttributesSync
 
     void TakeDamage(float damageAmount)
     {
-        
         Health -= damageAmount;
+        BroadcastRemoteMethod("UpdateHealth");
         if (Health <= 0)
         {
             BroadcastRemoteMethod("Die");
         }
+    }
+
+    [SynchronizableMethod]
+    void UpdateHealth()
+    {
+        if (!avatar.IsMe)
+            return;
+        Vector3 healthScale = new Vector3((Health / MaxHealth) * 2, HealthBar.localScale.y, HealthBar.localScale.z);
+        HealthBar.localScale = healthScale;
     }
 
     [SynchronizableMethod]
