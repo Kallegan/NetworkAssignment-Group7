@@ -14,8 +14,10 @@ public class PlayerActions : AttributesSync
     
     
     // Deflect
+    [Range(0, 10)]
     [SerializeField] private float deflectRange = 2f;
-    [SerializeField] private float deflectRadius = 5f;
+    [Range(0, 5)]
+    [SerializeField] private float deflectRadius = 1f;
     [SerializeField] private float deflectCoolDown = 0.5f;
     private float curDeflectCoolDown;
     private bool canDeflect = true;
@@ -85,5 +87,11 @@ public class PlayerActions : AttributesSync
     private void Deflect(Projectile proj)
     {
         proj.BroadcastRemoteMethod("OnDeflect", transform.forward);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, deflectRadius);
+        Gizmos.DrawWireSphere(transform.position + transform.forward * deflectRange, deflectRadius);
     }
 }

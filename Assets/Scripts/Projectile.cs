@@ -13,7 +13,9 @@ public class Projectile : AttributesSync
     public int playerIndex;
 
     public float speed = 50.0f;
-    public Vector3 direction;
+    
+    //TODO: only send on deflect/if changed, to reduce overhead
+    [SynchronizableField]public Vector3 direction;
     
     private void Start()
     {
