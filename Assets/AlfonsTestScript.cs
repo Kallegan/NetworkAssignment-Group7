@@ -8,7 +8,7 @@ public class AlfonsTestScript : AttributesSync
     [SerializeField] private Alteruna.Avatar avatar;
 
     [SynchronizableField]
-    float Health = 0;
+    float Health;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +25,8 @@ public class AlfonsTestScript : AttributesSync
 
         if (Input.GetKey(KeyCode.Space))
         {
+            if (!avatar.IsMe)
+                return;
             Health++;
         }
 
