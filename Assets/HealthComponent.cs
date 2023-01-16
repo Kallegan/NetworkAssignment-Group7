@@ -38,7 +38,7 @@ public class HealthComponent : AttributesSync
         Health -= damageAmount;
         if (Health <= 0)
         {
-            Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
         }
     }
 
