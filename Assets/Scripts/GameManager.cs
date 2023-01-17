@@ -78,7 +78,7 @@ public class GameManager : Synchronizable
     public void JoinedRoom()
     {
         if (_state == State.Idle)
-            ChangeState(State.Looking);
+            ChangeState(State.LookingForPlayers);
         
 #if UNITY_EDITOR
         PrintDebug("GameManager - Join room: ", _multiplayer.CurrentRoom.Name);
@@ -97,7 +97,7 @@ public class GameManager : Synchronizable
 #endif
         
         if (_users.Count >= _minUsersToStart)
-            ChangeState(State.Start);
+            ChangeState(State.StartRound);
     }
 
     // CHANGING STATES
