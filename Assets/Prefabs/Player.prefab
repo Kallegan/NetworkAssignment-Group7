@@ -220,7 +220,7 @@ MonoBehaviour:
   UID: {fileID: 0}
   Reliability: 1
   projectile: {fileID: 9131524751451437667, guid: ef9145017a0dd1241874614e0f19a92a, type: 3}
-  avatar: {fileID: 7328716418821615349}
+  avatar: {fileID: 6030635960649211570}
   attackCoolDown: 0.5
   deflectRange: 2
   deflectRadius: 1
@@ -336,11 +336,11 @@ GameObject:
   - component: {fileID: 7051877682914781265}
   - component: {fileID: 7051877682914781264}
   - component: {fileID: 7051877682914781267}
-  - component: {fileID: 4837402013434990872}
-  - component: {fileID: 7328716418821615349}
-  - component: {fileID: 1335887655347173280}
   - component: {fileID: 812899015305600708}
-  - component: {fileID: 1502893035235936109}
+  - component: {fileID: 4410329885500023375}
+  - component: {fileID: 1530998221303379972}
+  - component: {fileID: 4891437182217059579}
+  - component: {fileID: 6030635960649211570}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -433,55 +433,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4837402013434990872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7051877682914781266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1709514741, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  a: 54081fc1-c44f-4608-8571-dd759fdc6c95
---- !u!114 &7328716418821615349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7051877682914781266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -2141718255, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Multiplayer: {fileID: 0}
-  IsMe: 0
-  IsPossessed: 0
-  OnPossessed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnUnpossessed:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1335887655347173280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7051877682914781266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28d256d8438b7f4498c9891db15971b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  avatar: {fileID: 7328716418821615349}
-  controller: {fileID: 812899015305600708}
-  speed: 10
 --- !u!143 &812899015305600708
 CharacterController:
   m_ObjectHideFlags: 0
@@ -500,7 +451,20 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1502893035235936109
+--- !u!114 &4410329885500023375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7051877682914781266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1709514741, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  a: 188a5f1e-4d5b-4134-a4a3-5018055d2d77
+--- !u!114 &1530998221303379972
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -550,6 +514,42 @@ MonoBehaviour:
     LastUpdated: 0
     NeverString: Never
     RealtimeString: Realtime
+--- !u!114 &4891437182217059579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7051877682914781266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28d256d8438b7f4498c9891db15971b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  avatar: {fileID: 6030635960649211570}
+  controller: {fileID: 812899015305600708}
+  speed: 10
+--- !u!114 &6030635960649211570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7051877682914781266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2141718255, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplayer: {fileID: 0}
+  IsMe: 0
+  IsPossessed: 0
+  OnPossessed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnpossessed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7774178871493564330
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,5 +670,5 @@ MonoBehaviour:
   Multiplayer: {fileID: 0}
   UID: {fileID: 0}
   Reliability: 1
-  avatar: {fileID: 7328716418821615349}
+  avatar: {fileID: 6030635960649211570}
   HealthBar: {fileID: 4279380657899205574}
