@@ -8,8 +8,8 @@ public class ProjectileManager : AttributesSync
 {
     [SerializeField ]private Alteruna.Avatar avatar;
     [SerializeField] private GameObject projectilePrefab;
-    
-    private Dictionary<int, GameObject> projectileDict;
+
+    private Dictionary<int, GameObject> projectileDict = new Dictionary<int, GameObject>();
     
     private void Start()
     {
