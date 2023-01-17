@@ -29,6 +29,8 @@ public class ProjectileManager : AttributesSync
         parameters.Set("spawnPosZ", spawnPos.z);
         
         Multiplayer.InvokeRemoteProcedure("SpawnProjectileRemote", UserId.All, parameters);
+        
+        Debug.Log("SPAWN LOCAL, ID: " + id);
     }
     
     void SpawnProjectileRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
@@ -41,5 +43,7 @@ public class ProjectileManager : AttributesSync
         
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
         projectileDict.Add(id, projectile);
+        
+        Debug.Log("SPAWN REMOTE, ID: " + id);
     }
 }
