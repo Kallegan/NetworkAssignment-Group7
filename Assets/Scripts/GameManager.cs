@@ -80,7 +80,7 @@ public class GameManager : Synchronizable
             ChangeState(State.LookingForPlayers);
         
 #if UNITY_EDITOR
-        PrintDebug("GameManager - Join room: ", _multiplayer.CurrentRoom.Name);
+        PrintDebug("GameManager - Joined room: ", _multiplayer.CurrentRoom.Name);
 #endif
         
         CheckIfCanStartGame();
