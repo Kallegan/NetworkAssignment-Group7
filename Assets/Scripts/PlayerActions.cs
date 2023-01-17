@@ -52,7 +52,8 @@ public class PlayerActions : AttributesSync
         {
             if (deflectable)
             {
-                Deflect(deflectable);
+                projectileManager.OnPlayerDeflectProjectile(deflectable.localId);
+                //Deflect(deflectable);
                 deflectable = null;
             }
                 
@@ -95,6 +96,8 @@ public class PlayerActions : AttributesSync
     
     private void Deflect(Projectile proj)
     {
+        Debug.Log("DEFLECTED LOCAL, ID:" + proj.localId);
+        
         // debug when sending and re.. 
         float x = transform.forward.x;
         float y = transform.forward.y;

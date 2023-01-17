@@ -14,6 +14,7 @@ public class ProjectileManager : AttributesSync
     private void Start()
     {
         Multiplayer.RegisterRemoteProcedure("SpawnProjectileRemote", SpawnProjectileRemote);
+        Multiplayer.RegisterRemoteProcedure("OnPlayerDeflectProjectileRemote", OnPlayerDeflectProjectileRemote);
     }
     
     public void SpawnProjectileLocal(Vector3 spawnPos)
@@ -21,7 +22,10 @@ public class ProjectileManager : AttributesSync
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
         int id = projectile.GetInstanceID();
         projectileDict.Add(id, projectile);
-        
+
+        if (projectile.TryGetComponent(out Projectile proj))
+            proj.localId = id;
+
         ProcedureParameters parameters = new ProcedureParameters();
         
         parameters.Set("id", id);
@@ -43,7 +47,28 @@ public class ProjectileManager : AttributesSync
         
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
         projectileDict.Add(id, projectile);
+
+        if (projectile.TryGetComponent(out Projectile proj))
+            proj.localId = id;
         
         Debug.Log("SPAWN REMOTE, ID: " + id);
+    }
+
+    public void OnPlayerDeflectProjectile(int projectileId)
+    {
+        var proj = projectileDict[projectileId].GetComponent<Projectile>();
+        proj.OnDeflect();
+        
+        ProcedureParameters parameters = new ProcedureParameters();
+        parameters.Set("projectileId", projectileId);
+        Multiplayer.InvokeRemoteProcedure("OnPlayerDeflectProjectileRemote", UserId.All, parameters);
+    }
+    
+    public void OnPlayerDeflectProjectileRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
+    {
+        int projectileId = parameters.Get("projectileId", 0);
+        
+        var proj = projectileDict[projectileId].GetComponent<Projectile>();
+        proj.OnDeflect();
     }
 }
