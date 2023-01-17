@@ -9,10 +9,12 @@ public class ProjectileManager : AttributesSync
     [SerializeField ]private Alteruna.Avatar avatar;
     [SerializeField] private GameObject projectilePrefab;
 
-    private Dictionary<int, GameObject> projectileDict = new Dictionary<int, GameObject>();
+    private Dictionary<int, GameObject> projectileDict;
     
     private void Start()
     {
+        projectileDict = new Dictionary<int, GameObject>();
+        
         Multiplayer.RegisterRemoteProcedure("SpawnProjectileRemote", SpawnProjectileRemote);
         Multiplayer.RegisterRemoteProcedure("OnPlayerDeflectProjectileRemote", OnPlayerDeflectProjectileRemote);
     }

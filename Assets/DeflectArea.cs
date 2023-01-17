@@ -12,6 +12,8 @@ public class DeflectArea : MonoBehaviour
             return;
 
         // if (!player.deflectable)
+        Debug.Log("PLAYER CUR DEFLECTABLE ID:" + proj.localId);
+
             player.deflectable = proj;
     }
 

@@ -48,12 +48,11 @@ public class PlayerActions : AttributesSync
             projectileManager.SpawnProjectileLocal(transform.position + transform.forward);
         }
             //OnAction();
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
         {
             if (deflectable)
             {
                 projectileManager.OnPlayerDeflectProjectile(deflectable.localId);
-                Debug.Log("PLAYER DEFLECTABLE ID:" + deflectable.localId);
                 //Deflect(deflectable);
                 deflectable = null;
             }
