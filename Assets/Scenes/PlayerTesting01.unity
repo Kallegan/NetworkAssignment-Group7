@@ -1210,6 +1210,10 @@ PrefabInstance:
       propertyPath: _multiplayer
       value: 
       objectReference: {fileID: 2076814846}
+    - target: {fileID: 3675734681415983232, guid: 69676063d4554a148ab333afda282f0f, type: 3}
+      propertyPath: _minUsersToStart
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3675734681415983233, guid: 69676063d4554a148ab333afda282f0f, type: 3}
       propertyPath: m_Name
       value: GameManager

@@ -28,9 +28,8 @@ public class GameManager : Synchronizable
     }
     
     private List<User> _users;
-
-    private State _state;
     
+    private State _state;
     public enum State
     {
         Idle,
@@ -101,7 +100,7 @@ public class GameManager : Synchronizable
     }
 
     // CHANGING STATES
-    public void ChangeState(short stateIndex)
+    public void ChangeState(byte stateIndex)
     {
         FinalizeStateChange((State)stateIndex);
     }
@@ -112,7 +111,7 @@ public class GameManager : Synchronizable
     private void FinalizeStateChange(State state)
     {
         _state = state;
-        
+
 #if UNITY_EDITOR
         PrintDebug("GameManager - State Changed to: ", _state);
 #endif
