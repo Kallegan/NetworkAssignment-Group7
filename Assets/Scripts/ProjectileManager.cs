@@ -49,6 +49,7 @@ public class ProjectileManager : AttributesSync
         
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
         projectileDict.Add(id, projectile);
+        projectileDict.
 
         if (projectile.TryGetComponent(out Projectile proj))
             proj.localId = id;
@@ -58,8 +59,15 @@ public class ProjectileManager : AttributesSync
 
     public void OnPlayerDeflectProjectile(int projectileId)
     {
-        var proj = projectileDict[projectileId].GetComponent<Projectile>();
-        proj.OnDeflect();
+        if (projectileDict.TryGetValue(projectileId, out var go))
+        {
+            var proj = go.GetComponent<Projectile>();
+            proj.OnDeflect();
+        }
+        else
+        {
+            Debug.Log("LOCAL, PROJECTILE NOT FOUND IN DICT");
+        }
         
         ProcedureParameters parameters = new ProcedureParameters();
         parameters.Set("projectileId", projectileId);
@@ -70,7 +78,14 @@ public class ProjectileManager : AttributesSync
     {
         int projectileId = parameters.Get("projectileId", 0);
         
-        var proj = projectileDict[projectileId].GetComponent<Projectile>();
-        proj.OnDeflect();
+        if (projectileDict.TryGetValue(projectileId, out var go))
+        {
+            var proj = go.GetComponent<Projectile>();
+            proj.OnDeflect();
+        }
+        else
+        {
+            Debug.Log("REMOTE, PROJECTILE NOT FOUND IN DICT");
+        }
     }
 }
