@@ -49,7 +49,6 @@ public class ProjectileManager : AttributesSync
         
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
         projectileDict.Add(id, projectile);
-        projectileDict.
 
         if (projectile.TryGetComponent(out Projectile proj))
             proj.localId = id;
