@@ -6,6 +6,8 @@ public class PlayerActions : AttributesSync
 {
     [SerializeField] private GameObject projectile;
     [SerializeField] private Alteruna.Avatar avatar;
+
+    private ProjectileManager projectileManager;
     
     // Attack
     [SerializeField] private float attackCoolDown = 0.5f;
@@ -24,7 +26,12 @@ public class PlayerActions : AttributesSync
     private bool canDeflect = true;
     public Projectile deflectable = null;
     [SerializeField] private BoxCollider deflectArea;
-    
+
+    private void Awake()
+    {
+        projectileManager = FindObjectOfType<ProjectileManager>();
+    }
+
     private void Start()
     {
         curAttackCoolDown = attackCoolDown;
@@ -35,9 +42,12 @@ public class PlayerActions : AttributesSync
     {
         if (!avatar.IsMe)
             return;
-        
+
         if (Input.GetMouseButtonDown(0))
-            OnAction();
+        {
+            projectileManager.SpawnProjectileLocal(transform.position + transform.forward);
+        }
+            //OnAction();
         if (Input.GetMouseButtonDown(1))
         {
             if (deflectable)
@@ -85,6 +95,7 @@ public class PlayerActions : AttributesSync
     
     private void Deflect(Projectile proj)
     {
+        // debug when sending and re.. 
         float x = transform.forward.x;
         float y = transform.forward.y;
         float z = transform.forward.z;

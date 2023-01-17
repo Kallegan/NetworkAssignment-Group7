@@ -7,19 +7,20 @@ using Vector3 = UnityEngine.Vector3;
 public class Projectile : AttributesSync
 {
     public int playerIndex;
-
     public float speed = 50.0f;
     
+    // [SynchronizableField] - three floats, direction
     public Vector3 direction;
     
     private void Start()
     {
-        direction = transform.forward;
+        Debug.Log("PROJECTILE CREATED");
+        //direction = transform.forward;
     }
 
     void Update()
     {
-        transform.position += direction * (20 * Time.deltaTime);
+        //transform.position += direction * (20 * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -33,6 +34,7 @@ public class Projectile : AttributesSync
         
     }
 
+    // RPC 
     [SynchronizableMethod]
     public void OnDeflect(float x, float y, float z)
     {
