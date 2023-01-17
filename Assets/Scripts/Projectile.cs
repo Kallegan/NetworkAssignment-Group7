@@ -16,7 +16,7 @@ public class Projectile : AttributesSync
     private void Start()
     {
         Debug.Log("PROJECTILE CREATED");
-        //direction = transform.forward;
+        direction = transform.forward;
     }
 
     void Update()
