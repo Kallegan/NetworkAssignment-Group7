@@ -80,10 +80,10 @@ public class ProjectileManager : AttributesSync
     
     void SpawnProjectileRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
-        float posX = parameters.Get("spawnPosX", 300);
-        float posZ = parameters.Get("spawnPosZ", 0);
+        float posX = parameters.Get("spawnPosX", 0.3f);
+        float posZ = parameters.Get("spawnPosZ", 0.3f);
         int id = parameters.Get("id", 0);
-        float id2 = parameters.Get("id2", 0);
+        float id2 = parameters.Get("id2", 0.3f);
 
         Vector3 spawnPos = new Vector3(posX, 0, posZ);
 
