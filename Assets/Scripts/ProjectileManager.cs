@@ -65,14 +65,12 @@ public class ProjectileManager : AttributesSync
 
 
         ProcedureParameters parameters = new ProcedureParameters();
-
-        float id2 = 4.2f;
-
+        
         parameters.Set("id", id);
         parameters.Set("spawnPosX", spawnPos.x);
         parameters.Set("spawnPosY", spawnPos.y);
         parameters.Set("spawnPosZ", spawnPos.z);
-        parameters.Set("yawRot", transform.parent.rotation.y);
+        parameters.Set("yawRot", rotation.y);
         
         Multiplayer.InvokeRemoteProcedure("SpawnProjectileRemote", UserId.All, parameters);
 
@@ -83,18 +81,17 @@ public class ProjectileManager : AttributesSync
     void SpawnProjectileRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
         float posX = parameters.Get("spawnPosX", 0.0f); //The default value HAS to be specifically a float to pass a float
-        float posY = parameters.Get("spawnPosY", 0.0f);
-        float posZ = parameters.Get("spawnPosZ", 0.0f);
+        float posY = parameters.Get("spawnPosY", 0.0f); //The default value HAS to be specifically a float to pass a float
+        float posZ = parameters.Get("spawnPosZ", 0.0f); //The default value HAS to be specifically a float to pass a float
         float yaw = parameters.Get("yawRot", 0.0f);
 
         int id = parameters.Get("id", 0);
 
         Vector3 spawnPos = new Vector3(posX, posY, posZ);
-
-
-
+        
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
-        projectile.transform.rotation = Quaternion.Euler(0, yaw, 0);
+        projectile.transform.Rotate(Vector3.up, yaw);
+        
         projectileDict.Add(id, projectile);
 
         //if (projectile.TryGetComponent(out Projectile proj))
