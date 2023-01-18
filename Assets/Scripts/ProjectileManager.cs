@@ -11,24 +11,56 @@ public class ProjectileManager : AttributesSync
     [SerializeField] private GameObject projectilePrefab;
 
     private Dictionary<int, GameObject> projectileDict;
+    private List<GameObject> projectilePoolList;
+
+    [SynchronizableField]
+    private byte currentProjectilePoolIndex;
+
     
     private void Start()
     {
-        if (avatar.IsMe)
-            projectileDict = new Dictionary<int, GameObject>();
+
+        projectileDict = new Dictionary<int, GameObject>();
+        projectilePoolList = new List<GameObject>();
+
         
+        for (int i = 0; i < 100; i++)
+        {
+            GameObject projectile = Instantiate(projectilePrefab, Vector3.zero, Quaternion.identity);
+            if (projectile.TryGetComponent(out Projectile proj))
+                proj.localId = i;
+
+            projectilePoolList.Add(projectile);
+
+        }
+        
+
         Multiplayer.RegisterRemoteProcedure("SpawnProjectileRemote", SpawnProjectileRemote);
         Multiplayer.RegisterRemoteProcedure("OnPlayerDeflectProjectileRemote", OnPlayerDeflectProjectileRemote);
     }
+
     
     public void SpawnProjectileLocal(Vector3 spawnPos, Quaternion rotation)
     {
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, rotation);
         int id = projectile.GetInstanceID();
         projectileDict.Add(id, projectile);
-        
+
         if (projectile.TryGetComponent(out Projectile proj))
             proj.localId = id;
+
+        //Get object from object pool and get the right data from it
+        //GameObject obj = projectilePoolList[currentProjectilePoolIndex];
+        //Projectile proj = obj.GetComponent<Projectile>();
+        //int id = proj.localId;
+
+        //Set psotion
+        //Transform objTrans = obj.transform;
+        //objTrans.position = spawnPos;
+        //objTrans.rotation = rotation;
+
+        //Go to next index in pool
+        //currentProjectilePoolIndex++;
 
         ProcedureParameters parameters = new ProcedureParameters();
         
@@ -37,7 +69,9 @@ public class ProjectileManager : AttributesSync
         parameters.Set("spawnPosZ", spawnPos.z);
         
         Multiplayer.InvokeRemoteProcedure("SpawnProjectileRemote", UserId.All, parameters);
-        
+
+
+        Debug.Log("DICT SIZE LOCAL" + projectileDict.Count);
         Debug.Log("SPAWN LOCAL, ID: " + id);
     }
     
@@ -48,13 +82,17 @@ public class ProjectileManager : AttributesSync
         int id = parameters.Get("id", 0);
 
         Vector3 spawnPos = new Vector3(posX, 0, posZ);
-        
+
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
         projectileDict.Add(id, projectile);
 
-        if (projectile.TryGetComponent(out Projectile proj))
-            proj.localId = id;
-        
+        //if (projectile.TryGetComponent(out Projectile proj))
+        //    proj.localId = id;
+        //GameObject obj = projectilePoolList[currentProjectilePoolIndex];
+        //Projectile proj = obj.GetComponent<Projectile>();
+        //id = proj.localId;
+
+        Debug.Log("DICT SIZE REMOTE" + projectileDict.Count);
         Debug.Log("SPAWN REMOTE, ID: " + id);
     }
 
