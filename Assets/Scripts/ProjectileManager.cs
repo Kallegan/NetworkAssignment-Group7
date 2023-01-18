@@ -70,13 +70,13 @@ public class ProjectileManager : AttributesSync
         parameters.Set("spawnPosX", spawnPos.x);
         parameters.Set("spawnPosY", spawnPos.y);
         parameters.Set("spawnPosZ", spawnPos.z);
-        parameters.Set("yawRot", rotation.y); 
+        parameters.Set("yawRot", rotation.eulerAngles.y); 
 
         
         
         Multiplayer.InvokeRemoteProcedure("SpawnProjectileRemote", UserId.All, parameters);
 
-        Debug.Log("SPAWN ROT " + rotation.y);
+        Debug.Log("SPAWN ROT " + rotation.eulerAngles.y);
         Debug.Log("SPAWN LOCAL, ID: " + id);
     }
     
@@ -92,7 +92,7 @@ public class ProjectileManager : AttributesSync
         Vector3 spawnPos = new Vector3(posX, posY, posZ);
         
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
-        projectile.transform.Rotate(Vector3.up, 45);
+        projectile.transform.Rotate(Vector3.up, yaw);
         
         projectileDict.Add(id, projectile);
 
