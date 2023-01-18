@@ -89,9 +89,7 @@ public class ProjectileManager : AttributesSync
 
         Vector3 spawnPos = new Vector3(posX, posY, posZ);
         
-        GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
-        projectile.transform.Rotate(Vector3.up, yaw);
-        
+        GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.Euler(0,yaw,0));
         projectileDict.Add(id, projectile);
 
         //if (projectile.TryGetComponent(out Projectile proj))
