@@ -53,6 +53,7 @@ public class PlayerActions : AttributesSync
             if (deflectable)
             {
                 projectileManager.OnPlayerDeflectProjectile(deflectable.localId);
+                deflectable.OnDeflect(transform.position + transform.forward);
                 //Deflect(deflectable);
                 deflectable = null;
             }

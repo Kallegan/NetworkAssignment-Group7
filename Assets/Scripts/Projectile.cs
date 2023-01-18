@@ -9,9 +9,8 @@ public class Projectile : AttributesSync
     public int playerIndex;
     public int localId;
 
-    public float speed = 50.0f;
-
-    public Vector3 direction;
+    [SynchronizableField] public float speed = 50.0f;
+    [SynchronizableField] public Vector3 direction;
     
     private void Start()
     {
@@ -36,13 +35,14 @@ public class Projectile : AttributesSync
     }
 
     // RPC 
-    public void OnDeflect()
+    public void OnDeflect(Vector3 newDirection)
     {
-        direction *= -1;
+       direction = newDirection;
+       speed *= 1.1f;
         //direction.x = x;
         //direction.y = y;
         //direction.z = z;
-        //speed *= 1.1f;
+        //
     }
     
     [SynchronizableMethod]

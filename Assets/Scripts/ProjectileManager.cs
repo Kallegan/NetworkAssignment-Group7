@@ -16,10 +16,11 @@ public class ProjectileManager : AttributesSync
     [SynchronizableField]
     private byte currentProjectilePoolIndex;
 
-    
+    private List<GameObject> projectilesInRoom;
+
+
     private void Start()
     {
-
         projectileDict = new Dictionary<int, GameObject>();
         projectilePoolList = new List<GameObject>();
 
@@ -75,8 +76,7 @@ public class ProjectileManager : AttributesSync
         
         
         Multiplayer.InvokeRemoteProcedure("SpawnProjectileRemote", UserId.All, parameters);
-
-        Debug.Log("SPAWN ROT " + rotation.eulerAngles.y);
+        
         Debug.Log("SPAWN LOCAL, ID: " + id);
     }
     
@@ -95,13 +95,13 @@ public class ProjectileManager : AttributesSync
         projectile.transform.Rotate(Vector3.up, yaw);
         
         projectileDict.Add(id, projectile);
-
-        //if (projectile.TryGetComponent(out Projectile proj))
-        //    proj.localId = id;
+        if (projectile.TryGetComponent(out Projectile proj))
+            proj.localId = id;
+        
         //GameObject obj = projectilePoolList[currentProjectilePoolIndex];
         //Projectile proj = obj.GetComponent<Projectile>();
         //id = proj.localId;
-        Debug.Log("SPAWN YAW: " + yaw);
+
         Debug.Log("SPAWN REMOTE, ID: " + id);
     }
 
