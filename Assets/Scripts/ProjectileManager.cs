@@ -72,11 +72,11 @@ public class ProjectileManager : AttributesSync
         parameters.Set("spawnPosX", spawnPos.x);
         parameters.Set("spawnPosY", spawnPos.y);
         parameters.Set("spawnPosZ", spawnPos.z);
-        parameters.Set("yawRot", rotation.y);
+        parameters.Set("yawRot", transform.parent.rotation.y);
         
         Multiplayer.InvokeRemoteProcedure("SpawnProjectileRemote", UserId.All, parameters);
 
-        Debug.Log("SPAWN LOCAL, ID2: " + id2);
+        Debug.Log("SPAWN ROT " + rotation.y);
         Debug.Log("SPAWN LOCAL, ID: " + id);
     }
     
