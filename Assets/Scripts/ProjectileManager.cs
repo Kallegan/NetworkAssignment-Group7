@@ -110,7 +110,7 @@ public class ProjectileManager : AttributesSync
         if (projectileDict.TryGetValue(projectileId, out var go))
         {
             var proj = go.GetComponent<Projectile>();
-            proj.OnDeflect();
+            //proj.OnDeflect();
         }
         else
         {
