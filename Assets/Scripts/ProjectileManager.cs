@@ -65,7 +65,7 @@ public class ProjectileManager : AttributesSync
 
         ProcedureParameters parameters = new ProcedureParameters();
 
-        int id2 = 4;
+        float id2 = 4.2f;
 
         parameters.Set("id", id);
         parameters.Set("id2", id2);
@@ -83,7 +83,7 @@ public class ProjectileManager : AttributesSync
         float posX = parameters.Get("spawnPosX", 300);
         float posZ = parameters.Get("spawnPosZ", 0);
         int id = parameters.Get("id", 0);
-        int id2 = parameters.Get("id2", 0);
+        float id2 = parameters.Get("id2", 0);
 
         Vector3 spawnPos = new Vector3(posX, 0, posZ);
 
