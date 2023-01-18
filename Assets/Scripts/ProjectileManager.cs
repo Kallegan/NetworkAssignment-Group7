@@ -23,7 +23,7 @@ public class ProjectileManager : AttributesSync
         projectileDict = new Dictionary<int, GameObject>();
         projectilePoolList = new List<GameObject>();
 
-        
+        /*
         for (int i = 0; i < 100; i++)
         {
             GameObject projectile = Instantiate(projectilePrefab, Vector3.zero, Quaternion.identity);
@@ -33,6 +33,7 @@ public class ProjectileManager : AttributesSync
             projectilePoolList.Add(projectile);
 
         }
+        */
         
 
         Multiplayer.RegisterRemoteProcedure("SpawnProjectileRemote", SpawnProjectileRemote);
@@ -68,7 +69,6 @@ public class ProjectileManager : AttributesSync
         float id2 = 4.2f;
 
         parameters.Set("id", id);
-        parameters.Set("id2", id2);
         parameters.Set("spawnPosX", spawnPos.x);
         parameters.Set("spawnPosY", spawnPos.y);
         parameters.Set("spawnPosZ", spawnPos.z);
@@ -88,14 +88,13 @@ public class ProjectileManager : AttributesSync
         float yaw = parameters.Get("yawRot", 0.0f);
 
         int id = parameters.Get("id", 0);
-        float id2 = parameters.Get("id2", 0.3f);
 
         Vector3 spawnPos = new Vector3(posX, posY, posZ);
 
 
 
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
-        projectile.transform.Rotate(new Vector3(0, yaw, 0));
+        projectile.transform.rotation = Quaternion.Euler(0, yaw, 0);
         projectileDict.Add(id, projectile);
 
         //if (projectile.TryGetComponent(out Projectile proj))
@@ -104,7 +103,6 @@ public class ProjectileManager : AttributesSync
         //Projectile proj = obj.GetComponent<Projectile>();
         //id = proj.localId;
 
-        Debug.Log("SPAWN REMOTE, ID2: " + id2);
         Debug.Log("SPAWN REMOTE, ID: " + id);
     }
 
