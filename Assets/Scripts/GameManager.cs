@@ -82,14 +82,33 @@ public class GameManager : Synchronizable
 #if UNITY_EDITOR
         PrintDebug("GameManager - Joined room: ", _multiplayer.CurrentRoom.Name);
 #endif
-        
-        CheckIfCanStartGame();
     }
-
-    public void CheckIfCanStartGame() 
+    
+    public void OtherJoinedRoom()
     {
-        UpdateUsersInRoomList();
+#if UNITY_EDITOR
+        PrintDebug("GameManager - ", "Other player joined the room.");
+#endif
+    }
+    
+    public void LeftRoom()
+    {
+        ChangeState(State.Idle);
+#if UNITY_EDITOR
+        PrintDebug("GameManager - ", "Left room.");
+#endif
+    }
+    
+    public void OtherLeftRoom()
+    {
+#if UNITY_EDITOR
+        PrintDebug("GameManager - ", "Other player left the room.");
+#endif
+    }
+    
 
+    public void CheckIfEnoughPlayers() 
+    {
 #if UNITY_EDITOR
         var possibleToStart = _users.Count >= _minUsersToStart;
             PrintDebug("GameManager - Check if can start round: ", possibleToStart);
@@ -97,6 +116,8 @@ public class GameManager : Synchronizable
         
         if (_users.Count >= _minUsersToStart)
             ChangeState(State.StartRound);
+        else
+            ChangeState(State.LookingForPlayers);
     }
 
     // CHANGING STATES
@@ -110,6 +131,8 @@ public class GameManager : Synchronizable
     }
     private void FinalizeStateChange(State state)
     {
+        if (_state == state)
+            return;
         _state = state;
 
 #if UNITY_EDITOR
