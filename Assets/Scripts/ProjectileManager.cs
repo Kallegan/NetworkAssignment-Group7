@@ -48,7 +48,7 @@ public class ProjectileManager : AttributesSync
         int id = projectile.GetInstanceID();
         projectileDict.Add(id, projectile);
 
-        if (projectile.TryGetComponent(out Projectile proj))
+        if (projectile.TryGetComponent(out SynchronizedProjectile proj))
             proj.localId = id;
 
         //Get object from object pool and get the right data from it
@@ -95,7 +95,7 @@ public class ProjectileManager : AttributesSync
         projectile.transform.Rotate(Vector3.up, yaw);
         
         projectileDict.Add(id, projectile);
-        if (projectile.TryGetComponent(out Projectile proj))
+        if (projectile.TryGetComponent(out SynchronizedProjectile proj))
             proj.localId = id;
         
         //GameObject obj = projectilePoolList[currentProjectilePoolIndex];
@@ -109,7 +109,7 @@ public class ProjectileManager : AttributesSync
     {
         if (projectileDict.TryGetValue(projectileId, out var go))
         {
-            var proj = go.GetComponent<Projectile>();
+            var proj = go.GetComponent<SynchronizedProjectile>();
             //proj.OnDeflect();
         }
         else
@@ -128,7 +128,7 @@ public class ProjectileManager : AttributesSync
         
         if (projectileDict.TryGetValue(projectileId, out var go))
         {
-            var proj = go.GetComponent<Projectile>();
+            var proj = go.GetComponent<SynchronizedProjectile>();
             //proj.OnDeflect();
         }
         else

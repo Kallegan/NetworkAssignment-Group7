@@ -24,7 +24,7 @@ public class PlayerActions : AttributesSync
     
     private float curDeflectCoolDown;
     private bool canDeflect = true;
-    public Projectile deflectable = null;
+    public SynchronizedProjectile deflectable = null;
     [SerializeField] private BoxCollider deflectArea;
 
     private void Awake()
@@ -52,8 +52,9 @@ public class PlayerActions : AttributesSync
         {
             if (deflectable)
             {
-                projectileManager.OnPlayerDeflectProjectile(deflectable.localId);
-                deflectable.OnDeflect(transform.position + transform.forward);
+                //projectileManager.OnPlayerDeflectProjectile(deflectable.localId);
+                Vector3 direction = transform.position + transform.forward;
+                deflectable.OnDeflect(direction.normalized);
                 //Deflect(deflectable);
                 deflectable = null;
             }
@@ -86,7 +87,7 @@ public class PlayerActions : AttributesSync
             BroadcastRemoteMethod("Shoot");
     }
     
-    
+    /*
     [SynchronizableMethod]
     private void Shoot()
     {
@@ -107,4 +108,5 @@ public class PlayerActions : AttributesSync
         proj.BroadcastRemoteMethod("OnDeflect", x, y, z);
         //proj.BroadcastRemoteMethod("Destroy");
     }
+    */
 }

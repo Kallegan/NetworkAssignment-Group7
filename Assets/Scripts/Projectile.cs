@@ -1,9 +1,58 @@
+using System;
 using Alteruna;
 using Alteruna.Trinity;
 using UnityEngine;
 using Avatar = UnityEngine.Avatar;
 using Vector3 = UnityEngine.Vector3;
 
+public class SynchronizedProjectile : Synchronizable
+{
+    
+    public int localId;
+    
+    private Vector3 _oldDirection;
+    public Vector3 direction;
+    private float speed = 5.0f;
+
+    private void Start()
+    {
+        direction = transform.forward;
+    }
+
+    private void Update()
+    {
+        if (_oldDirection != direction)
+        {
+            Commit();
+            _oldDirection = direction;
+        }
+        
+        // Movement
+        transform.position += direction * (20 * Time.deltaTime);
+
+        SyncUpdate();
+    }
+    
+    public override void AssembleData(Writer writer, byte LOD = 100)
+    {
+        writer.Write(direction);
+    }
+
+    public override void DisassembleData(Reader reader, byte LOD = 100)
+    {
+        direction = reader.ReadVector3();
+        _oldDirection = direction;
+    }
+    
+    public void OnDeflect(Vector3 newDirection)
+    {
+        direction = newDirection;
+        //speed *= 1.1f;
+    }
+}
+
+
+/*
 public class Projectile : AttributesSync
 {
     public int playerIndex;
@@ -43,12 +92,8 @@ public class Projectile : AttributesSync
         dirX = newDirection.x;
         dirY = newDirection.y;
         dirZ = newDirection.z;
-
-        direction.x = dirX;
-        direction.y = dirY;
-        direction.z = dirZ;
-        
-       speed *= 1.1f;
+        direction = new Vector3(dirX, dirY, dirZ);
+        speed *= 1.1f;
     }
     
     [SynchronizableMethod]
@@ -62,3 +107,4 @@ public class Projectile : AttributesSync
         Destroy(gameObject);
     }
 }
+*/

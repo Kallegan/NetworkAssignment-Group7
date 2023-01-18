@@ -8,11 +8,11 @@ public class DeflectArea : MonoBehaviour
     {
         Debug.Log("Enter: " +other);
         
-        if (!other.gameObject.TryGetComponent(out Projectile proj))
+        if (!other.gameObject.TryGetComponent(out SynchronizedProjectile proj))
             return;
 
         // if (!player.deflectable)
-        Debug.Log("PLAYER CUR DEFLECTABLE ID:" + proj.localId);
+        //Debug.Log("PLAYER CUR DEFLECTABLE ID:" + proj.localId);
 
             player.deflectable = proj;
     }
