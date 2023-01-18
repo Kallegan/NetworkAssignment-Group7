@@ -70,7 +70,9 @@ public class ProjectileManager : AttributesSync
         parameters.Set("id", id);
         parameters.Set("id2", id2);
         parameters.Set("spawnPosX", spawnPos.x);
+        parameters.Set("spawnPosY", spawnPos.y);
         parameters.Set("spawnPosZ", spawnPos.z);
+        parameters.Set("yawRot", rotation.y);
         
         Multiplayer.InvokeRemoteProcedure("SpawnProjectileRemote", UserId.All, parameters);
 
@@ -80,14 +82,20 @@ public class ProjectileManager : AttributesSync
     
     void SpawnProjectileRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
-        float posX = parameters.Get("spawnPosX", 0.3f);
-        float posZ = parameters.Get("spawnPosZ", 0.3f);
+        float posX = parameters.Get("spawnPosX", 0.0f); //The default value HAS to be specifically a float to pass a float
+        float posY = parameters.Get("spawnPosY", 0.0f);
+        float posZ = parameters.Get("spawnPosZ", 0.0f);
+        float yaw = parameters.Get("yawRot", 0.0f);
+
         int id = parameters.Get("id", 0);
         float id2 = parameters.Get("id2", 0.3f);
 
-        Vector3 spawnPos = new Vector3(posX, 0, posZ);
+        Vector3 spawnPos = new Vector3(posX, posY, posZ);
+
+
 
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+
         projectileDict.Add(id, projectile);
 
         //if (projectile.TryGetComponent(out Projectile proj))
