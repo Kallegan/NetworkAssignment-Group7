@@ -148,7 +148,7 @@ public class GameManager : Synchronizable
 #if UNITY_EDITOR
     private void PrintDebug<T> (string text, T debugData)
     {
-        if (_showDebugLogs);
+        if (_showDebugLogs)
             Debug.Log("<color=olive>" + text + "</color><color=teal>" + debugData.ToString() + "</color>");
     }
 #endif
