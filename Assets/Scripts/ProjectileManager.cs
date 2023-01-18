@@ -14,7 +14,8 @@ public class ProjectileManager : AttributesSync
     
     private void Start()
     {
-        projectileDict = new Dictionary<int, GameObject>();
+        if (avatar.IsMe)
+            projectileDict = new Dictionary<int, GameObject>();
         
         Multiplayer.RegisterRemoteProcedure("SpawnProjectileRemote", SpawnProjectileRemote);
         Multiplayer.RegisterRemoteProcedure("OnPlayerDeflectProjectileRemote", OnPlayerDeflectProjectileRemote);
