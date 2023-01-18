@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Alteruna;
@@ -19,9 +20,9 @@ public class ProjectileManager : AttributesSync
         Multiplayer.RegisterRemoteProcedure("OnPlayerDeflectProjectileRemote", OnPlayerDeflectProjectileRemote);
     }
     
-    public void SpawnProjectileLocal(Vector3 spawnPos)
+    public void SpawnProjectileLocal(Vector3 spawnPos, Quaternion rotation)
     {
-        GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+        GameObject projectile = Instantiate(projectilePrefab, spawnPos, rotation);
         int id = projectile.GetInstanceID();
         projectileDict.Add(id, projectile);
         

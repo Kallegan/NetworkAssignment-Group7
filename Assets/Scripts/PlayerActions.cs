@@ -45,7 +45,7 @@ public class PlayerActions : AttributesSync
 
         if (Input.GetMouseButtonDown(0))
         {
-            projectileManager.SpawnProjectileLocal(transform.position + transform.forward);
+            projectileManager.SpawnProjectileLocal(transform.position + transform.forward, transform.rotation);
         }
             //OnAction();
         if (Input.GetMouseButton(1))
