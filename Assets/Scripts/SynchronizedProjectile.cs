@@ -38,14 +38,14 @@ public class SynchronizedProjectile : Synchronizable
 
     public override void DisassembleData(Reader reader, byte LOD = 100)
     {
-        Debug.Log("DissasembleData");
         direction = reader.ReadVector3();
         _oldDirection = direction;
+        Debug.Log("DissasembledData" + direction);
     }
     
     public void OnDeflect(Vector3 newDirection)
     {
-        direction = newDirection;
+        direction = Vector3.up;
     }
 }
 

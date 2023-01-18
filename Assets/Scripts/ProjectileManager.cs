@@ -18,6 +18,12 @@ public class ProjectileManager : AttributesSync
 
     private List<GameObject> projectilesInRoom;
 
+    private Spawner spawner;
+
+    private void Awake()
+    {
+        spawner = FindObjectOfType<Spawner>();
+    }
 
     private void Start()
     {
@@ -44,7 +50,8 @@ public class ProjectileManager : AttributesSync
     
     public void SpawnProjectileLocal(Vector3 spawnPos, Quaternion rotation)
     {
-        GameObject projectile = Instantiate(projectilePrefab, spawnPos, rotation);
+        //GameObject projectile = Instantiate(projectilePrefab, spawnPos, rotation);
+        GameObject projectile = spawner.Spawn(0, spawnPos, rotation);
         int id = projectile.GetInstanceID();
         projectileDict.Add(id, projectile);
 
@@ -75,9 +82,9 @@ public class ProjectileManager : AttributesSync
 
         
         
-        Multiplayer.InvokeRemoteProcedure("SpawnProjectileRemote", UserId.All, parameters);
+        //Multiplayer.InvokeRemoteProcedure("SpawnProjectileRemote", UserId.All, parameters);
         
-        Debug.Log("SPAWN LOCAL, ID: " + id);
+        //Debug.Log("SPAWN LOCAL, ID: " + id);
     }
     
     void SpawnProjectileRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
@@ -92,6 +99,7 @@ public class ProjectileManager : AttributesSync
         Vector3 spawnPos = new Vector3(posX, posY, posZ);
         
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+        //GameObject projectile = spawner.Spawn(0, spawnPos, rotation);
         projectile.transform.Rotate(Vector3.up, yaw);
         
         projectileDict.Add(id, projectile);
@@ -102,7 +110,7 @@ public class ProjectileManager : AttributesSync
         //Projectile proj = obj.GetComponent<Projectile>();
         //id = proj.localId;
 
-        Debug.Log("SPAWN REMOTE, ID: " + id);
+        //Debug.Log("SPAWN REMOTE, ID: " + id);
     }
 
     public void OnPlayerDeflectProjectile(int projectileId)
@@ -114,7 +122,7 @@ public class ProjectileManager : AttributesSync
         }
         else
         {
-            Debug.Log("LOCAL, PROJECTILE NOT FOUND IN DICT");
+            //Debug.Log("LOCAL, PROJECTILE NOT FOUND IN DICT");
         }
         
         ProcedureParameters parameters = new ProcedureParameters();
@@ -133,7 +141,7 @@ public class ProjectileManager : AttributesSync
         }
         else
         {
-            Debug.Log("REMOTE, PROJECTILE NOT FOUND IN DICT");
+            //Debug.Log("REMOTE, PROJECTILE NOT FOUND IN DICT");
         }
     }
 }

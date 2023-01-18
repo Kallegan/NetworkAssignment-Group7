@@ -55,7 +55,7 @@ public class HealthComponent : AttributesSync
     [SynchronizableMethod]
     void DebugHealth()
     {
-        Debug.Log(Health);
+        //Debug.Log(Health);
     }
 
     void TakeDamage(float damageAmount)
