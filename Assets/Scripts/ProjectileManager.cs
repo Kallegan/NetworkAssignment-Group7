@@ -102,7 +102,7 @@ public class ProjectileManager : AttributesSync
         //GameObject obj = projectilePoolList[currentProjectilePoolIndex];
         //Projectile proj = obj.GetComponent<Projectile>();
         //id = proj.localId;
-
+        Debug.Log("SPAWN YAW: " + yaw);
         Debug.Log("SPAWN REMOTE, ID: " + id);
     }
 
