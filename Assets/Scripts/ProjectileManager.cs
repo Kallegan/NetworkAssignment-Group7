@@ -62,16 +62,19 @@ public class ProjectileManager : AttributesSync
         //Go to next index in pool
         //currentProjectilePoolIndex++;
 
+
         ProcedureParameters parameters = new ProcedureParameters();
-        
+
+        int id2 = 4;
+
         parameters.Set("id", id);
+        parameters.Set("id2", id2);
         parameters.Set("spawnPosX", spawnPos.x);
         parameters.Set("spawnPosZ", spawnPos.z);
         
         Multiplayer.InvokeRemoteProcedure("SpawnProjectileRemote", UserId.All, parameters);
 
-
-        Debug.Log("DICT SIZE LOCAL" + projectileDict.Count);
+        Debug.Log("SPAWN LOCAL, ID2: " + id2);
         Debug.Log("SPAWN LOCAL, ID: " + id);
     }
     
@@ -80,6 +83,7 @@ public class ProjectileManager : AttributesSync
         float posX = parameters.Get("spawnPosX", 300);
         float posZ = parameters.Get("spawnPosZ", 0);
         int id = parameters.Get("id", 0);
+        int id2 = parameters.Get("id2", 0);
 
         Vector3 spawnPos = new Vector3(posX, 0, posZ);
 
@@ -92,7 +96,7 @@ public class ProjectileManager : AttributesSync
         //Projectile proj = obj.GetComponent<Projectile>();
         //id = proj.localId;
 
-        Debug.Log("DICT SIZE REMOTE" + projectileDict.Count);
+        Debug.Log("SPAWN REMOTE, ID2: " + id2);
         Debug.Log("SPAWN REMOTE, ID: " + id);
     }
 
