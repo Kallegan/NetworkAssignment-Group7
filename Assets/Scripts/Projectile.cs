@@ -10,7 +10,10 @@ public class Projectile : AttributesSync
     public int localId;
 
     [SynchronizableField] public float speed = 50.0f;
-    [SynchronizableField] public Vector3 direction;
+    [SynchronizableField] public float dirX = 0.0f;
+    [SynchronizableField] public float dirY = 0.0f;
+    [SynchronizableField] public float dirZ = 0.0f;
+    public Vector3 direction;
     
     private void Start()
     {
@@ -37,12 +40,15 @@ public class Projectile : AttributesSync
     // RPC 
     public void OnDeflect(Vector3 newDirection)
     {
-       direction = newDirection;
+        dirX = newDirection.x;
+        dirY = newDirection.y;
+        dirZ = newDirection.z;
+
+        direction.x = dirX;
+        direction.y = dirY;
+        direction.z = dirZ;
+        
        speed *= 1.1f;
-        //direction.x = x;
-        //direction.y = y;
-        //direction.z = z;
-        //
     }
     
     [SynchronizableMethod]
