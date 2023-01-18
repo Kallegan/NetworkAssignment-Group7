@@ -95,7 +95,7 @@ public class ProjectileManager : AttributesSync
 
 
         GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
-
+        projectile.transform.eulerAngles = new Vector3(0, yaw, 0);
         projectileDict.Add(id, projectile);
 
         //if (projectile.TryGetComponent(out Projectile proj))
