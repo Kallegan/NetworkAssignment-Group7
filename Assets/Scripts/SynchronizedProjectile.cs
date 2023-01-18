@@ -18,7 +18,7 @@ public class SynchronizedProjectile : Synchronizable
     {
         direction = transform.forward;
     }
-
+    
     private void Update()
     {
         if (_oldDirection != direction)
@@ -26,20 +26,19 @@ public class SynchronizedProjectile : Synchronizable
             Commit();
             _oldDirection = direction;
         }
-        
-        // Movement
         transform.position += direction * (20 * Time.deltaTime);
-
         SyncUpdate();
     }
     
     public override void AssembleData(Writer writer, byte LOD = 100)
     {
+        Debug.Log("AssembledData");
         writer.Write(direction);
     }
 
     public override void DisassembleData(Reader reader, byte LOD = 100)
     {
+        Debug.Log("DissasembleData");
         direction = reader.ReadVector3();
         _oldDirection = direction;
     }
@@ -47,7 +46,6 @@ public class SynchronizedProjectile : Synchronizable
     public void OnDeflect(Vector3 newDirection)
     {
         direction = newDirection;
-        //speed *= 1.1f;
     }
 }
 
