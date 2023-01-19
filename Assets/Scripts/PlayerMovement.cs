@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         
         Vector3 moveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         if (canMove)
-            controller.Move(moveDir.normalized * (Time.deltaTime * moveSpeed));
+            controller.Move(moveDir * Time.deltaTime * moveSpeed);
         
         LookAtMouseWorldPos();
     }
