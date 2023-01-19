@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerActions : AttributesSync
 {
+    // TODO: add charge up on projectiles
+    
     [SerializeField] private Alteruna.Avatar avatar;
     [SerializeField]private Spawner spawner;
     
@@ -14,17 +16,13 @@ public class PlayerActions : AttributesSync
     
     
     // Deflect
-    [Range(0, 10)]
-    [SerializeField] private float deflectRange = 2f;
-    [Range(0, 5)]
-    [SerializeField] private float deflectRadius = 1f;
-    [SerializeField] private float deflectCoolDown = 0.5f;
+    [SerializeField] private BoxCollider deflectArea;
+    public SynchronizedProjectile curDeflectable = null;
     
+    [SerializeField] private float deflectCoolDown = 0.5f;
     private float curDeflectCoolDown;
     private bool canDeflect = true;
-    public SynchronizedProjectile deflectable = null;
-    [SerializeField] private BoxCollider deflectArea;
-
+    
     private void Awake()
     {
         spawner = FindObjectOfType<Spawner>();
@@ -46,14 +44,8 @@ public class PlayerActions : AttributesSync
        
         if (Input.GetMouseButton(1))
         {
-            if (deflectable)
-            {
-                //projectileManager.OnPlayerDeflectProjectile(deflectable.localId);
-                Vector3 direction = transform.parent.forward;
-                deflectable.OnDeflect(direction.normalized);
-                //Deflect(deflectable);
-                deflectable = null;
-            }
+            if (TryDeflect())
+                OnDeflect();
         }
         
         if (!canAttack)
@@ -76,14 +68,30 @@ public class PlayerActions : AttributesSync
             }
         }
     }
-    
+
+    bool TryDeflect()
+    {
+        if (canDeflect && curDeflectable)
+            return true;
+        
+        canDeflect = false;
+        return false;
+    }
+
+    void OnDeflect()
+    {
+        Vector3 direction = transform.parent.forward;
+        curDeflectable.OnDeflect(direction.normalized);
+        curDeflectable = null;
+    }
     private void Shoot()
     {
-        GameObject proj = spawner.Spawn(0, transform.position + transform.forward, transform.rotation);
+        GameObject proj = spawner.Spawn(0, transform.position + transform.forward * 2f, transform.rotation);
         if (proj.TryGetComponent(out SynchronizedProjectile p))
         {
             p.playerIndex = avatar.Possessor.Index;
             p.spawner = spawner;
         }
+        canAttack = false;
     }
 }

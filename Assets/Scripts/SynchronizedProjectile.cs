@@ -50,14 +50,14 @@ public class SynchronizedProjectile : Synchronizable
         direction = newDirection;
         speed *= 1.1f;
     }
+
+    private void Destroy()
+    {
+        spawner.Despawn(gameObject);
+    }
     
     private void OnCollisionEnter(Collision collision)
     {
-        if (!collision.gameObject.CompareTag("Player"))
-            return;
-        
-        // TODO: Make sure the player who spawned the object, is the one despawning the object
-        spawner.Despawn(gameObject);
+        Destroy();
     }
 }
-

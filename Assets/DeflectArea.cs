@@ -14,12 +14,12 @@ public class DeflectArea : MonoBehaviour
         // if (!player.deflectable)
         //Debug.Log("PLAYER CUR DEFLECTABLE ID:" + proj.localId);
 
-            player.deflectable = proj;
+            player.curDeflectable = proj;
     }
 
     private void OnTriggerExit(Collider other)
     {
         Debug.Log("Exit: " +other);
-        player.deflectable = null;
+        player.curDeflectable = null;
     }
 }
