@@ -222,11 +222,9 @@ MonoBehaviour:
   avatar: {fileID: 6030635960649211570}
   spawner: {fileID: 7973682003673400592, guid: bdcf3332f5c38474ea67b18f2853ea97, type: 3}
   attackCoolDown: 0.5
-  deflectRange: 2
-  deflectRadius: 1
-  deflectCoolDown: 0.5
-  deflectable: {fileID: 0}
   deflectArea: {fileID: 3263929097021584910}
+  curDeflectable: {fileID: 0}
+  deflectCoolDown: 0.5
 --- !u!1 &4706027095896428391
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,7 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatar: {fileID: 6030635960649211570}
   controller: {fileID: 812899015305600708}
-  speed: 10
+  moveSpeed: 10
 --- !u!114 &6030635960649211570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,8 +592,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7.88, y: 3.99, z: 9}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 6.23, y: 2.67, z: 5.53}
+  m_Center: {x: 0, y: 0, z: 2.54}
 --- !u!114 &8536820268506545127
 MonoBehaviour:
   m_ObjectHideFlags: 0

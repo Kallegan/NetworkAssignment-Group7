@@ -1,6 +1,4 @@
 using Alteruna;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthComponent : AttributesSync
@@ -24,7 +22,6 @@ public class HealthComponent : AttributesSync
         if (!avatar.IsMe)
             return;
         Health = MaxHealth;
-        
         
     }
 
