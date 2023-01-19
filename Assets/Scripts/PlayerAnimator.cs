@@ -31,13 +31,17 @@ public class PlayerAnimator : MonoBehaviour
         velocityDelta = positionDelta.magnitude;
         lastPosition = transform.position;
 
-        float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing);
-        anim.SetFloat("VelocityMagnitude", SmoothedVelocity);
-        Debug.Log("Smoothed Velocity" + SmoothedVelocity);
+        
 
         prevDelta = velocityDelta;
         
 
        
+    }
+
+    private void Update()
+    {
+        float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing);
+        anim.SetFloat("VelocityMagnitude", SmoothedVelocity);
     }
 }
