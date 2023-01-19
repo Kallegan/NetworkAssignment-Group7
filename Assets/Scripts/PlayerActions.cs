@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerActions : AttributesSync
 {
-    [SerializeField] private GameObject projectile;
     [SerializeField] private Alteruna.Avatar avatar;
-
-    private ProjectileManager projectileManager;
+    [SerializeField]private Spawner spawner;
     
     // Attack
     [SerializeField] private float attackCoolDown = 0.5f;
@@ -29,7 +27,7 @@ public class PlayerActions : AttributesSync
 
     private void Awake()
     {
-        projectileManager = FindObjectOfType<ProjectileManager>();
+        spawner = FindObjectOfType<Spawner>();
     }
 
     private void Start()
@@ -44,21 +42,18 @@ public class PlayerActions : AttributesSync
             return;
 
         if (Input.GetMouseButtonDown(0))
-        {
-            projectileManager.SpawnProjectileLocal(transform.position + transform.forward, transform.rotation);
-        }
-            //OnAction();
+            Shoot();
+       
         if (Input.GetMouseButton(1))
         {
             if (deflectable)
             {
                 //projectileManager.OnPlayerDeflectProjectile(deflectable.localId);
-                Vector3 direction = transform.position + transform.forward;
+                Vector3 direction = transform.parent.forward;
                 deflectable.OnDeflect(direction.normalized);
                 //Deflect(deflectable);
                 deflectable = null;
             }
-                
         }
         
         if (!canAttack)
@@ -81,32 +76,14 @@ public class PlayerActions : AttributesSync
             }
         }
     }
-    private void OnAction()
-    {
-        if (canAttack)
-            BroadcastRemoteMethod("Shoot");
-    }
     
-    /*
-    [SynchronizableMethod]
     private void Shoot()
     {
-        GameObject proj = Instantiate(projectile, transform.position + transform.forward, transform.rotation);
-        if (proj.TryGetComponent(out Projectile p))
+        GameObject proj = spawner.Spawn(0, transform.position + transform.forward, transform.rotation);
+        if (proj.TryGetComponent(out SynchronizedProjectile p))
+        {
             p.playerIndex = avatar.Possessor.Index;
+            p.spawner = spawner;
+        }
     }
-    
-    private void Deflect(Projectile proj)
-    {
-        Debug.Log("DEFLECTED LOCAL, ID:" + proj.localId);
-        
-        // debug when sending and re.. 
-        float x = transform.forward.x;
-        float y = transform.forward.y;
-        float z = transform.forward.z;
-        
-        proj.BroadcastRemoteMethod("OnDeflect", x, y, z);
-        //proj.BroadcastRemoteMethod("Destroy");
-    }
-    */
 }

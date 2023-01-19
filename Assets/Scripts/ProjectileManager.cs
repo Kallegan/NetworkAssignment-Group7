@@ -5,6 +5,8 @@ using Alteruna;
 using Alteruna.Trinity;
 using UnityEngine;
 
+// vill vi ha en ProjetileManager
+
 public class ProjectileManager : AttributesSync
 {
     [SerializeField ]private Alteruna.Avatar avatar;
@@ -46,7 +48,6 @@ public class ProjectileManager : AttributesSync
         Multiplayer.RegisterRemoteProcedure("SpawnProjectileRemote", SpawnProjectileRemote);
         Multiplayer.RegisterRemoteProcedure("OnPlayerDeflectProjectileRemote", OnPlayerDeflectProjectileRemote);
     }
-
     
     public void SpawnProjectileLocal(Vector3 spawnPos, Quaternion rotation)
     {
@@ -56,7 +57,9 @@ public class ProjectileManager : AttributesSync
         projectileDict.Add(id, projectile);
 
         if (projectile.TryGetComponent(out SynchronizedProjectile proj))
-            proj.localId = id;
+        {
+            //proj.localId = id;
+        }
 
         //Get object from object pool and get the right data from it
         //GameObject obj = projectilePoolList[currentProjectilePoolIndex];
@@ -104,8 +107,10 @@ public class ProjectileManager : AttributesSync
         
         projectileDict.Add(id, projectile);
         if (projectile.TryGetComponent(out SynchronizedProjectile proj))
-            proj.localId = id;
-        
+        { 
+            //proj.localId = id;
+        }
+
         //GameObject obj = projectilePoolList[currentProjectilePoolIndex];
         //Projectile proj = obj.GetComponent<Projectile>();
         //id = proj.localId;
