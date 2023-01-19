@@ -528,8 +528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatar: {fileID: 6030635960649211570}
   controller: {fileID: 812899015305600708}
-  speed: 10
-  stunTime: 0.75
+  moveSpeed: 10
 --- !u!114 &6030635960649211570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,7 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656a7519a6fbd874b95f520ebde788bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSmoothing: 0.4
+  MovementSmoothing: 10
   anim: {fileID: 7112471908007226232}
 --- !u!1 &7774178871493564330
 GameObject:

@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main;
+        
     }
     
     private void Update()
