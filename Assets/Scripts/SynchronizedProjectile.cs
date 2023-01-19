@@ -47,7 +47,7 @@ public class SynchronizedProjectile : Synchronizable
     
     public void OnDeflect(Vector3 newDirection)
     {
-        direction = Vector3.up;
+        direction = newDirection;
         speed *= 1.1f;
     }
     

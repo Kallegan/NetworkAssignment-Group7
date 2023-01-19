@@ -49,8 +49,8 @@ public class PlayerActions : AttributesSync
             if (deflectable)
             {
                 //projectileManager.OnPlayerDeflectProjectile(deflectable.localId);
-                Vector3 direction = transform.position + transform.forward;
-                deflectable.OnDeflect(direction);
+                Vector3 direction = transform.parent.forward;
+                deflectable.OnDeflect(direction.normalized);
                 //Deflect(deflectable);
                 deflectable = null;
             }
