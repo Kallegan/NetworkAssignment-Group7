@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -671,19 +671,7 @@ MonoBehaviour:
         m_CallState: 2
   RoomListUpdated:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 492439495}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: CheckIfEnoughPlayers
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OtherUserJoined:
     m_PersistentCalls:
       m_Calls:
@@ -736,19 +724,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   DevClientIndex: 0
-  c: DevClient0
-  d: 0
-  e: 0
+  e: 
   f: 0
   g: 0
   h: 0
   i: 0
-  j: 
+  j: 0
   k: 0
-  l: 0
+  l: 
   m: 20010
   n: 0
-  o: 
+  o: 20000
+  p: 0
+  q: 
 --- !u!1 &2082267811
 GameObject:
   m_ObjectHideFlags: 0
