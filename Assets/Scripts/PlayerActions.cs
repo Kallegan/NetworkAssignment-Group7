@@ -40,7 +40,8 @@ public class PlayerActions : AttributesSync
             return;
 
         if (Input.GetMouseButtonDown(0))
-            Shoot();
+            if (canAttack)
+                Shoot();
        
         if (Input.GetMouseButton(1))
         {
