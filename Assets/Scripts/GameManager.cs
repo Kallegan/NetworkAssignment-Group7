@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
 
-public class GameManager : Synchronizable
+public class GameManager : MonoBehaviour
 {
     [SerializeField] private bool _showDebugLogs = true;
     [SerializeField] private Multiplayer _multiplayer;
@@ -28,7 +28,7 @@ public class GameManager : Synchronizable
     }
     
     private List<User> _users;
-    
+
     private State _state;
     public enum State
     {
@@ -40,30 +40,30 @@ public class GameManager : Synchronizable
         Restart
     }
 
+    private GameState _currentState;
+    private readonly IdleGameState _idleGameState = new IdleGameState();
+    private readonly LookingForPlayerGameState _lookingForPlayerGameState = new LookingForPlayerGameState();
+    private readonly PrepareRoundGameState _prepareRoundGameState = new PrepareRoundGameState();
+    private readonly StartRoundGameState _startRoundGameState = new StartRoundGameState();
+    private FinishRoundGameState _finishRoundGameState = new FinishRoundGameState();
+
     private void Awake()
     {
         _instance = this;
         ChangeState(State.Idle);
+        
     }
 
     void Start()
     {
+        
     }
     
     void Update()
     {
-        if (_state == State.Idle)
-            return;
-    }
-    
-    public override void AssembleData(Writer writer, byte LOD = 100)
-    {
+        _currentState.Update();
     }
 
-    public override void DisassembleData(Reader reader, byte LOD = 100)
-    {
-    }
-    
     public void UpdateUsersInRoomList()
     {
         _users = _multiplayer.GetUsers();
@@ -109,6 +109,8 @@ public class GameManager : Synchronizable
 
     public void CheckIfEnoughPlayers()
     {
+        if (!_multiplayer.InRoom)
+            return;
         UpdateUsersInRoomList();
 #if UNITY_EDITOR
         var possibleToStart = _users.Count >= _minUsersToStart;
@@ -116,7 +118,7 @@ public class GameManager : Synchronizable
 #endif
         
         if (_users.Count >= _minUsersToStart)
-            ChangeState(State.StartRound);
+            ChangeState(State.PrepareRound);
         else
             ChangeState(State.LookingForPlayers);
     }
@@ -132,9 +134,18 @@ public class GameManager : Synchronizable
     }
     private void FinalizeStateChange(State state)
     {
-        if (_state == state)
-            return;
         _state = state;
+
+        _currentState = _state switch
+        {
+            State.Idle => _idleGameState,
+            State.LookingForPlayers => _lookingForPlayerGameState,
+            State.PrepareRound => _prepareRoundGameState,
+            State.StartRound => _startRoundGameState,
+            State.FinishRound => _finishRoundGameState,
+            State.Restart => _prepareRoundGameState,
+            _ => _currentState
+        };
 
 #if UNITY_EDITOR
         PrintDebug("GameManager - State Changed to: ", _state);
