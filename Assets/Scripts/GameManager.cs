@@ -82,7 +82,6 @@ public class GameManager : Synchronizable
 #if UNITY_EDITOR
         PrintDebug("GameManager - Joined room: ", _multiplayer.CurrentRoom.Name);
 #endif
-        CheckIfEnoughPlayers();
     }
     
     public void OtherJoinedRoom()
@@ -90,7 +89,6 @@ public class GameManager : Synchronizable
 #if UNITY_EDITOR
         PrintDebug("GameManager - ", "Other player joined the room.");
 #endif
-        CheckIfEnoughPlayers();
     }
     
     public void LeftRoom()
@@ -106,7 +104,6 @@ public class GameManager : Synchronizable
 #if UNITY_EDITOR
         PrintDebug("GameManager - ", "Other player left the room.");
 #endif
-        CheckIfEnoughPlayers();
     }
     
 
