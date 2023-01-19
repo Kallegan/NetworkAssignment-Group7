@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     private readonly LookingForPlayerGameState _lookingForPlayerGameState = new LookingForPlayerGameState();
     private readonly PrepareRoundGameState _prepareRoundGameState = new PrepareRoundGameState();
     private readonly StartRoundGameState _startRoundGameState = new StartRoundGameState();
-    private FinishRoundGameState _finishRoundGameState = new FinishRoundGameState();
+    private readonly FinishRoundGameState _finishRoundGameState = new FinishRoundGameState();
 
     private void Awake()
     {
@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
             return;
         }
         _instance = this;
+
+        _currentState = _idleGameState;
         ChangeState(State.Idle);
         
     }
@@ -64,7 +66,7 @@ public class GameManager : MonoBehaviour
         
     }
     
-    void Update()
+    void FixedUpdate()
     {
         _currentState.Update();
     }
@@ -131,14 +133,17 @@ public class GameManager : MonoBehaviour
     // CHANGING STATES
     public void ChangeState(byte stateIndex)
     {
-        FinalizeStateChange((State)stateIndex);
+        AssignState((State)stateIndex);
     }
     public void ChangeState(State state)
     {
-        FinalizeStateChange(state);
+        AssignState(state);
     }
-    private void FinalizeStateChange(State state)
+    private void AssignState(State state)
     {
+        if (_state == state)
+            return;
+        
         _state = state;
 
         _currentState = _state switch
