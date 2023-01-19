@@ -51,13 +51,13 @@ public class SynchronizedProjectile : Synchronizable
         speed *= 1.1f;
     }
 
-    private void Destroy()
+    private void DestroySelf()
     {
         spawner.Despawn(gameObject);
     }
     
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy();
+        DestroySelf();
     }
 }
