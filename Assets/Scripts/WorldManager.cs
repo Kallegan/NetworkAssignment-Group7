@@ -57,7 +57,6 @@ public class WorldManager : MonoBehaviour
             Destroy(other.gameObject);
         }
         
-        Destroy(other.gameObject);
     }
 }
 
