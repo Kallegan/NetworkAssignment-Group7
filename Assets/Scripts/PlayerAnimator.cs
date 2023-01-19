@@ -25,7 +25,7 @@ public class PlayerAnimator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Vector3 positionDelta = transform.position - lastPosition;
         velocityDelta = positionDelta.magnitude;
