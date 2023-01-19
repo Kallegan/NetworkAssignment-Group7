@@ -1,12 +1,14 @@
 using Alteruna;
 using UnityEngine;
+using Avatar = Alteruna.Avatar;
 using Vector3 = UnityEngine.Vector3;
 
 public class SynchronizedProjectile : Synchronizable
 {
     public Spawner spawner;
-    public int playerIndex;
-
+    public Avatar avatar;
+    public int ownerIndex;
+    
     private Vector3 direction;
     private Vector3 _oldDirection;
     
@@ -53,7 +55,8 @@ public class SynchronizedProjectile : Synchronizable
 
     private void DestroySelf()
     {
-        spawner.Despawn(gameObject);
+        if (avatar.Possessor.Index == ownerIndex)
+            spawner.Despawn(gameObject);
     }
     
     private void OnCollisionEnter(Collision collision)
