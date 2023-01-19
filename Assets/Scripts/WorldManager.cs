@@ -38,7 +38,7 @@ public class WorldManager : MonoBehaviour
                 {
                     tempGameObject.transform.position = new Vector3(x * xOffset + xOffset / 2, 0, z * zOffset);
                 }
-                
+
                 SetHexInfo(tempGameObject, x, z);
             }
         }
@@ -48,6 +48,15 @@ public class WorldManager : MonoBehaviour
     {
         tempGO.transform.parent = transform;
         tempGO.name = "Hex_" + x + "," + z;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Hex"))
+        {
+            Destroy(other.gameObject);
+        }
+        
     }
 }
 
