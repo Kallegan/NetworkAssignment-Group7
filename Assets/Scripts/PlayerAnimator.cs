@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Alteruna.Trinity;
+using Alteruna;
 
 public class PlayerAnimator : MonoBehaviour
 {
-    [SerializeField, Range(0, 10)] float MovementSmoothing;
+    [SerializeField] float MovementSmoothing;
 
     [SerializeField] private Animator anim;
     private CharacterController charController;
 
-    private float SmoothVelocityMagnitude;
+    private float smoothVelocityMagnitude;
+
+    private Vector3 lastPosition;
+    private float velocityDelta;
+    private float prevDelta;
+    private float smoothVelocityDelta;
 
     // Start is called before the first frame update
     void Awake()
@@ -20,9 +27,17 @@ public class PlayerAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Mathf.SmoothDamp(SmoothVelocityMagnitude, charController.velocity.magnitude, ref SmoothVelocityMagnitude, 1);
-        anim.SetFloat("VelocityMagnitude", SmoothVelocityMagnitude);
+        Vector3 positionDelta = transform.position - lastPosition;
+        velocityDelta = positionDelta.magnitude;
+        lastPosition = transform.position;
 
-        Debug.Log(charController.velocity.magnitude);
+        float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing);
+        anim.SetFloat("VelocityMagnitude", SmoothedVelocity);
+        Debug.Log("Smoothed Velocity" + SmoothedVelocity);
+
+        prevDelta = velocityDelta;
+        
+
+       
     }
 }
