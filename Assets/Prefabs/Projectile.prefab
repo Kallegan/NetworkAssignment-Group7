@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 26871013919276042}
   - component: {fileID: 5071796771279239231}
   m_Layer: 0
-  m_Name: FireBall
+  m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &26871013919276042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,4 +180,4 @@ MonoBehaviour:
     NeverString: Never
     RealtimeString: Realtime
   localId: 0
-  direction: {x: 0, y: 0, z: 0}
+  playerIndex: 0

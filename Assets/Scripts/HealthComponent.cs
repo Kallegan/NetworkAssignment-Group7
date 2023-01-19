@@ -31,9 +31,6 @@ public class HealthComponent : AttributesSync
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-            BroadcastRemoteMethod("DebugHealth");
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!avatar.IsMe)
@@ -46,10 +43,7 @@ public class HealthComponent : AttributesSync
         HealthBar.localScale = healthScale;
         
         //turns healthbars to player camera.
-        HealthBar.transform.LookAt(HealthBar.transform.position + cam.transform.rotation * Vector3.forward); 
-
-
-
+        HealthBar.transform.LookAt(HealthBar.transform.position + cam.transform.rotation * Vector3.forward);
     }
 
     [SynchronizableMethod]
