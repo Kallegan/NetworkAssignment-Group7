@@ -18,6 +18,8 @@ public class PlayerAnimator : MonoBehaviour
     private float prevDelta;
     private float smoothVelocityDelta;
 
+    [SerializeField] float Coefficent = 1;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -39,9 +41,9 @@ public class PlayerAnimator : MonoBehaviour
        
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing);
-        anim.SetFloat("VelocityMagnitude", SmoothedVelocity);
+        float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing, 0, Time.deltaTime);
+        anim.SetFloat("VelocityMagnitude", SmoothedVelocity * Coefficent);
     }
 }

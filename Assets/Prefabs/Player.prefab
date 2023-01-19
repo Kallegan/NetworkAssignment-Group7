@@ -562,8 +562,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656a7519a6fbd874b95f520ebde788bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSmoothing: 100
+  MovementSmoothing: 1
   anim: {fileID: 7112471908007226232}
+  Coefficent: 1000
 --- !u!1 &7774178871493564330
 GameObject:
   m_ObjectHideFlags: 0
