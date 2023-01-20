@@ -9,7 +9,7 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] float MovementSmoothing;
 
     [SerializeField] private Animator anim;
-    private CharacterController charController;
+    private RigidbodySynchronizable rbSync;
 
     private float smoothVelocityMagnitude;
 
@@ -23,7 +23,7 @@ public class PlayerAnimator : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        charController = GetComponent<CharacterController>();
+        rbSync = GetComponent<RigidbodySynchronizable>();
     }
 
     // Update is called once per frame
@@ -43,7 +43,9 @@ public class PlayerAnimator : MonoBehaviour
 
     private void LateUpdate()
     {
+
+        
         float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing, 0, Time.deltaTime);
-        anim.SetFloat("VelocityMagnitude", SmoothedVelocity * Coefficent);
+        anim.SetFloat("VelocityMagnitude", rbSync.velocity.magnitude * Coefficent);
     }
 }

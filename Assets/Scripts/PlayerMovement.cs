@@ -6,7 +6,7 @@ using Vector3 = UnityEngine.Vector3;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Avatar avatar;
-    [SerializeField] private CharacterController controller;
+    //[SerializeField] private CharacterController controller;
 
     private Rigidbody rb;
     
@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main;
+
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -43,8 +45,10 @@ public class PlayerMovement : MonoBehaviour
         */
         
         _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-        controller.Move(_moveDir * _moveSpeed * Time.deltaTime);
-        
+        //controller.Move(_moveDir * _moveSpeed * Time.deltaTime);
+
+        rb.AddForce(_moveDir * _moveSpeed);
+
         LookAtMouseWorldPos();
         /*
         _velocity += _moveDir * _moveSpeed * Time.deltaTime;
