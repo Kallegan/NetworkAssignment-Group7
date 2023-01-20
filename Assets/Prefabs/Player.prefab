@@ -298,8 +298,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3238621714589657169}
-  - component: {fileID: 6841186233431249242}
-  - component: {fileID: 3867568081364565234}
+  - component: {fileID: 4773272600566989978}
+  - component: {fileID: 112867442170245571}
   m_Layer: 7
   m_Name: GameStateComponent
   m_TagString: Untagged
@@ -322,7 +322,20 @@ Transform:
   m_Father: {fileID: 7051877682914781358}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6841186233431249242
+--- !u!114 &4773272600566989978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3937227739541676012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1709514741, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  a: 3bd7c2c5-4a5c-4cb1-94e0-12461caed52f
+--- !u!114 &112867442170245571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -336,21 +349,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Multiplayer: {fileID: 0}
   UID: {fileID: 0}
-  BucketBehaviors: []
+  BucketBehaviors:
+  - Name: Min
+    NetLOD: 0
+    Frequency: -1
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: Low
+    NetLOD: 1
+    Frequency: 0
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: Mid
+    NetLOD: 2
+    Frequency: 0
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: High
+    NetLOD: 3
+    Frequency: 0
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: Max
+    NetLOD: 4
+    Frequency: 500
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
   currentGameState: 0
---- !u!114 &3867568081364565234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3937227739541676012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1709514741, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  a: 1badb986-0906-4a5a-984e-a924eacc6dce
 --- !u!1 &4706027095896428391
 GameObject:
   m_ObjectHideFlags: 0
