@@ -17,11 +17,6 @@ public class SynchronizedProjectile : Synchronizable
     
     public int damage = 1;
 
-    public void Start()
-    {
-        Debug.Log("Proj was spawned");
-    }
-
     [SynchronizableMethod]
     public void Init(UInt16 fromIndex)
     {
@@ -32,7 +27,7 @@ public class SynchronizedProjectile : Synchronizable
     
     private void Update()
     {
-        /*
+        
         if (_oldDirection != _direction | _oldSpeed != _speed)
         {
             Commit();
@@ -42,7 +37,7 @@ public class SynchronizedProjectile : Synchronizable
         
         transform.position += _direction * (_speed * Time.deltaTime);
         SyncUpdate();
-        */
+        
     }
     
     public override void AssembleData(Writer writer, byte LOD = 100)
