@@ -19,10 +19,13 @@ public class WorldManager : MonoBehaviour
     void Start()
     {
         GenerateHexGrid();
-        //StartCoroutine(ShrinkGrid());
+        SetHexShape(); 
+        StarShrinkLevel(); //move out from start and trigger from game manager instead.
+    }
+
+    public void StarShrinkLevel()
+    {
         InvokeRepeating("ShrinkGrid", 10, 5);
-
-
     }
 
     private void GenerateHexGrid()
@@ -57,7 +60,7 @@ public class WorldManager : MonoBehaviour
                 tempGameObject.name = "Hex_" + x + "," + z;
 
                 hexList.Add(tempGameObject);
-                SetHexShape(); //temp move out from loop
+                
 
             }
         }
@@ -65,14 +68,18 @@ public class WorldManager : MonoBehaviour
 
     private void SetHexShape()
     {
-        for (int i = 0; i < hexList.Count; i++)
+        for (int j = 0; j < 6; j++)
         {
-            if (Vector3.Distance(hexList[i].transform.position, transform.position) > radius)
+            for (int i = 0; i < hexList.Count; i++)
             {
-                Destroy(hexList[i]);
-                hexList.RemoveAt(i);
+                if (Vector3.Distance(hexList[i].transform.position, transform.position) > radius)
+                {
+                    Destroy(hexList[i]);
+                    hexList.RemoveAt(i);
+                }
             }
         }
+       
     }
 
     private void ShrinkGrid()
@@ -80,13 +87,7 @@ public class WorldManager : MonoBehaviour
         if (radius > 5)
             radius = radius - 2;
 
-        SetHexShape();
-        SetHexShape();
-        SetHexShape();
-        SetHexShape();
-        SetHexShape();
-        SetHexShape();
-
+        SetHexShape();        
     }
 }
      
