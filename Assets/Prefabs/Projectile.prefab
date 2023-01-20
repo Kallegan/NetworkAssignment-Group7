@@ -115,7 +115,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 116
   m_CollisionDetection: 1
 --- !u!96 &5563470969943014348
 TrailRenderer:
@@ -297,5 +297,8 @@ MonoBehaviour:
     LastUpdated: 0
     NeverString: Never
     RealtimeString: Realtime
+  ownerIndex: 0
+  spawner: {fileID: 0}
+  avatar: {fileID: 0}
   _speed: 5
   damage: 1

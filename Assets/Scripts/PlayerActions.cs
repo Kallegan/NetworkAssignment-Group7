@@ -88,7 +88,6 @@ public class PlayerActions : AttributesSync
         GameObject proj = spawner.Spawn(0, transform.position + transform.forward * 2f, transform.rotation);
         if (proj.TryGetComponent(out SynchronizedProjectile p))
             p.BroadcastRemoteMethod("Init", avatar.Possessor.Index );
-        
         canAttack = false;
     }
 }

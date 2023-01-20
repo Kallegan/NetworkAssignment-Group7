@@ -6,35 +6,32 @@ using Vector3 = UnityEngine.Vector3;
 
 public class SynchronizedProjectile : Synchronizable
 {
-   
-    public UInt16 ownerIndex;
+    private Spawner _spawner;
+    private UInt16 _ownerIndex;
 
-    public Spawner spawner;
-    public Avatar avatar;
-    
     private Vector3 _direction;
     private Vector3 _oldDirection;
 
     [SerializeField] private float _speed = 5.0f;
     private float _oldSpeed;
-
+    
     public int damage = 1;
     
     private void Start()
     {
         _direction = transform.forward;
 
-        spawner = FindObjectOfType<Spawner>();
-        Multiplayer.Instance.GetAvatar(ownerIndex);
+        _spawner = FindObjectOfType<Spawner>();
+        Multiplayer.Instance.GetAvatar(_ownerIndex);
     }
 
     private void Update()
     {
         if (_oldDirection != _direction | _oldSpeed != _speed)
         {
-            Commit();
             _oldDirection = _direction;
             _oldSpeed = _speed;
+            Commit();
         }
         
         transform.position += _direction * (_speed * Time.deltaTime);
@@ -44,9 +41,8 @@ public class SynchronizedProjectile : Synchronizable
     [SynchronizableMethod]
     public void Init(UInt16 fromIndex)
     {
-        ownerIndex = fromIndex;
-        spawner = FindObjectOfType<Spawner>();
-        Multiplayer.Instance.GetAvatar(ownerIndex);
+        _ownerIndex = fromIndex;
+        _spawner = FindObjectOfType<Spawner>();
     }
     
     public override void AssembleData(Writer writer, byte LOD = 100)
@@ -72,10 +68,8 @@ public class SynchronizedProjectile : Synchronizable
 
     private void DestroySelf()
     {
-        /*
-        if (avatar.Possessor.Index == ownerIndex)
-            spawner.Despawn(gameObject);
-            */
+        if (Multiplayer.Me.Index == _ownerIndex)
+            _spawner.Despawn(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
