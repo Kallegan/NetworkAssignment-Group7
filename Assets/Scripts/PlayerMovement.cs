@@ -5,7 +5,7 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Avatar avatar;
+    private Avatar avatar;
     //[SerializeField] private CharacterController controller;
     [SerializeField] private float _moveSpeed = 10f;
     [SerializeField] private float _friction = 10f;
@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
 
         rb = GetComponent<Rigidbody>();
+        transform.parent.GetComponent<Avatar>();
     }
     
     private void Update()

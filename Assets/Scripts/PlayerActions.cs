@@ -5,7 +5,7 @@ public class PlayerActions : AttributesSync
 {
     // TODO: add charge up on projectiles
     
-    [SerializeField] private Alteruna.Avatar avatar;
+    private Alteruna.Avatar avatar;
     [SerializeField]private Spawner spawner;
     
     // Attack
@@ -24,6 +24,7 @@ public class PlayerActions : AttributesSync
     private void Awake()
     {
         spawner = FindObjectOfType<Spawner>();
+        transform.parent.GetComponent<Alteruna.Avatar>();
     }
 
     private void Start()
@@ -87,7 +88,7 @@ public class PlayerActions : AttributesSync
     {
         GameObject proj = spawner.Spawn(0, transform.position + transform.forward * 2f, transform.rotation);
         if (proj.TryGetComponent(out SynchronizedProjectile p))
-            p.BroadcastRemoteMethod("Init", avatar.Possessor.Index );
+            p.BroadcastRemoteMethod("Init", avatar.Possessor.Index);
         canAttack = false;
     }
 }

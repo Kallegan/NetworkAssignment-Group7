@@ -623,7 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d256d8438b7f4498c9891db15971b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatar: {fileID: 0}
+  avatar: {fileID: 7780725231177317048}
   _moveSpeed: 50
   _friction: 10
   stunned: 0
