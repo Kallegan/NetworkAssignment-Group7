@@ -1,4 +1,5 @@
 using Alteruna;
+using UnityEngine;
 
 public class PlayerGameStateSync : Synchronizable
 {
@@ -8,11 +9,14 @@ public class PlayerGameStateSync : Synchronizable
     
     public override void AssembleData(Writer writer, byte LOD = 100)
     {
+        Debug.Log("ASSEMBLING, PLAYERGAMESTATE");
         writer.Write(currentGameState);
     }
 
     public override void DisassembleData(Reader reader, byte LOD = 100)
     {
+        Debug.Log("DISASSEMBLING, PLAYERGAMESTATE");
+
         currentGameState = reader.ReadByte();
         
         _oldGameState = currentGameState;

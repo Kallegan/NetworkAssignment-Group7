@@ -6,11 +6,8 @@ public class DeflectArea : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter: " +other);
-        
         if (!other.gameObject.TryGetComponent(out SynchronizedProjectile proj))
             return;
-
         
         // if (!player.deflectable)
         //Debug.Log("PLAYER CUR DEFLECTABLE ID:" + proj.localId);
@@ -20,7 +17,6 @@ public class DeflectArea : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exit: " +other);
         player.curDeflectable = null;
     }
 }

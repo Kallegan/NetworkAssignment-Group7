@@ -54,7 +54,7 @@ public class DamageableComponent : AttributesSync
     void TakeDamage(int damageAmount)
     {
         Health -= damageAmount;
-        BroadcastRemoteMethod("UpdateHealth");
+        BroadcastRemoteMethod("UpdateHealthBar");
         if (Health <= 0)
         {
             BroadcastRemoteMethod("Die");
