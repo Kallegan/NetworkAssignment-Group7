@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Alteruna;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
 
@@ -10,10 +11,10 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private bool _showDebugLogs = true;
     [SerializeField] private Multiplayer _multiplayer;
-    
+
     [Header("Game Settings")]
-    [SerializeField] private int _minUsersToStart = 2;
-        
+    [SerializeField] public int _minUsersToStart = 2;
+
     private static GameManager _instance;
     public static GameManager Instance
     {
@@ -41,22 +42,29 @@ public class GameManager : MonoBehaviour
     }
 
     private GameState _currentState;
-    private readonly IdleGameState _idleGameState = new IdleGameState();
-    private readonly LookingForPlayerGameState _lookingForPlayerGameState = new LookingForPlayerGameState();
-    private readonly PrepareRoundGameState _prepareRoundGameState = new PrepareRoundGameState();
-    private readonly StartRoundGameState _startRoundGameState = new StartRoundGameState();
-    private FinishRoundGameState _finishRoundGameState = new FinishRoundGameState();
-
+    private IdleGameState _idleGameState;
+    private LookingForPlayerGameState _lookingForPlayerGameState;
+    private PrepareRoundGameState _prepareRoundGameState;
+    private StartRoundGameState _startRoundGameState;
+    private FinishRoundGameState _finishRoundGameState;
     private void Awake()
     {
+        
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
             return;
         }
         _instance = this;
-        ChangeState(State.Idle);
         
+        _idleGameState = new IdleGameState();
+        _lookingForPlayerGameState = new LookingForPlayerGameState(_instance);
+        _prepareRoundGameState = new PrepareRoundGameState();
+        _startRoundGameState = new StartRoundGameState();
+        _finishRoundGameState = new FinishRoundGameState();
+        
+        _currentState = _idleGameState;
+        ChangeState(State.Idle);
     }
 
     void Start()
@@ -72,13 +80,19 @@ public class GameManager : MonoBehaviour
     public void UpdateUsersInRoomList()
     {
         _users = _multiplayer.GetUsers();
-        
+
 #if UNITY_EDITOR
         PrintDebug("GameManager - Users in room: ", _users.Count);
 #endif
-        
     }
 
+    public int AmountOfPlayersInRoom()
+    {
+        UpdateUsersInRoomList();
+        int amount = _users.Count;
+        return amount;
+    }
+    
     public void JoinedRoom()
     {
         if (_state == State.Idle)
@@ -110,35 +124,21 @@ public class GameManager : MonoBehaviour
         PrintDebug("GameManager - ", "Other player left the room.");
 #endif
     }
-    
-
-    public void CheckIfEnoughPlayers()
-    {
-        if (!_multiplayer.InRoom)
-            return;
-        UpdateUsersInRoomList();
-#if UNITY_EDITOR
-        var possibleToStart = _users.Count >= _minUsersToStart;
-            PrintDebug("GameManager - Check if can start round: ", possibleToStart);
-#endif
-        
-        if (_users.Count >= _minUsersToStart)
-            ChangeState(State.PrepareRound);
-        else
-            ChangeState(State.LookingForPlayers);
-    }
 
     // CHANGING STATES
     public void ChangeState(byte stateIndex)
     {
-        FinalizeStateChange((State)stateIndex);
+        AssignState((State)stateIndex);
     }
     public void ChangeState(State state)
     {
-        FinalizeStateChange(state);
+        AssignState(state);
     }
-    private void FinalizeStateChange(State state)
+    private void AssignState(State state)
     {
+        if (_state == state)
+            return;
+        
         _state = state;
 
         _currentState = _state switch
@@ -151,7 +151,20 @@ public class GameManager : MonoBehaviour
             State.Restart => _prepareRoundGameState,
             _ => _currentState
         };
-
+        
+        if (_multiplayer.GetAvatar(_multiplayer.Me.Index).GameObject() != null)
+        {
+            PlayerGameStateSync playerGameStateSync = _multiplayer.GetAvatar(_multiplayer.Me.Index).GameObject().GetComponentInChildren<PlayerGameStateSync>();
+            playerGameStateSync.currentGameState = (byte)_state;
+        }
+        
+        // if (_multiplayer.GetAvatar(_multiplayer.Me.Index).GameObject().TryGetComponent<PlayerGameStateSync>(out var playerGameStateSync))
+        // {
+        //     Debug.Log("yes");
+        //     playerGameStateSync.currentGameState = (byte)_state;
+        //     Debug.Log("yes");
+        // }
+        
 #if UNITY_EDITOR
         PrintDebug("GameManager - State Changed to: ", _state);
 #endif
@@ -159,7 +172,7 @@ public class GameManager : MonoBehaviour
     
     // DEBUG PRINT
 #if UNITY_EDITOR
-    private void PrintDebug<T> (string text, T debugData)
+    public void PrintDebug<T> (string text, T debugData)
     {
         if (_showDebugLogs)
             Debug.Log("<color=olive>" + text + "</color><color=teal>" + debugData.ToString() + "</color>");
