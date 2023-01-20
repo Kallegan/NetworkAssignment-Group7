@@ -44,10 +44,10 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(_velocity * Time.deltaTime);
         */
         
-        _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        
         //controller.Move(_moveDir * _moveSpeed * Time.deltaTime);
 
-        rb.AddForce(_moveDir * _moveSpeed);
+        
 
         LookAtMouseWorldPos();
         /*
@@ -56,7 +56,13 @@ public class PlayerMovement : MonoBehaviour
          controller.Move(_velocity * Time.deltaTime);
         */
     }
-    
+
+    private void FixedUpdate()
+    {
+        _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        rb.AddForce(_moveDir * _moveSpeed);
+    }
+
 
     private void LookAtMouseWorldPos()
     {
