@@ -169,12 +169,9 @@ public class GameManager : MonoBehaviour
         Avatar avatar = _multiplayer.GetAvatar();
         if (avatar != null)
         {
-            GameObject player = avatar.GameObject();
-            if (player != null)
-            {
-                PlayerGameStateSync playerGameStateSync = player.GetComponentInChildren<PlayerGameStateSync>();
+            GameObject player = avatar.gameObject;
+            PlayerGameStateSync playerGameStateSync = player.GetComponentInChildren<PlayerGameStateSync>();
                 playerGameStateSync.currentGameState = (byte)_state;
-            }
         }
     }
 
