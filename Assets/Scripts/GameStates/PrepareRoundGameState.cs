@@ -42,6 +42,9 @@ public class PrepareRoundGameState : GameState
             
             foreach (var avatar in avatars)
             {
+                if (avatar == null)
+                    break;
+                
                 GameObject player = avatar.GameObject();
                 
                 if (player != null)
