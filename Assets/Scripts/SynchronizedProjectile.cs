@@ -36,11 +36,16 @@ public class SynchronizedProjectile : Synchronizable
             _oldDirection = _direction;
             _oldSpeed = _speed;
         }
-
+        
         transform.position += _direction * (_speed * Time.deltaTime);
         SyncUpdate();
     }
 
+    public void Init()
+    {
+        
+    }
+    
     [SynchronizableMethod]
     public void SetIndex(UInt16 index) // projectileInit()
     {

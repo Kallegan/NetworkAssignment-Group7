@@ -88,12 +88,8 @@ public class PlayerActions : AttributesSync
         GameObject proj = spawner.Spawn(0, transform.position + transform.forward * 2f, transform.rotation);
         if (proj.TryGetComponent(out SynchronizedProjectile p))
         {
-            Debug.Log("YES PROJECTILE SCRIPT");
-            p.SetIndex(avatar.Possessor.Index);
-        }
-        else
-        {
-            Debug.Log("NO PROJECTILE SCRIPT");
+            p.BroadcastRemoteMethod("SetIndex", avatar.Possessor.Index );
+            //p.SetIndex(avatar.Possessor.Index);
         }
         canAttack = false;
     }
