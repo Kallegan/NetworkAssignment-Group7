@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
         PrintDebug("GameManager - Check if enough players: ", enoughPlayers);
 #endif
 
-        return false;
+        return enoughPlayers;
     }
     public void JoinedRoom()
     {
