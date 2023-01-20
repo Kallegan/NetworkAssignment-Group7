@@ -11,6 +11,8 @@ public class WorldManager : MonoBehaviour
     private readonly float zOffset = 1.6f;
 
     float radius = 14f;
+    [SerializeField] float shrinkStartDelay = 10;
+    [SerializeField] float shrinkRepeatTimer = 5;
 
     private List<GameObject> hexList = new();
 
@@ -25,7 +27,7 @@ public class WorldManager : MonoBehaviour
 
     public void StarShrinkLevel()
     {
-        InvokeRepeating("ShrinkGrid", 10, 5);
+        InvokeRepeating("ShrinkGrid", shrinkStartDelay, shrinkRepeatTimer);
     }
 
     private void GenerateHexGrid()
@@ -90,71 +92,4 @@ public class WorldManager : MonoBehaviour
         SetHexShape();        
     }
 }
-     
-
-
-
-/* cubegrid test
-[SerializeField] private int rows = 10;
-[SerializeField] private int cols = 10;
-[SerializeField] private float gridSize = 1f;
-private int totalGridSize;
-private float gridShrinktimer = 1;
-
-[SerializeField] private GameObject gridBlock;
-private List<GameObject> gridBlockList = new();
-void Start()    
-{
-    transform.position = new Vector3(cols / -2, 0, rows / 2); 
-    GenerateGrid();
-    totalGridSize = gridBlockList.Count;
-}
-
-private void Update()
-{
-    totalGridSize--;
-    RemoveGridLayer(totalGridSize);
-}
     
-private void GenerateGrid()
-{
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < cols; j++)
-        { 
-            GameObject tile = Instantiate(gridBlock, transform);
-            tile.name = "Tile_" + i + "_" + j;  
-            tile.transform.localScale = new Vector3(gridSize, 1, gridSize);
-
-            Vector3 gridStartPosition = transform.position;
-            float positionX = j * gridSize + gridStartPosition.x;     
-            float positionY = i * -gridSize + gridStartPosition.z;
-
-                
-            tile.transform.position = new Vector3(positionX, 0,  +positionY);
-            gridBlockList.Add(tile);
-        }
-    }
-}
-
-private void RemoveGridLayer(int gridIndex)
-{
-    if (gridIndex >= 0)
-    {
-        Destroy(gridBlockList[gridIndex]);        
-        // gridBlockList.RemoveAt(gridIndex);
-    }
-}
-}
-IEnumerator ShrinkGrid()
-    {
-        yield return new WaitForSeconds(1);
-
-        if(radius > 5)
-            radius = radius - 2;
-
-        SetHexShape();
-        StartCoroutine(ShrinkGrid());
-    }
-
-*/
