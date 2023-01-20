@@ -16,8 +16,8 @@ public class WorldManager : MonoBehaviour
     [SerializeField] float shrinkStartDelay = 10;
     [SerializeField] float shrinkRepeatTimer = 5;
 
-    private List<GameObject> hexList = new();
-    private List<GameObject> hexMarkedForDeletion = new();
+    private readonly List<GameObject> hexList = new();
+    private readonly List<GameObject> hexMarkedForDeletion = new();
 
 
     [SerializeField] private GameObject hexPrefab; 
@@ -32,7 +32,7 @@ public class WorldManager : MonoBehaviour
 
     public void StarShrinkLevel()
     {
-        InvokeRepeating("ShrinkGrid", shrinkStartDelay, shrinkRepeatTimer);
+        InvokeRepeating(nameof(ShrinkGrid), shrinkStartDelay, shrinkRepeatTimer);
     }
 
     private void GenerateHexGrid()
@@ -88,7 +88,7 @@ public class WorldManager : MonoBehaviour
 
                     hexMarkedForDeletion.Add(hexList[i]);
                     hexList.RemoveAt(i);
-                    StartCoroutine(DestroyHexOutOfRange(i));
+                    StartCoroutine(DestroyHexOutOfRange());
                     
                 }
             }
@@ -99,13 +99,13 @@ public class WorldManager : MonoBehaviour
     private void ShrinkGrid()
     {
         if (levelShrinkSize > 5)
-            levelShrinkSize = levelShrinkSize - 2;
+            levelShrinkSize -= 2;
 
         SetHexShape();        
     }
 
 
-    IEnumerator DestroyHexOutOfRange(int index)
+    IEnumerator DestroyHexOutOfRange()
     {
         yield return new WaitForSeconds(3);
 
