@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class WorldManager : MonoBehaviour
 {
@@ -8,12 +9,20 @@ public class WorldManager : MonoBehaviour
 
     private readonly float xOffset = 1.8f;  
     private readonly float zOffset = 1.6f;
-    
+
+    float radius = 15f;
+
+    private List<GameObject> hexList = new();
+
     [SerializeField] private GameObject hexPrefab;
 
     void Start()
     {
         GenerateHexGrid();
+        //StartCoroutine(ShrinkGrid());
+        //InvokeRepeating("ShrinkGrid", 1, 1);
+
+        
     }
 
     private void GenerateHexGrid()
@@ -23,31 +32,49 @@ public class WorldManager : MonoBehaviour
         
         float gridZMin = -worldHeight / 2;
         float gridZMax = worldHeight / 2;
+
+       
         
         for (float x = gridXMin; x < gridXMax; x++)
         {
             for (float z = gridZMin; z < gridZMax; z++)
             {
                 GameObject tempGameObject = Instantiate(hexPrefab);
+                Vector3 gridPosition;
                 
                 if (z % 2 == 0)
                 {
-                    tempGameObject.transform.position = new Vector3(x * xOffset, 0, z * zOffset);
+                    gridPosition = new Vector3(x * xOffset, 0, z * zOffset);
+
                 }
                 else
                 {
-                    tempGameObject.transform.position = new Vector3(x * xOffset + xOffset / 2, 0, z * zOffset);
+                    gridPosition = new Vector3(x * xOffset + xOffset / 2, 0, z * zOffset);
                 }
+                             
 
-                SetHexInfo(tempGameObject, x, z);
+                tempGameObject.transform.position = gridPosition;
+                tempGameObject.name = "Hex_" + x + "," + z;
+
+                hexList.Add(tempGameObject);
+                SetHexShape(); //temp move out from loop
+
             }
         }
     }
 
-    void SetHexInfo(GameObject tempGO, float x, float z)
+    
+
+    private void SetHexShape()
     {
-        tempGO.transform.parent = transform;
-        tempGO.name = "Hex_" + x + "," + z;
+        for (int i = 0; i < hexList.Count; i++)
+        {
+            if (Vector3.Distance(hexList[i].transform.position, transform.position) > radius)
+            {
+                Destroy(hexList[i]);
+                hexList.RemoveAt(i);
+            }
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -111,5 +138,15 @@ private void RemoveGridLayer(int gridIndex)
     }
 }
 }
+IEnumerator ShrinkGrid()
+    {
+        yield return new WaitForSeconds(1);
+
+        if(radius > 5)
+            radius = radius - 2;
+
+        SetHexShape();
+        StartCoroutine(ShrinkGrid());
+    }
 
 */
