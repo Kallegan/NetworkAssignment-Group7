@@ -1,4 +1,6 @@
+using System;
 using Alteruna;
+using Alteruna.Trinity;
 using UnityEngine;
 
 public class PlayerActions : AttributesSync
@@ -87,8 +89,16 @@ public class PlayerActions : AttributesSync
     private void Shoot()
     {
         GameObject proj = spawner.Spawn(0, transform.position + transform.forward * 2f, transform.rotation);
-        if (proj.TryGetComponent(out SynchronizedProjectile p))
-            p.BroadcastRemoteMethod("Init", avatar.Possessor.Index);
+        
+        if (!proj.TryGetComponent(out SynchronizedProjectile p)) 
+            return;
+       
+        UInt16 playerIndex = avatar.Possessor.Index;
+        
+        ProcedureParameters parameters = new ProcedureParameters();
+        parameters.Set("playerIndex", (UInt16)playerIndex);
+        Multiplayer.InvokeRemoteProcedure("RemoteGetOwnerIndex", UserId.All, parameters);
+        
         canAttack = false;
     }
 }
