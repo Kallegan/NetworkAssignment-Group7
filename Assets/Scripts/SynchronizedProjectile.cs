@@ -1,5 +1,6 @@
 using System;
 using Alteruna;
+using Alteruna.Trinity;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
 using Vector3 = UnityEngine.Vector3;
@@ -22,6 +23,9 @@ public class SynchronizedProjectile : Synchronizable
         Debug.Log("Proj was spawned");
         _spawner = FindObjectOfType<Spawner>();
         _direction = transform.forward;
+        
+        // register get method
+        Multiplayer.RegisterRemoteProcedure("RemoteGetOwnerIndex", RemoteGetOwnerIndex);
     }
 
     [SynchronizableMethod]
@@ -29,6 +33,13 @@ public class SynchronizedProjectile : Synchronizable
     {
         _ownerIndex = fromIndex;
         GameManager.Instance.PrintDebug("Projectile owner index: ", _ownerIndex);
+    }
+    
+    public void RemoteGetOwnerIndex(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
+    {
+        UInt16 fromIndex = parameters.Get("playerIndex", (UInt16) 0);
+        _ownerIndex = fromIndex;
+        GameManager.Instance.PrintDebug("Projectile owner index: ", _ownerIndex + " , This Player: " + Multiplayer.Me.Index );
     }
     
     private void Update()
