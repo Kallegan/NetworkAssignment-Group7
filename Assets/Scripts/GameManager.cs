@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
     private readonly FinishRoundGameState _finishRoundGameState = new FinishRoundGameState();
     private void Awake()
     {
-        
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
@@ -58,13 +57,12 @@ public class GameManager : MonoBehaviour
         }
         _instance = this;
         _multiplayer = Multiplayer.Instance;
-
-        _currentState = _idleGameState;
-        ChangeState(State.Idle);
     }
 
     void Start()
     {
+        _currentState = _idleGameState;
+        ChangeState(State.Idle);
         
     }
     
@@ -144,9 +142,6 @@ public class GameManager : MonoBehaviour
     }
     private void AssignState(State state)
     {
-        if (_state == state)
-            return;
-        
         _state = state;
 
         _currentState = _state switch
@@ -160,16 +155,26 @@ public class GameManager : MonoBehaviour
             _ => _currentState
         };
         _currentState.Run();
-        
-        if (_multiplayer.GetAvatar(_multiplayer.Me.Index).GameObject() != null)
-        {
-            PlayerGameStateSync playerGameStateSync = _multiplayer.GetAvatar(_multiplayer.Me.Index).GameObject().GetComponentInChildren<PlayerGameStateSync>();
-            playerGameStateSync.currentGameState = (byte)_state;
-        }
+
+        UpdateSyncState();
 
 #if UNITY_EDITOR
         PrintDebug("GameManager - State Changed to: ", _state);
 #endif
+    }
+
+    public void UpdateSyncState()
+    {
+        Avatar avatar = _multiplayer.GetAvatar();
+        if (avatar != null)
+        {
+            GameObject player = avatar.GameObject();
+            if (player != null)
+            {
+                PlayerGameStateSync playerGameStateSync = player.GetComponentInChildren<PlayerGameStateSync>();
+                playerGameStateSync.currentGameState = (byte)_state;
+            }
+        }
     }
     
     // DEBUG PRINT
