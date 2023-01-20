@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5563470969943014348}
   - component: {fileID: 3183203414235313279}
   - component: {fileID: 7016648384154840731}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 84
   m_CollisionDetection: 1
 --- !u!96 &5563470969943014348
 TrailRenderer:
@@ -297,8 +297,5 @@ MonoBehaviour:
     LastUpdated: 0
     NeverString: Never
     RealtimeString: Realtime
-  spawner: {fileID: 0}
-  avatar: {fileID: 0}
-  ownerIndex: 0
-  speed: 5
+  _speed: 5
   damage: 1

@@ -7,10 +7,10 @@ using Vector3 = UnityEngine.Vector3;
 public class SynchronizedProjectile : Synchronizable
 {
    
-    private UInt16 ownerIndex;
+    public UInt16 ownerIndex;
 
-    private Spawner spawner;
-    private Avatar avatar;
+    public Spawner spawner;
+    public Avatar avatar;
     
     private Vector3 _direction;
     private Vector3 _oldDirection;
@@ -71,10 +71,8 @@ public class SynchronizedProjectile : Synchronizable
 
     private void DestroySelf()
     {
-        /*
         if (avatar.Possessor.Index == ownerIndex)
             spawner.Despawn(gameObject);
-            */
     }
 
     private void OnCollisionEnter(Collision collision)

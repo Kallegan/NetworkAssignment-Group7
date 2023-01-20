@@ -20,7 +20,7 @@ public class LookingForPlayerGameState : GameState
     // ReSharper disable Unity.PerformanceAnalysis
     public override void Update()
     {
-        Debug.Log(_multiplayer);
+        //Debug.Log(_multiplayer);
         if (_nextCheck <= 0)
         {
             CheckIfEnoughPlayers();
