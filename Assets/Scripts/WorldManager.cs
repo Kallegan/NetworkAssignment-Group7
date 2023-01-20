@@ -7,7 +7,7 @@ public class WorldManager : MonoBehaviour
     [SerializeField] private int worldWidth = 20;
     [SerializeField] private int worldHeight = 20;
 
-    private readonly float xOffset = 1.8f;  
+    private readonly float xOffset = 1.8f;
     private readonly float zOffset = 1.6f;
 
     float radius = 14f;
@@ -20,28 +20,28 @@ public class WorldManager : MonoBehaviour
     {
         GenerateHexGrid();
         //StartCoroutine(ShrinkGrid());
-        //InvokeRepeating("ShrinkGrid", 1, 1);
+        InvokeRepeating("ShrinkGrid", 10, 5);
 
-        
+
     }
 
     private void GenerateHexGrid()
     {
         float gridXMin = -worldWidth / 2;
         float gridXMax = worldWidth / 2;
-        
+
         float gridZMin = -worldHeight / 2;
         float gridZMax = worldHeight / 2;
 
-       
-        
+
+
         for (float x = gridXMin; x < gridXMax; x++)
         {
             for (float z = gridZMin; z < gridZMax; z++)
             {
                 GameObject tempGameObject = Instantiate(hexPrefab);
                 Vector3 gridPosition;
-                
+
                 if (z % 2 == 0)
                 {
                     gridPosition = new Vector3(x * xOffset, 0, z * zOffset);
@@ -51,7 +51,7 @@ public class WorldManager : MonoBehaviour
                 {
                     gridPosition = new Vector3(x * xOffset + xOffset / 2, 0, z * zOffset);
                 }
-                             
+
 
                 tempGameObject.transform.position = gridPosition;
                 tempGameObject.name = "Hex_" + x + "," + z;
@@ -62,8 +62,6 @@ public class WorldManager : MonoBehaviour
             }
         }
     }
-
-    
 
     private void SetHexShape()
     {
@@ -77,14 +75,23 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void ShrinkGrid()
     {
-        if (other.CompareTag("Hex"))
-        {
-            Destroy(other.gameObject);
-        }        
+        if (radius > 5)
+            radius = radius - 2;
+
+        SetHexShape();
+        SetHexShape();
+        SetHexShape();
+        SetHexShape();
+        SetHexShape();
+        SetHexShape();
+
     }
 }
+     
+
+
 
 /* cubegrid test
 [SerializeField] private int rows = 10;
