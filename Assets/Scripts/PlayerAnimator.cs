@@ -10,6 +10,7 @@ public class PlayerAnimator : MonoBehaviour
 
     [SerializeField] private Animator anim;
     private RigidbodySynchronizable rbSync;
+    private Rigidbody rb;
 
     private float smoothVelocityMagnitude;
 
@@ -23,6 +24,7 @@ public class PlayerAnimator : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         //rbSync = GetComponent<RigidbodySynchronizable>();
     }
 
@@ -46,6 +48,6 @@ public class PlayerAnimator : MonoBehaviour
 
         
         float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing, 0, Time.deltaTime);
-        //anim.SetFloat("VelocityMagnitude", rbSync.velocity.magnitude * Coefficent);
+        anim.SetFloat("VelocityMagnitude", rb.velocity.magnitude * Coefficent);
     }
 }
