@@ -10,7 +10,7 @@ public class WorldManager : MonoBehaviour
     private readonly float xOffset = 1.8f;  
     private readonly float zOffset = 1.6f;
 
-    float radius = 15f;
+    float radius = 14f;
 
     private List<GameObject> hexList = new();
 
