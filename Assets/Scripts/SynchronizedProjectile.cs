@@ -17,14 +17,14 @@ public class SynchronizedProjectile : Synchronizable
     
     public int damage = 1;
     
-    private void Start()
+    [SynchronizableMethod]
+    public void Init(UInt16 fromIndex)
     {
         _direction = transform.forward;
-
+        _ownerIndex = fromIndex;
         _spawner = FindObjectOfType<Spawner>();
-        Multiplayer.Instance.GetAvatar(_ownerIndex);
     }
-
+    
     private void Update()
     {
         if (_oldDirection != _direction | _oldSpeed != _speed)
@@ -36,13 +36,6 @@ public class SynchronizedProjectile : Synchronizable
         
         transform.position += _direction * (_speed * Time.deltaTime);
         SyncUpdate();
-    }
-
-    [SynchronizableMethod]
-    public void Init(UInt16 fromIndex)
-    {
-        _ownerIndex = fromIndex;
-        _spawner = FindObjectOfType<Spawner>();
     }
     
     public override void AssembleData(Writer writer, byte LOD = 100)
