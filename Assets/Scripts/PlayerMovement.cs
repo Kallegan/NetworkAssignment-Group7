@@ -7,28 +7,52 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Avatar avatar;
     [SerializeField] private CharacterController controller;
-    [SerializeField] private float moveSpeed = 10f;
+
+    private Rigidbody rb;
+    
+    [SerializeField] private float _moveSpeed = 10f;
+    private float _curSpeed;
+    
+    [SerializeField] private float _friction = 10f;
+    
+    private Vector3 _moveDir;
+    private Vector3 _velocity;
     
     private Camera cam;
-    private bool canMove = true;
+    public bool canMove = true;
     
     private void Awake()
     {
         cam = Camera.main;
-        
     }
-    
+
+    private void Start()
+    {
+        _curSpeed = 0;
+    }
+
     private void Update()
     {
-        if (!avatar.IsMe)
+        if (!avatar.IsMe) // ?
             return;
+        /*
+        _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        _velocity += _moveDir * _moveSpeed * Time.deltaTime;
+        _velocity = Vector3.MoveTowards(_velocity, Vector3.zero, _friction * Time.deltaTime);
+        controller.Move(_velocity * Time.deltaTime);
+        */
         
-        Vector3 moveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        if (canMove)
-            controller.Move(moveDir * Time.deltaTime * moveSpeed);
+        _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        controller.Move(_moveDir * _moveSpeed * Time.deltaTime);
         
         LookAtMouseWorldPos();
+        /*
+        _velocity += _moveDir * _moveSpeed * Time.deltaTime;
+        _velocity = Vector3.MoveTowards(_velocity, Vector3.zero, _friction * Time.deltaTime);
+         controller.Move(_velocity * Time.deltaTime);
+        */
     }
+    
 
     private void LookAtMouseWorldPos()
     {

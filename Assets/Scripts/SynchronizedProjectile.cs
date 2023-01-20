@@ -8,18 +8,20 @@ public class SynchronizedProjectile : Synchronizable
     public Spawner spawner;
     public Avatar avatar;
     public int ownerIndex;
-    
+
     private Vector3 direction;
     private Vector3 _oldDirection;
-    
+
     [SerializeField] private float speed = 5.0f;
     private float _oldSpeed;
+
+    public int damage = 1;
 
     private void Start()
     {
         direction = transform.forward;
     }
-    
+
     private void Update()
     {
         if (_oldDirection != direction | _oldSpeed != speed)
@@ -28,10 +30,11 @@ public class SynchronizedProjectile : Synchronizable
             _oldDirection = direction;
             _oldSpeed = speed;
         }
+
         transform.position += direction * (speed * Time.deltaTime);
         SyncUpdate();
     }
-    
+
     public override void AssembleData(Writer writer, byte LOD = 100)
     {
         writer.Write(direction);
@@ -46,7 +49,7 @@ public class SynchronizedProjectile : Synchronizable
         speed = reader.ReadFloat();
         _oldSpeed = speed;
     }
-    
+
     public void OnDeflect(Vector3 newDirection)
     {
         direction = newDirection;
@@ -58,9 +61,13 @@ public class SynchronizedProjectile : Synchronizable
         if (avatar.Possessor.Index == ownerIndex)
             spawner.Despawn(gameObject);
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
+        var damageable = collision.gameObject.GetComponentInChildren<DamageableComponent>();
+        if (damageable)
+            damageable.OnHit(1, direction);
+
         DestroySelf();
     }
 }

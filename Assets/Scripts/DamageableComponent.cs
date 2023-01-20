@@ -1,40 +1,36 @@
 using Alteruna;
 using UnityEngine;
 
-public class HealthComponent : AttributesSync
+public class DamageableComponent : AttributesSync
 {
     [SerializeField] private Alteruna.Avatar avatar;
+    [SerializeField] Transform HealthBar;
+    
+    
+    [SerializeField] private int MaxHealth = 10;
+    [SynchronizableField] private int Health = 10;
 
-    [SynchronizableField]
-    float Health = 10;
-
-    float MaxHealth = 10;
-
-    [SerializeField]
-    Transform HealthBar;
-
+    private PlayerMovement PlayerMovement;
+    
     private Camera cam;
+    
+    private void Awake()
+    {
+        cam = Camera.main;
+        PlayerMovement = transform.parent.GetComponent<PlayerMovement>();
+        
+    }
 
     private void Start()
     {
-        cam = Camera.main;
-        
         if (!avatar.IsMe)
             return;
         Health = MaxHealth;
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!avatar.IsMe)
-                return;
-            TakeDamage(1);
-        }
-
         //Update size of healthbar
         Vector3 healthScale = new Vector3((Health / MaxHealth) * 2, HealthBar.localScale.y, HealthBar.localScale.z);
         HealthBar.localScale = healthScale;
@@ -43,13 +39,18 @@ public class HealthComponent : AttributesSync
         HealthBar.transform.LookAt(HealthBar.transform.position + cam.transform.rotation * Vector3.forward);
     }
 
-    [SynchronizableMethod]
-    void DebugHealth()
+    public void OnHit(int damageAmount)
     {
-        //Debug.Log(Health);
+        TakeDamage(damageAmount);
     }
-
-    void TakeDamage(float damageAmount)
+    
+    public void OnHit(int damageAmount, Vector3 knockbackDirection)
+    {
+        TakeDamage(damageAmount);
+        PlayerMovement.canMove = false;
+        //PlayerMovement.velocity = knockbackDirection.normalized;
+    }
+    void TakeDamage(int damageAmount)
     {
         Health -= damageAmount;
         BroadcastRemoteMethod("UpdateHealth");
@@ -64,16 +65,13 @@ public class HealthComponent : AttributesSync
     {
         if (!avatar.IsMe)
             return;
-        
     }
 
     [SynchronizableMethod]
-    void Die()
+    private void Die()
     {
         Destroy(transform.parent.gameObject);
     }
-
-
 }
 /*
  * According to all known laws
