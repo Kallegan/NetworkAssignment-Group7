@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class MaterialPropertyBlockTest : MonoBehaviour
 {
-    public Color Color1, Color2;
-    public float Speed = 1, Offset;
+    public Color DefaultColor, Color1, Color2;
+    private float Speed = 1, Offset;
 
     private Renderer _renderer;
     private MaterialPropertyBlock _propBlock;
+
+    private bool isMarkedForDeletion = false;
 
     void Awake()
     {
@@ -19,11 +21,23 @@ public class MaterialPropertyBlockTest : MonoBehaviour
 
     void Update()
     {
-        // Get the current value of the material properties in the renderer.
         _renderer.GetPropertyBlock(_propBlock);
-        // Assign our new value.
-        _propBlock.SetColor("_Color", Color.Lerp(Color1, Color2, (Mathf.Sin(Time.time * Speed + Offset) + 1) / 2f));
-        // Apply the edited values to the renderer.
+
+        if (isMarkedForDeletion)
+        {
+            _renderer.GetPropertyBlock(_propBlock);
+            _propBlock.SetColor("_Color", Color.Lerp(Color1, Color2, (Mathf.Sin(Time.time * Speed + Offset) + 1) / 2f));
+        }
+        else
+            _propBlock.SetColor("_Color", DefaultColor);
+
         _renderer.SetPropertyBlock(_propBlock);
+
+
+    }
+
+    public void MarkForDeletion()
+    {
+        isMarkedForDeletion = true;
     }
 }
