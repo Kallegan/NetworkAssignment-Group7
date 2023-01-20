@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 
+
 public class WorldManager : MonoBehaviour
 {
     [SerializeField] private int worldWidth = 20;
@@ -64,6 +65,8 @@ public class WorldManager : MonoBehaviour
                 tempGameObject.name = "Hex_" + x + "," + z;
                 tempGameObject.transform.parent = transform;
 
+                
+
                 hexList.Add(tempGameObject);
                 
 
@@ -79,11 +82,12 @@ public class WorldManager : MonoBehaviour
             {
                 if (Vector3.Distance(hexList[i].transform.position, transform.position) > levelShrinkSize)
                 {
-                    Destroy(hexList[i]);
-                    hexList.RemoveAt(i);
+                    hexList[i].GetComponent<MaterialPropertyBlockTest>().MarkForDeletion();
+                    //Destroy(hexList[i]);
+                    //hexList.RemoveAt(i);
                 }
             }
-        }
+        }     
        
     }
 
