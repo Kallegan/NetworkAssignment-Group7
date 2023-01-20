@@ -44,3 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52ed82c9cbd994541993924f965b5723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldWidth: 20
+  worldHeight: 20
+  levelShrinkSize: 14
+  shrinkStartDelay: 10
+  shrinkRepeatTimer: 5
+  hexPrefab: {fileID: 8344211244079217841, guid: 8032b004f85a1434b81c8c0e271c0a1f, type: 3}
