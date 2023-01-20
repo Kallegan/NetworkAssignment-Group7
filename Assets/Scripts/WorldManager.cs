@@ -17,7 +17,8 @@ public class WorldManager : MonoBehaviour
 
     private List<GameObject> hexList = new();
 
-    [SerializeField] private GameObject hexPrefab;
+    [SerializeField] private GameObject hexPrefab; 
+        
 
     void Start()
     {
