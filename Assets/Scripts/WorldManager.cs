@@ -17,6 +17,8 @@ public class WorldManager : MonoBehaviour
     [SerializeField] float shrinkRepeatTimer = 5;
 
     private List<GameObject> hexList = new();
+    private List<GameObject> hexMarkedForDeletion = new();
+
 
     [SerializeField] private GameObject hexPrefab; 
         
@@ -83,8 +85,11 @@ public class WorldManager : MonoBehaviour
                 if (Vector3.Distance(hexList[i].transform.position, transform.position) > levelShrinkSize)
                 {
                     hexList[i].GetComponent<MaterialPropertyBlockTest>().MarkForDeletion();
-                    //Destroy(hexList[i]);
-                    //hexList.RemoveAt(i);
+
+                    hexMarkedForDeletion.Add(hexList[i]);
+                    hexList.RemoveAt(i);
+                    StartCoroutine(DestroyHexOutOfRange(i));
+                    
                 }
             }
         }     
@@ -97,6 +102,22 @@ public class WorldManager : MonoBehaviour
             levelShrinkSize = levelShrinkSize - 2;
 
         SetHexShape();        
+    }
+
+
+    IEnumerator DestroyHexOutOfRange(int index)
+    {
+        yield return new WaitForSeconds(3);
+
+        for (int i = 0; i < hexMarkedForDeletion.Count; i++)
+        {
+            Destroy(hexMarkedForDeletion[i]);
+        }
+
+        hexMarkedForDeletion.Clear();
+        
+
+        
     }
 }
     
