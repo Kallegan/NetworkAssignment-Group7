@@ -61,6 +61,7 @@ public class WorldManager : MonoBehaviour
 
                 tempGameObject.transform.position = gridPosition;
                 tempGameObject.name = "Hex_" + x + "," + z;
+                tempGameObject.transform.parent = transform;
 
                 hexList.Add(tempGameObject);
                 
