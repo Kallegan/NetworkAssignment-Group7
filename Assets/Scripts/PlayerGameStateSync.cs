@@ -1,4 +1,3 @@
-using System;
 using Alteruna;
 
 public class PlayerGameStateSync : Synchronizable
