@@ -29,46 +29,12 @@ public class PrepareRoundGameState : GameState
 
     private void CheckIfCanStart()
     {
-        
 #if UNITY_EDITOR
         GameManager.Instance.PrintDebug("GameManager - ", "Checking if can start.");
 #endif
-        
-        bool canStart = true;
-        
-        if (GameManager.Instance.CheckIfEnoughPlayers())
-        {
-            var avatars = Multiplayer.Instance.GetAvatars();
-            
-            foreach (var avatar in avatars)
-            {
-                if (avatar == null)
-                    break;
-                
-                GameObject player = avatar.GameObject();
-                
-                if (player != null)
-                {
-                    var playerGameStateSync = player.GetComponentInChildren<PlayerGameStateSync>();
-                    if (playerGameStateSync.currentGameState == (byte)GameManager.State.PrepareRound) continue;
-                }
-
-                canStart = false;
-                break;
-            }
-        }
-        else
-        {
-            GameManager.Instance.ChangeState(GameManager.State.LookingForPlayers);
-            return;
-        }
-
-        if (canStart)
-        {
-            GameManager.Instance.ChangeState(GameManager.State.StartRound);
-        }
-
-        
-        
+        GameManager.Instance.ChangeState(GameManager.Instance.CheckIfEnoughPlayers()
+            ? GameManager.State.StartRound
+            : GameManager.State.LookingForPlayers);
     }
 }
+ 
