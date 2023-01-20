@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 6256759949714837762}
   - component: {fileID: 596002553679409354}
   - component: {fileID: 7780725231177317048}
-  - component: {fileID: 1013865643387354260}
+  - component: {fileID: 4538822643149185074}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -673,7 +673,7 @@ MonoBehaviour:
   OnUnpossessed:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1013865643387354260
+--- !u!114 &4538822643149185074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -688,13 +688,41 @@ MonoBehaviour:
   Multiplayer: {fileID: 0}
   UID: {fileID: 0}
   BucketBehaviors:
-  - Name: 
+  - Name: Min
     NetLOD: 0
+    Frequency: -1
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: Low
+    NetLOD: 1
     Frequency: 0
     Pending: 0
     LastUpdated: 0
-    NeverString: 
-    RealtimeString: 
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: Mid
+    NetLOD: 2
+    Frequency: 0
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: High
+    NetLOD: 3
+    Frequency: 0
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: Max
+    NetLOD: 4
+    Frequency: 500
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
 --- !u!1 &7774178871493564330
 GameObject:
   m_ObjectHideFlags: 0
