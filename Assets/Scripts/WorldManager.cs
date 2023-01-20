@@ -12,9 +12,11 @@ public class WorldManager : MonoBehaviour
     private readonly float zOffset = 1.6f;
 
 
-    [SerializeField] float levelShrinkSize = 14f;
+    [SerializeField] float playfieldSize = 14f;
+    [SerializeField] float levelMinSize = 5;
+    [SerializeField] float shrinkAmount = 2;
     [SerializeField] float shrinkStartDelay = 10;
-    [SerializeField] float shrinkRepeatTimer = 5;
+    [SerializeField] float shrinkRepeatTimer = 10;
 
     private readonly List<GameObject> hexList = new();
     private readonly List<GameObject> hexMarkedForDeletion = new();
@@ -65,59 +67,55 @@ public class WorldManager : MonoBehaviour
 
                 tempGameObject.transform.position = gridPosition;
                 tempGameObject.name = "Hex_" + x + "," + z;
-                tempGameObject.transform.parent = transform;
+                tempGameObject.transform.parent = transform;                
 
-                
-
-                hexList.Add(tempGameObject);
-                
-
+                hexList.Add(tempGameObject);             
             }
         }
     }
 
+   
+
+    private void ShrinkGrid()
+    {
+        if (playfieldSize > levelMinSize)
+            playfieldSize -= shrinkAmount;
+
+        SetHexShape();        
+    }
+
     private void SetHexShape()
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < 10; j++)
         {
             for (int i = 0; i < hexList.Count; i++)
             {
-                if (Vector3.Distance(hexList[i].transform.position, transform.position) > levelShrinkSize)
+                if (Vector3.Distance(hexList[i].transform.position, transform.position) > playfieldSize)
                 {
-                    hexList[i].GetComponent<MaterialPropertyBlockTest>().MarkForDeletion();
+                    hexList[i].GetComponent<MaterialPropertyBlockTest>().PendingTileOutOfBound();
 
                     hexMarkedForDeletion.Add(hexList[i]);
                     hexList.RemoveAt(i);
                     StartCoroutine(DestroyHexOutOfRange());
-                    
+
                 }
             }
-        }     
-       
-    }
+        }
 
-    private void ShrinkGrid()
-    {
-        if (levelShrinkSize > 5)
-            levelShrinkSize -= 2;
-
-        SetHexShape();        
     }
 
 
     IEnumerator DestroyHexOutOfRange()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(shrinkRepeatTimer / 2);
 
         for (int i = 0; i < hexMarkedForDeletion.Count; i++)
         {
-            Destroy(hexMarkedForDeletion[i]);
+            hexMarkedForDeletion[i].GetComponent<MaterialPropertyBlockTest>().TileOutOfBound();
+            //Destroy(hexMarkedForDeletion[i]);
         }
 
         hexMarkedForDeletion.Clear();
-        
-
-        
     }
 }
     
