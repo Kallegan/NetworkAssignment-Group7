@@ -47,7 +47,8 @@ public class DamageableComponent : AttributesSync
     public void OnHit(int damageAmount, Vector3 knockbackDirection)
     {
         TakeDamage(damageAmount);
-        PlayerMovement.canMove = false;
+        // Todo: deal with stuntime in a better way
+        PlayerMovement.SetAsStunned(0.5f); 
         //PlayerMovement.velocity = knockbackDirection.normalized;
     }
     void TakeDamage(int damageAmount)
@@ -61,10 +62,12 @@ public class DamageableComponent : AttributesSync
     }
 
     [SynchronizableMethod]
-    void UpdateHealth()
+    void UpdateHealthBar()
     {
         if (!avatar.IsMe)
             return;
+        Vector3 healthScale = new Vector3((Health / MaxHealth) * 2, HealthBar.localScale.y, HealthBar.localScale.z);
+        HealthBar.localScale = healthScale;
     }
 
     [SynchronizableMethod]

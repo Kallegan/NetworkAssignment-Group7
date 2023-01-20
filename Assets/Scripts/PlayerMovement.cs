@@ -7,19 +7,17 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Avatar avatar;
     //[SerializeField] private CharacterController controller;
-
-    private Rigidbody rb;
-    
     [SerializeField] private float _moveSpeed = 10f;
-    private float _curSpeed;
-    
     [SerializeField] private float _friction = 10f;
+    
+    private Camera cam;
+    private Rigidbody rb;
     
     private Vector3 _moveDir;
     private Vector3 _velocity;
     
-    private Camera cam;
-    public bool canMove = true;
+    public bool stunned = false;
+    private float stunTime;
     
     private void Awake()
     {
@@ -27,12 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
     }
-
-    private void Start()
-    {
-        _curSpeed = 0;
-    }
-
+    
     private void Update()
     {
         if (!avatar.IsMe) // ?
@@ -46,24 +39,32 @@ public class PlayerMovement : MonoBehaviour
         
         
         //controller.Move(_moveDir * _moveSpeed * Time.deltaTime);
-
         
-
+        // LookRotation
         LookAtMouseWorldPos();
-        /*
-        _velocity += _moveDir * _moveSpeed * Time.deltaTime;
-        _velocity = Vector3.MoveTowards(_velocity, Vector3.zero, _friction * Time.deltaTime);
-         controller.Move(_velocity * Time.deltaTime);
-        */
+        
+        // Stun
+        if (!stunned) return;
+        stunTime -= Time.deltaTime; 
+        if (stunTime <= 0) 
+            stunned = false;
     }
 
+    public void SetAsStunned(float duration)
+    {
+        stunned = true;
+        stunTime = duration;
+    }
+    
     private void FixedUpdate()
     {
+        if (!avatar.IsMe) return;
+        if (!stunned) return;
+
         _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         rb.AddForce(_moveDir * _moveSpeed);
     }
-
-
+    
     private void LookAtMouseWorldPos()
     {
         Ray cameraRay = cam.ScreenPointToRay(Input.mousePosition);
