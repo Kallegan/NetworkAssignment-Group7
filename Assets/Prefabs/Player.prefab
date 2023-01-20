@@ -61,7 +61,6 @@ MonoBehaviour:
   Multiplayer: {fileID: 0}
   UID: {fileID: 0}
   Reliability: 1
-  avatar: {fileID: 0}
   HealthBar: {fileID: 4279380657899205574}
   MaxHealth: 10
 --- !u!1 &1472975842189796498
@@ -283,7 +282,6 @@ MonoBehaviour:
   Multiplayer: {fileID: 0}
   UID: {fileID: 0}
   Reliability: 1
-  avatar: {fileID: 0}
   spawner: {fileID: 7973682003673400592, guid: bdcf3332f5c38474ea67b18f2853ea97, type: 3}
   attackCoolDown: 0.5
   deflectArea: {fileID: 3263929097021584910}
@@ -500,7 +498,7 @@ GameObject:
   - component: {fileID: 6256759949714837762}
   - component: {fileID: 596002553679409354}
   - component: {fileID: 7780725231177317048}
-  - component: {fileID: 1013865643387354260}
+  - component: {fileID: 4538822643149185074}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -623,7 +621,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d256d8438b7f4498c9891db15971b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatar: {fileID: 7780725231177317048}
   _moveSpeed: 50
   _friction: 10
   stunned: 0
@@ -676,7 +673,7 @@ MonoBehaviour:
   OnUnpossessed:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1013865643387354260
+--- !u!114 &4538822643149185074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -690,7 +687,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Multiplayer: {fileID: 0}
   UID: {fileID: 0}
-  BucketBehaviors: []
+  BucketBehaviors:
+  - Name: Min
+    NetLOD: 0
+    Frequency: -1
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: Low
+    NetLOD: 1
+    Frequency: 0
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: Mid
+    NetLOD: 2
+    Frequency: 0
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: High
+    NetLOD: 3
+    Frequency: 0
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
+  - Name: Max
+    NetLOD: 4
+    Frequency: 500
+    Pending: 0
+    LastUpdated: 0
+    NeverString: Never
+    RealtimeString: Realtime
 --- !u!1 &7774178871493564330
 GameObject:
   m_ObjectHideFlags: 0
