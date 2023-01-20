@@ -1,4 +1,3 @@
-using System;
 using Alteruna;
 using UnityEngine;
 
@@ -13,7 +12,6 @@ public class PlayerActions : AttributesSync
     [SerializeField] private float attackCoolDown = 0.5f;
     private bool canAttack = true;
     private float curAttackCoolDown;
-    
     
     // Deflect
     [SerializeField] private BoxCollider deflectArea;
@@ -90,9 +88,12 @@ public class PlayerActions : AttributesSync
         GameObject proj = spawner.Spawn(0, transform.position + transform.forward * 2f, transform.rotation);
         if (proj.TryGetComponent(out SynchronizedProjectile p))
         {
-            p.ownerIndex = avatar.Possessor.Index;
-            p.spawner = spawner;
-            p.avatar = avatar;
+            Debug.Log("YES PROJECTILE SCRIPT");
+            p.SetIndex(avatar.Possessor.Index);
+        }
+        else
+        {
+            Debug.Log("NO PROJECTILE SCRIPT");
         }
         canAttack = false;
     }

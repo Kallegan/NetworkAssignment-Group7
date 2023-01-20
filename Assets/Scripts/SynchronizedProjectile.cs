@@ -1,3 +1,4 @@
+using System;
 using Alteruna;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
@@ -5,52 +6,67 @@ using Vector3 = UnityEngine.Vector3;
 
 public class SynchronizedProjectile : Synchronizable
 {
+   
+    public UInt16 ownerIndex;
+
     public Spawner spawner;
     public Avatar avatar;
-    public int ownerIndex;
     
-    private Vector3 direction;
+    private Vector3 _direction;
     private Vector3 _oldDirection;
-    
-    [SerializeField] private float speed = 5.0f;
+
+    [SerializeField] private float _speed = 5.0f;
     private float _oldSpeed;
 
+    public int damage = 1;
+    
     private void Start()
     {
-        direction = transform.forward;
+        _direction = transform.forward;
+
+        spawner = FindObjectOfType<Spawner>();
+        Multiplayer.Instance.GetAvatar(ownerIndex);
     }
-    
+
     private void Update()
     {
-        if (_oldDirection != direction | _oldSpeed != speed)
+        if (_oldDirection != _direction | _oldSpeed != _speed)
         {
             Commit();
-            _oldDirection = direction;
-            _oldSpeed = speed;
+            _oldDirection = _direction;
+            _oldSpeed = _speed;
         }
-        transform.position += direction * (speed * Time.deltaTime);
+
+        transform.position += _direction * (_speed * Time.deltaTime);
         SyncUpdate();
+    }
+
+    [SynchronizableMethod]
+    public void SetIndex(UInt16 index) // projectileInit()
+    {
+        ownerIndex = index;
+        Debug.Log("PROJECTILE SET INDEX " + ownerIndex);
     }
     
     public override void AssembleData(Writer writer, byte LOD = 100)
     {
-        writer.Write(direction);
-        writer.Write(speed);
+        writer.Write(_direction);
+        writer.Write(_speed);
     }
 
     public override void DisassembleData(Reader reader, byte LOD = 100)
     {
-        direction = reader.ReadVector3();
-        _oldDirection = direction;
+        _direction = reader.ReadVector3();
+        _oldDirection = _direction;
 
-        speed = reader.ReadFloat();
-        _oldSpeed = speed;
+        _speed = reader.ReadFloat();
+        _oldSpeed = _speed;
     }
-    
+
     public void OnDeflect(Vector3 newDirection)
     {
-        direction = newDirection;
-        speed *= 1.1f;
+        _direction = newDirection;
+        _speed *= 1.1f;
     }
 
     private void DestroySelf()
@@ -58,9 +74,13 @@ public class SynchronizedProjectile : Synchronizable
         if (avatar.Possessor.Index == ownerIndex)
             spawner.Despawn(gameObject);
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
+        var damageable = collision.gameObject.GetComponentInChildren<DamageableComponent>();
+        if (damageable)
+            damageable.OnHit(1, _direction);
+
         DestroySelf();
     }
 }

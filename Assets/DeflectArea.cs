@@ -11,10 +11,11 @@ public class DeflectArea : MonoBehaviour
         if (!other.gameObject.TryGetComponent(out SynchronizedProjectile proj))
             return;
 
+        
         // if (!player.deflectable)
         //Debug.Log("PLAYER CUR DEFLECTABLE ID:" + proj.localId);
 
-            player.curDeflectable = proj;
+        player.curDeflectable = proj;
     }
 
     private void OnTriggerExit(Collider other)
