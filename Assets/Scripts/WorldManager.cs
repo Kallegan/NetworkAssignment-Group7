@@ -76,6 +76,16 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+   
+
+    private void ShrinkGrid()
+    {
+        if (levelShrinkSize > 5)
+            levelShrinkSize -= 2;
+
+        SetHexShape();        
+    }
+
     private void SetHexShape()
     {
         for (int j = 0; j < 6; j++)
@@ -89,19 +99,11 @@ public class WorldManager : MonoBehaviour
                     hexMarkedForDeletion.Add(hexList[i]);
                     hexList.RemoveAt(i);
                     StartCoroutine(DestroyHexOutOfRange());
-                    
+
                 }
             }
-        }     
-       
-    }
+        }
 
-    private void ShrinkGrid()
-    {
-        if (levelShrinkSize > 5)
-            levelShrinkSize -= 2;
-
-        SetHexShape();        
     }
 
 
@@ -115,9 +117,6 @@ public class WorldManager : MonoBehaviour
         }
 
         hexMarkedForDeletion.Clear();
-        
-
-        
     }
 }
     
