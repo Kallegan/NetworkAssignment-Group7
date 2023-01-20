@@ -96,7 +96,7 @@ public class PlayerActions : AttributesSync
         UInt16 playerIndex = avatar.Possessor.Index;
         
         ProcedureParameters parameters = new ProcedureParameters();
-        parameters.Set("playerIndex", (UInt16)playerIndex);
+        parameters.Set("playerIndex", (UInt16)Multiplayer.Instance.Me.Index);
         Multiplayer.InvokeRemoteProcedure("RemoteGetOwnerIndex", UserId.All, parameters);
         
         canAttack = false;

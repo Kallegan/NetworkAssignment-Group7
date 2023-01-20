@@ -80,7 +80,7 @@ public class SynchronizedProjectile : Synchronizable
 
     private void DestroySelf()
     {
-        if (Multiplayer.Me.Index == _ownerIndex)
+        if (Multiplayer.Instance.Me.Index == _ownerIndex)
             _spawner.Despawn(gameObject);
     }
 
