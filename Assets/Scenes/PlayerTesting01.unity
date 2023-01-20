@@ -412,6 +412,10 @@ PrefabInstance:
       propertyPath: worldHeight
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 5180205229018151375, guid: 414a71e754e62e34b9804997f50ba9e5, type: 3}
+      propertyPath: shrinkRepeatTimer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 414a71e754e62e34b9804997f50ba9e5, type: 3}
 --- !u!1 &1719576489
