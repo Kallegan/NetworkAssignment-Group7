@@ -9,13 +9,13 @@ public class PlayerGameStateSync : Synchronizable
     
     public override void AssembleData(Writer writer, byte LOD = 100)
     {
-        Debug.Log("ASSEMBLING, PLAYERGAMESTATE");
+        GameManager.Instance.PrintDebug("Assembling data", this.name);
         writer.Write(currentGameState);
     }
 
     public override void DisassembleData(Reader reader, byte LOD = 100)
     {
-        Debug.Log("DISASSEMBLING, PLAYERGAMESTATE");
+        GameManager.Instance.PrintDebug("Disassembling data", this.name);
 
         currentGameState = reader.ReadByte();
         
