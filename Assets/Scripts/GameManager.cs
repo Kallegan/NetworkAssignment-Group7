@@ -90,8 +90,8 @@ public class GameManager : MonoBehaviour
     
     public bool CheckIfEnoughPlayers()
     {
-        var amountOfPlayersInRoom = AmountOfPlayersInRoom();
-        var enoughPlayers = amountOfPlayersInRoom >= _minUsersToStart;
+        int amountOfPlayersInRoom = AmountOfPlayersInRoom();
+        bool enoughPlayers = amountOfPlayersInRoom >= _minUsersToStart;
         
 #if UNITY_EDITOR
         PrintDebug("GameManager - Check if enough players: ", enoughPlayers);
@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
     
     public void OtherJoinedRoom()
     {
+        SyncTheStates();
 #if UNITY_EDITOR
         PrintDebug("GameManager - ", "Other player joined the room.");
 #endif
@@ -173,6 +174,20 @@ public class GameManager : MonoBehaviour
             {
                 PlayerGameStateSync playerGameStateSync = player.GetComponentInChildren<PlayerGameStateSync>();
                 playerGameStateSync.currentGameState = (byte)_state;
+            }
+        }
+    }
+
+    private void SyncTheStates()
+    {
+        Avatar avatar = _multiplayer.GetAvatar();
+        if (avatar != null)
+        {
+            GameObject player = avatar.GameObject();
+            if (player != null)
+            {
+                PlayerGameStateSync playerGameStateSync = player.GetComponentInChildren<PlayerGameStateSync>();
+                playerGameStateSync.SyncMyState();
             }
         }
     }

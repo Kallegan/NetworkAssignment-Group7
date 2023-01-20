@@ -35,9 +35,9 @@ public class SynchronizedProjectile : Synchronizable
         /*
         if (_oldDirection != _direction | _oldSpeed != _speed)
         {
+            Commit();
             _oldDirection = _direction;
             _oldSpeed = _speed;
-            Commit();
         }
         
         transform.position += _direction * (_speed * Time.deltaTime);
