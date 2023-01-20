@@ -10,7 +10,8 @@ public class WorldManager : MonoBehaviour
     private readonly float xOffset = 1.8f;
     private readonly float zOffset = 1.6f;
 
-    float radius = 14f;
+
+    [SerializeField] float levelShrinkSize = 14f;
     [SerializeField] float shrinkStartDelay = 10;
     [SerializeField] float shrinkRepeatTimer = 5;
 
@@ -74,7 +75,7 @@ public class WorldManager : MonoBehaviour
         {
             for (int i = 0; i < hexList.Count; i++)
             {
-                if (Vector3.Distance(hexList[i].transform.position, transform.position) > radius)
+                if (Vector3.Distance(hexList[i].transform.position, transform.position) > levelShrinkSize)
                 {
                     Destroy(hexList[i]);
                     hexList.RemoveAt(i);
@@ -86,8 +87,8 @@ public class WorldManager : MonoBehaviour
 
     private void ShrinkGrid()
     {
-        if (radius > 5)
-            radius = radius - 2;
+        if (levelShrinkSize > 5)
+            levelShrinkSize = levelShrinkSize - 2;
 
         SetHexShape();        
     }

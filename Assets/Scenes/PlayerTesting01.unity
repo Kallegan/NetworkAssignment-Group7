@@ -380,6 +380,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldWidth: 20
   worldHeight: 20
+  levelShrinkSize: 14
+  shrinkStartDelay: 10
+  shrinkRepeatTimer: 5
   hexPrefab: {fileID: 108990249871851049, guid: fbb9c4f15e8ab404687e00e234f0e122, type: 3}
 --- !u!4 &1440878774
 Transform:
