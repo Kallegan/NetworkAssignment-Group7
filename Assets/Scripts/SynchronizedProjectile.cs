@@ -41,16 +41,12 @@ public class SynchronizedProjectile : Synchronizable
         SyncUpdate();
     }
 
-    public void Init()
-    {
-        
-    }
-    
     [SynchronizableMethod]
-    public void SetIndex(UInt16 index) // projectileInit()
+    public void Init(UInt16 fromIndex)
     {
-        ownerIndex = index;
-        Debug.Log("PROJECTILE SET INDEX " + ownerIndex);
+        ownerIndex = fromIndex;
+        spawner = FindObjectOfType<Spawner>();
+        Multiplayer.Instance.GetAvatar(ownerIndex);
     }
     
     public override void AssembleData(Writer writer, byte LOD = 100)
