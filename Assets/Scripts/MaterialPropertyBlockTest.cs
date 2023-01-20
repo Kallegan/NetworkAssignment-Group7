@@ -17,6 +17,7 @@ public class MaterialPropertyBlockTest : MonoBehaviour
     private bool isPending = false;
     private bool isOutOfBound = false;
 
+
     void Awake()
     {
         _propBlock = new MaterialPropertyBlock();

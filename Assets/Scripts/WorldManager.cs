@@ -21,9 +21,7 @@ public class WorldManager : MonoBehaviour
     private readonly List<GameObject> hexList = new();
     private readonly List<GameObject> hexMarkedForDeletion = new();
 
-
-    [SerializeField] private GameObject hexPrefab; 
-        
+    [SerializeField] private GameObject hexPrefab;         
 
     void Start()
     {
@@ -81,7 +79,8 @@ public class WorldManager : MonoBehaviour
         if (playfieldSize > levelMinSize)
             playfieldSize -= shrinkAmount;
 
-        SetHexShape();        
+        SetHexShape();
+        
     }
 
     private void SetHexShape()
@@ -97,7 +96,6 @@ public class WorldManager : MonoBehaviour
                     hexMarkedForDeletion.Add(hexList[i]);
                     hexList.RemoveAt(i);
                     StartCoroutine(DestroyHexOutOfRange());
-
                 }
             }
         }
@@ -111,11 +109,27 @@ public class WorldManager : MonoBehaviour
 
         for (int i = 0; i < hexMarkedForDeletion.Count; i++)
         {
-            hexMarkedForDeletion[i].GetComponent<MaterialPropertyBlockTest>().TileOutOfBound();
-            //Destroy(hexMarkedForDeletion[i]);
+            hexMarkedForDeletion[i].GetComponent<MaterialPropertyBlockTest>().TileOutOfBound();           
         }
-
+               
         hexMarkedForDeletion.Clear();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+       // if (other.tag == "Player" && (Vector3.Distance(other.transform.position, transform.position) < playfieldSize + shrinkAmount))
+           // Debug.Log("safe zone");
+        // other.transform.Find("Damageable").GetComponent<DamageableComponent>().OnHit(1);
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //if (other.tag == "Player" && (Vector3.Distance(other.transform.position, transform.position) > playfieldSize + shrinkAmount))
+            //Debug.Log("DAMAGE"); //other.transform.Find("Damageable").GetComponent<DamageableComponent>().OnHit(1);
+
+    }
+
+    
 }
     

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5180205229018151372}
   - component: {fileID: 5180205229018151375}
+  - component: {fileID: 6181155785779380307}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -46,7 +47,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldWidth: 20
   worldHeight: 20
-  levelShrinkSize: 14
+  playfieldSize: 14
+  levelMinSize: 5
+  shrinkAmount: 2
   shrinkStartDelay: 10
   shrinkRepeatTimer: 5
   hexPrefab: {fileID: 8344211244079217841, guid: 8032b004f85a1434b81c8c0e271c0a1f, type: 3}
+--- !u!135 &6181155785779380307
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5180205229018151374}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
