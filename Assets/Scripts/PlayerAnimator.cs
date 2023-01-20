@@ -46,8 +46,8 @@ public class PlayerAnimator : MonoBehaviour
     private void LateUpdate()
     {
 
-        
+        //This is jittery
         float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing, 0, Time.deltaTime);
-        anim.SetFloat("VelocityMagnitude", rb.velocity.magnitude * Coefficent);
+        anim.SetFloat("VelocityMagnitude", SmoothedVelocity * Coefficent);
     }
 }
