@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
 
         rb = GetComponent<Rigidbody>();
-        transform.parent.GetComponent<Avatar>();
+        avatar = transform.parent.GetComponent<Avatar>();
     }
     
     private void Update()
