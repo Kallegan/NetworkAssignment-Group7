@@ -6,10 +6,10 @@ using Vector3 = UnityEngine.Vector3;
 
 public class SynchronizedProjectile : Synchronizable
 {
-    private Spawner _spawner;
-    private UInt16 _ownerIndex;
+    public Spawner _spawner;
+    public UInt16 _ownerIndex;
 
-    private Vector3 _direction;
+    public Vector3 _direction;
     private Vector3 _oldDirection;
 
     [SerializeField] private float _speed = 5.0f;
@@ -17,17 +17,22 @@ public class SynchronizedProjectile : Synchronizable
     
     public int damage = 1;
 
+    public void Start()
+    {
+        Debug.Log("Proj was spawned");
+        _spawner = FindObjectOfType<Spawner>();
+        _direction = transform.forward;
+    }
+
     [SynchronizableMethod]
     public void Init(UInt16 fromIndex)
     {
-        _direction = transform.forward;
         _ownerIndex = fromIndex;
-        _spawner = FindObjectOfType<Spawner>();
     }
     
     private void Update()
     {
-        
+        /*
         if (_oldDirection != _direction | _oldSpeed != _speed)
         {
             Commit();
@@ -37,7 +42,7 @@ public class SynchronizedProjectile : Synchronizable
         
         transform.position += _direction * (_speed * Time.deltaTime);
         SyncUpdate();
-        
+        */
     }
     
     public override void AssembleData(Writer writer, byte LOD = 100)
