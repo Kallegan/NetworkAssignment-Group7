@@ -1,3 +1,4 @@
+using System;
 using Alteruna;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
@@ -16,7 +17,7 @@ public class SynchronizedProjectile : Synchronizable
     private float _oldSpeed;
 
     public int damage = 1;
-
+    
     private void Start()
     {
         direction = transform.forward;

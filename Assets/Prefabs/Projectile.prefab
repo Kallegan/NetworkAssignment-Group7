@@ -180,9 +180,11 @@ MonoBehaviour:
     LastUpdated: 0
     NeverString: Never
     RealtimeString: Realtime
-  spawner: {fileID: 0}
-  playerIndex: 0
+  spawner: {fileID: 7973682003673400592, guid: bdcf3332f5c38474ea67b18f2853ea97, type: 3}
+  avatar: {fileID: 6030635960649211570, guid: 058d179d6651dec449daf0226f63c33c, type: 3}
+  ownerIndex: 0
   speed: 10
+  damage: 1
 --- !u!96 &5563470969943014348
 TrailRenderer:
   serializedVersion: 2

@@ -1,4 +1,3 @@
-using System;
 using Alteruna;
 using UnityEngine;
 
@@ -13,7 +12,6 @@ public class PlayerActions : AttributesSync
     [SerializeField] private float attackCoolDown = 0.5f;
     private bool canAttack = true;
     private float curAttackCoolDown;
-    
     
     // Deflect
     [SerializeField] private BoxCollider deflectArea;
