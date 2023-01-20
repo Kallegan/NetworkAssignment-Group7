@@ -16,7 +16,12 @@ public class SynchronizedProjectile : Synchronizable
     private float _oldSpeed;
     
     public int damage = 1;
-    
+
+    public void Start()
+    {
+        Debug.Log("Proj was spawned");
+    }
+
     [SynchronizableMethod]
     public void Init(UInt16 fromIndex)
     {
