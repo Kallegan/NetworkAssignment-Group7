@@ -586,7 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avatar: {fileID: 6030635960649211570}
-  _moveSpeed: 17.5
+  _moveSpeed: 50
   _friction: 10
   canMove: 1
 --- !u!114 &6030635960649211570
