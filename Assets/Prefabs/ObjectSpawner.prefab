@@ -53,3 +53,4 @@ MonoBehaviour:
   ObjectDespawned:
     m_PersistentCalls:
       m_Calls: []
+  ForceSync: 1
