@@ -72,8 +72,10 @@ public class SynchronizedProjectile : Synchronizable
 
     private void DestroySelf()
     {
+        /*
         if (avatar.Possessor.Index == ownerIndex)
             spawner.Despawn(gameObject);
+            */
     }
 
     private void OnCollisionEnter(Collision collision)
