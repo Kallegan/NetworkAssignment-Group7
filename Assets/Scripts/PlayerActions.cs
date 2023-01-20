@@ -24,13 +24,13 @@ public class PlayerActions : AttributesSync
     private void Awake()
     {
         spawner = FindObjectOfType<Spawner>();
-        avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
     }
 
     private void Start()
     {
         curAttackCoolDown = attackCoolDown;
         curDeflectCoolDown = deflectCoolDown;
+        avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
     }
     
     private void Update()

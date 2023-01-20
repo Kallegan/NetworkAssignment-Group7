@@ -24,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
 
         rb = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
     }
     
