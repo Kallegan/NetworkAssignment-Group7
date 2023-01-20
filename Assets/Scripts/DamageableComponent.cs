@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DamageableComponent : AttributesSync
 {
-    [SerializeField] private Alteruna.Avatar avatar;
+    private Alteruna.Avatar avatar;
     [SerializeField] Transform HealthBar;
     
     
@@ -18,6 +18,7 @@ public class DamageableComponent : AttributesSync
     {
         cam = Camera.main;
         PlayerMovement = transform.parent.GetComponent<PlayerMovement>();
+        avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
         
     }
 
