@@ -24,7 +24,7 @@ public class PlayerActions : AttributesSync
     private void Awake()
     {
         spawner = FindObjectOfType<Spawner>();
-        avatar = transform.parent.GetComponent<Alteruna.Avatar>();
+        avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
     }
 
     private void Start()
