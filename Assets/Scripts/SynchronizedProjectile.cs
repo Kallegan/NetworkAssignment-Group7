@@ -28,6 +28,7 @@ public class SynchronizedProjectile : Synchronizable
     public void Init(UInt16 fromIndex)
     {
         _ownerIndex = fromIndex;
+        GameManager.Instance.PrintDebug("Projectile owner index: ", _ownerIndex);
     }
     
     private void Update()
