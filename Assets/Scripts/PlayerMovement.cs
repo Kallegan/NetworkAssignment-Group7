@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (!avatar.IsMe) return;
-        if (!stunned) return;
+        if (stunned) return;
 
         _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         rb.AddForce(_moveDir * _moveSpeed);
