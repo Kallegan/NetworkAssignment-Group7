@@ -6,8 +6,8 @@ public class WorldManager : MonoBehaviour
     [SerializeField] private int worldWidth = 20;
     [SerializeField] private int worldHeight = 20;
 
-    private readonly float xOffset = 1.8f;
-    private readonly float zOffset = 1.565f;
+    private readonly float xOffset = 1.8f;  
+    private readonly float zOffset = 1.6f;
     
     [SerializeField] private GameObject hexPrefab;
 
@@ -55,8 +55,7 @@ public class WorldManager : MonoBehaviour
         if (other.CompareTag("Hex"))
         {
             Destroy(other.gameObject);
-        }
-        
+        }        
     }
 }
 
