@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MaterialPropertyBlockTest : MonoBehaviour
 {
-    public Color defaultColor, deletedTile, pending1, pending2;
+    public Color defaultColor, deletedTile1, deletedTile2, pending1, pending2;
     [SerializeField] private float pendingSpeed = 2;
     [SerializeField] private float outOfScopeSpeed = 1;
     private readonly float offset;
@@ -30,7 +30,7 @@ public class MaterialPropertyBlockTest : MonoBehaviour
         if (isPending)   
             _propBlock.SetColor("_Color", Color.Lerp(pending1, pending2, (Mathf.Sin(Time.time * pendingSpeed + offset) + 1) / 2f));        
         else if(isOutOfBound)
-            _propBlock.SetColor("_Color", Color.Lerp(pending2, deletedTile, (Mathf.Sin(Time.time * outOfScopeSpeed + offset) + 1) / 2f));
+            _propBlock.SetColor("_Color", Color.Lerp(deletedTile1, deletedTile2, (Mathf.Sin(Time.time * outOfScopeSpeed + offset) + 1) / 2f));
         else
             _propBlock.SetColor("_Color", defaultColor);
 

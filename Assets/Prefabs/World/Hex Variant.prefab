@@ -109,8 +109,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultColor: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 0}
-  deletedTile: {r: 0.16981131, g: 0.002402986, b: 0.002402986, a: 0}
+  deletedTile1: {r: 0, g: 0, b: 0, a: 0}
+  deletedTile2: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 0}
   pending1: {r: 0.6509434, g: 0, b: 0, a: 0}
-  pending2: {r: 0, g: 0, b: 0, a: 0}
+  pending2: {r: 0.38679248, g: 0, b: 0, a: 0}
   pendingSpeed: 1
-  outOfScopeSpeed: 1
+  outOfScopeSpeed: 0.5
