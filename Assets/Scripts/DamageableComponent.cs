@@ -9,7 +9,8 @@ public class DamageableComponent : AttributesSync
 
     WorldManager world;
 
-
+    [SerializeField] private float WorldDamageImmunityTime = 0.5f;
+    [SerializeField] private int WorldDamage = 1;
     [SerializeField] private int MaxHealth = 10;
     [SynchronizableField] private int Health = 10;
 
@@ -17,7 +18,7 @@ public class DamageableComponent : AttributesSync
 
     private Camera cam;
     private bool RecentlyDamaged = false;
-    private float IFrames = 1f;
+   
 
     private void Awake()
     {
@@ -62,10 +63,10 @@ public class DamageableComponent : AttributesSync
     {
         RecentlyDamaged = true;
 
-        yield return new WaitForSeconds(IFrames);
+        yield return new WaitForSeconds(WorldDamageImmunityTime);
 
         RecentlyDamaged = false;
-        OnHit(1);
+        OnHit(WorldDamage);
     }
 
     public void OnHit(int damageAmount)
