@@ -9,8 +9,8 @@ public class DamageableComponent : AttributesSync
 
     [SerializeField] private float WorldDamageImmunityTime = 0.5f;
     [SerializeField] private int WorldDamage = 1;
-    [SerializeField] private int MaxHealth = 10;
-    [SynchronizableField] private int Health = 10;
+    [SerializeField] private float MaxHealth = 10;
+    [SynchronizableField] private float Health = 10;
 
     private PlayerMovement PlayerMovement;
 
