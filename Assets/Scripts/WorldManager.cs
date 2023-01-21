@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
-
+using System;
 
 public class WorldManager : MonoBehaviour
 {
+    [SerializeField] bool enableDebug = false;
+
     [SerializeField] private int worldWidth = 20;
     [SerializeField] private int worldHeight = 20;
 
@@ -21,13 +23,44 @@ public class WorldManager : MonoBehaviour
     private readonly List<GameObject> hexList = new();
     private readonly List<GameObject> hexMarkedForDeletion = new();
 
-    [SerializeField] private GameObject hexPrefab;         
+    private float safeZoneRadius;
+
+    [SerializeField] private GameObject hexPrefab;
+
+
+    private static WorldManager instance;
+    public static WorldManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                throw new NullReferenceException("instance is null!");
+            }
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+    }
+
+
 
     void Start()
     {
         GenerateHexGrid();
         SetHexShape(); 
         StarShrinkLevel(); //move out from start and trigger from game manager instead.
+
+
+        safeZoneRadius = worldWidth;
     }
 
     public void StarShrinkLevel()
@@ -77,10 +110,9 @@ public class WorldManager : MonoBehaviour
     private void ShrinkGrid()
     {
         if (playfieldSize > levelMinSize)
-            playfieldSize -= shrinkAmount;
+            playfieldSize -= shrinkAmount;        
 
         SetHexShape();
-        
     }
 
     private void SetHexShape()
@@ -99,10 +131,9 @@ public class WorldManager : MonoBehaviour
                 }
             }
         }
-
     }
 
-
+   
     IEnumerator DestroyHexOutOfRange()
     {
         yield return new WaitForSeconds(shrinkRepeatTimer / 2);
@@ -113,23 +144,19 @@ public class WorldManager : MonoBehaviour
         }
                
         hexMarkedForDeletion.Clear();
+        safeZoneRadius = playfieldSize;
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    public bool TakeWorldDamage(Vector3 playerPosition)
     {
-       // if (other.tag == "Player" && (Vector3.Distance(other.transform.position, transform.position) < playfieldSize + shrinkAmount))
-           // Debug.Log("safe zone");
-        // other.transform.Find("Damageable").GetComponent<DamageableComponent>().OnHit(1);
 
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        //if (other.tag == "Player" && (Vector3.Distance(other.transform.position, transform.position) > playfieldSize + shrinkAmount))
-            //Debug.Log("DAMAGE"); //other.transform.Find("Damageable").GetComponent<DamageableComponent>().OnHit(1);
-
+        if (Vector3.Distance(transform.position, playerPosition) > safeZoneRadius)
+            return true;
+        else
+            return false;
     }
 
     
 }
-    
+

@@ -1,25 +1,30 @@
 using Alteruna;
+using System.Collections;
 using UnityEngine;
 
 public class DamageableComponent : AttributesSync
 {
     private Alteruna.Avatar avatar;
     [SerializeField] Transform HealthBar;
-    
-    
+
+    WorldManager world;
+
+
     [SerializeField] private int MaxHealth = 10;
     [SynchronizableField] private int Health = 10;
 
     private PlayerMovement PlayerMovement;
-    
+
     private Camera cam;
-    
+    private bool RecentlyDamaged = false;
+    private float IFrames = 1f;
+
     private void Awake()
     {
         cam = Camera.main;
         PlayerMovement = transform.parent.GetComponent<PlayerMovement>();
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
-        
+
     }
 
     private void Start()
@@ -27,6 +32,8 @@ public class DamageableComponent : AttributesSync
         if (!avatar.IsMe)
             return;
         Health = MaxHealth;
+
+        world = WorldManager.Instance;
     }
 
     // Update is called once per frame
@@ -35,14 +42,35 @@ public class DamageableComponent : AttributesSync
         //Update size of healthbar
         Vector3 healthScale = new Vector3((Health / MaxHealth) * 2, HealthBar.localScale.y, HealthBar.localScale.z);
         HealthBar.localScale = healthScale;
-        
+
         //turns healthbars to player camera.
         HealthBar.transform.LookAt(HealthBar.transform.position + cam.transform.rotation * Vector3.forward);
+
+        if (world.TakeWorldDamage(transform.parent.position) && !RecentlyDamaged)
+            TakeWorldDamage();
+    }
+
+    private void TakeWorldDamage()
+    {
+        if (RecentlyDamaged)
+            return;
+
+        StartCoroutine(TickDamage());
+    }
+
+    private IEnumerator TickDamage()
+    {
+        RecentlyDamaged = true;
+
+        yield return new WaitForSeconds(IFrames);
+
+        RecentlyDamaged = false;
+        OnHit(1);
     }
 
     public void OnHit(int damageAmount)
     {
-        TakeDamage(damageAmount);
+        TakeDamage(damageAmount);        
     }
     
     public void OnHit(int damageAmount, Vector3 knockbackDirection)
