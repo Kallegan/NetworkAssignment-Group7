@@ -49,4 +49,10 @@ public class MaterialPropertyBlockTest : MonoBehaviour
         isPending = false;
         isOutOfBound = true;
     }
+
+    public void ResetPropertyBlock()
+    {
+        isPending = false;
+        isOutOfBound = false;
+    }
 }

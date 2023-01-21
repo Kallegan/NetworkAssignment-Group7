@@ -5,29 +5,34 @@ using System;
 
 public class WorldManager : MonoBehaviour
 {
-    [SerializeField] bool enableDebug = false;
-
+    
+    //total hex grid size
     [SerializeField] private int worldWidth = 20;
     [SerializeField] private int worldHeight = 20;
 
+    //hex offset when spawning to make them match
     private readonly float xOffset = 1.8f;
     private readonly float zOffset = 1.6f;
 
-
-    [SerializeField] float playfieldSize = 14f;
-    [SerializeField] float levelMinSize = 5;
-    [SerializeField] float shrinkAmount = 2;
-    [SerializeField] float shrinkStartDelay = 10;
-    [SerializeField] float shrinkRepeatTimer = 10;
-
-    private readonly List<GameObject> hexList = new();
-    private readonly List<GameObject> hexMarkedForDeletion = new();
-
+    //playfield and safezone. Cuts out spheres shape from hexgrid.
+    [SerializeField] float playfieldStartSize = 14;
+    private float playfieldSize;
     private float safeZoneRadius;
 
+    
+    [SerializeField] float levelMinSize = 5;
+    [SerializeField] float shrinkAmount = 2;    
+    [SerializeField] float shrinkRepeatTimer = 10;
+
+    //list with all hexes currently in scene.
+    private readonly List<GameObject> hexList = new();
+    //hexes that are marked out of scape to deal damage.
+    private readonly List<GameObject> hexMarkedForDeletion = new();
+    //temp for resetting grid
+    private readonly List<GameObject> hexReset = new();
+    private bool isGameRunning = false;
+
     [SerializeField] private GameObject hexPrefab;
-
-
     private static WorldManager instance;
     public static WorldManager Instance
     {
@@ -56,27 +61,28 @@ public class WorldManager : MonoBehaviour
     void Start()
     {
         GenerateHexGrid();
-        SetHexShape(); 
-        StarShrinkLevel(); //move out from start and trigger from game manager instead.
-
-
-        safeZoneRadius = worldWidth;
+        StartShrinkGrid();        
     }
 
-    public void StarShrinkLevel()
+    public void StartShrinkGrid()
     {
-        InvokeRepeating(nameof(ShrinkGrid), shrinkStartDelay, shrinkRepeatTimer);
+        isGameRunning = true;
+        playfieldSize = playfieldStartSize;
+        safeZoneRadius = worldWidth;
+
+        SetHexShape(); //cuts the sphere into square hexgrid. 
+        InvokeRepeating(nameof(ShrinkGrid), shrinkRepeatTimer, shrinkRepeatTimer);
     }
+
+
+    
 
     private void GenerateHexGrid()
     {
         float gridXMin = -worldWidth / 2;
         float gridXMax = worldWidth / 2;
-
         float gridZMin = -worldHeight / 2;
         float gridZMax = worldHeight / 2;
-
-
 
         for (float x = gridXMin; x < gridXMax; x++)
         {
@@ -98,19 +104,24 @@ public class WorldManager : MonoBehaviour
 
                 tempGameObject.transform.position = gridPosition;
                 tempGameObject.name = "Hex_" + x + "," + z;
-                tempGameObject.transform.parent = transform;                
-
-                hexList.Add(tempGameObject);             
+                tempGameObject.transform.parent = transform;
+                
+                hexList.Add(tempGameObject);
+                hexReset.Add(tempGameObject);
             }
         }
     }
 
-   
-
     private void ShrinkGrid()
     {
         if (playfieldSize > levelMinSize)
-            playfieldSize -= shrinkAmount;        
+                playfieldSize -= shrinkAmount;
+        else//temp for testing
+        {
+            ResetHexGrid();
+            StartShrinkGrid();
+        }
+            
 
         SetHexShape();
     }
@@ -138,25 +149,47 @@ public class WorldManager : MonoBehaviour
     {
         yield return new WaitForSeconds(shrinkRepeatTimer / 2);
 
-        for (int i = 0; i < hexMarkedForDeletion.Count; i++)
+        //avoids cutting a hole in grid after resetting the map.
+        if(isGameRunning)
         {
-            hexMarkedForDeletion[i].GetComponent<MaterialPropertyBlockTest>().TileOutOfBound();           
-        }
+            for (int i = 0; i < hexMarkedForDeletion.Count; i++)
+            {
+                hexMarkedForDeletion[i].GetComponent<MaterialPropertyBlockTest>().TileOutOfBound();
+            }
+            
+            safeZoneRadius = playfieldSize;
+        }        
                
         hexMarkedForDeletion.Clear();
-        safeZoneRadius = playfieldSize;
+       
     }
 
 
     public bool TakeWorldDamage(Vector3 playerPosition)
     {
-
         if (Vector3.Distance(transform.position, playerPosition) > safeZoneRadius)
             return true;
         else
             return false;
     }
 
-    
+    public void ResetHexGrid()
+    {
+        //stops the grid from shrinking
+        CancelInvoke();
+        isGameRunning = false;
+
+        foreach (var hex in hexReset)
+        {
+            hexList.Add(hex);
+        }
+
+        for (int i = 0; i < hexList.Count; i++)
+        {
+            hexList[i].GetComponent<MaterialPropertyBlockTest>().ResetPropertyBlock();
+        }
+    }
+
+
 }
 
