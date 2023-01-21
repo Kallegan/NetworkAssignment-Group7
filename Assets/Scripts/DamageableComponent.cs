@@ -5,9 +5,7 @@ using UnityEngine;
 public class DamageableComponent : AttributesSync
 {
     private Alteruna.Avatar avatar;
-    [SerializeField] Transform HealthBar;
-
-    WorldManager world;
+    [SerializeField] Transform HealthBar;    
 
     [SerializeField] private float WorldDamageImmunityTime = 0.5f;
     [SerializeField] private int WorldDamage = 1;
@@ -34,7 +32,7 @@ public class DamageableComponent : AttributesSync
             return;
         Health = MaxHealth;
 
-        world = WorldManager.Instance;
+        
     }
 
     // Update is called once per frame
@@ -47,7 +45,7 @@ public class DamageableComponent : AttributesSync
         //turns healthbars to player camera.
         HealthBar.transform.LookAt(HealthBar.transform.position + cam.transform.rotation * Vector3.forward);
 
-        if (world.TakeWorldDamage(transform.parent.position) && !RecentlyDamaged)
+        if (WorldManager.Instance.TakeWorldDamage(transform.parent.position) && !RecentlyDamaged)
             TakeWorldDamage();
     }
 

@@ -16,8 +16,8 @@ public class WorldManager : MonoBehaviour
 
     //playfield and safezone. Cuts out spheres shape from hexgrid.
     [SerializeField] float playfieldStartSize = 14;
-    private float playfieldSize;
-    private float safeZoneRadius;
+    private float playfieldSize = 100f;
+    private float safeZoneRadius = 100f;
 
     
     [SerializeField] float levelMinSize = 5;
