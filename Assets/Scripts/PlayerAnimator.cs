@@ -52,7 +52,7 @@ public class PlayerAnimator : MonoBehaviour
 
         anim.SetFloat("VelocityMagnitude", velocityDelta * Coefficent);
 
-        //anim.SetFloat("StrafeX", turnAngle);
+        anim.SetFloat("StrafeX", turnAngle);
 
     }
 
