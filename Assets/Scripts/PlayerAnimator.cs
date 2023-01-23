@@ -31,6 +31,11 @@ public class PlayerAnimator : MonoBehaviour
         //rbSync = GetComponent<RigidbodySynchronizable>();
     }
 
+    private void Start()
+    {
+        //Bind event to play spell cast animation here
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -84,5 +89,11 @@ public class PlayerAnimator : MonoBehaviour
         float SmoothedTurn = Mathf.SmoothDampAngle(prevAngle, turnAngle, ref smoothedTurnAngle, 0.01f);
         
         
+    }
+
+    //Plays animation once on action layer. Like an Unreal Engine montage
+    private void PlayAction(string ActionName) 
+    {
+        anim.Play(ActionName, 1, -1);
     }
 }

@@ -22,6 +22,7 @@ public class PlayerActions : AttributesSync
     [SerializeField] private float deflectCoolDown = 0.5f;
     private float curDeflectCoolDown;
     private bool canDeflect = true;
+
     
     private void Awake()
     {
