@@ -74,16 +74,17 @@ public class GameManager : Synchronizable
 #if UNITY_EDITOR
         PrintDebug("GameManager - ", "RPC TO CHANGE STATE");
 #endif
-        int stateIndex = parameters.Get("stateIndex", 0);
-        ChangeState((byte)stateIndex);
+        byte stateIndex = (byte)parameters.Get("stateIndex", (byte)0);
+        ChangeState(stateIndex);
     }
     
     public void CallChangeMyState(State state)
     {
+        byte stateIndex = (byte)state;
         ProcedureParameters parameters = new ProcedureParameters();
-        parameters.Set("stateIndex", (int)state);
+        parameters.Set("stateIndex", stateIndex);
         Multiplayer.InvokeRemoteProcedure("ChangeMyStateProcedure", UserId.All, parameters);
-        ChangeState((byte)state);
+        ChangeState(stateIndex);
     }
 
     void Update()
