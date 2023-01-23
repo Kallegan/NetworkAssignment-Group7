@@ -66,9 +66,8 @@ public class WorldManager : MonoBehaviour
 
     public void StartShrinkGrid()
     {
-
-        if (isGameRunning)
-            return;
+        if(isGameRunning)
+         ResetHexGrid(); //tempfix for shrinkgrid called multiple times.
 
         isGameRunning = true;
         playfieldSize = playfieldStartSize;
@@ -118,6 +117,7 @@ public class WorldManager : MonoBehaviour
 
     private void ShrinkGrid()
     {
+        
         if (playfieldSize > levelMinSize)
                 playfieldSize -= shrinkAmount;       
         
