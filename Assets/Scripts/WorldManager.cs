@@ -66,10 +66,6 @@ public class WorldManager : MonoBehaviour
 
     public void StartShrinkGrid()
     {
-
-        if (isGameRunning)
-            return;
-
         isGameRunning = true;
         playfieldSize = playfieldStartSize;
         safeZoneRadius = worldWidth;        
@@ -118,6 +114,7 @@ public class WorldManager : MonoBehaviour
 
     private void ShrinkGrid()
     {
+        
         if (playfieldSize > levelMinSize)
                 playfieldSize -= shrinkAmount;       
         

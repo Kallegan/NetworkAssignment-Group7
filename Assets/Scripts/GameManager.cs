@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Alteruna;
+using Alteruna.Trinity;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Synchronizable
 {
     [SerializeField] private bool _showDebugLogs = true;
 
@@ -58,14 +59,33 @@ public class GameManager : MonoBehaviour
         _instance = this;
         _multiplayer = Multiplayer.Instance;
     }
-
+    
+   
+    
     void Start()
     {
+        Multiplayer.RegisterRemoteProcedure("ChangeMyStateProcedure", ChangeMyStateProcedure);
         _currentState = _idleGameState;
         ChangeState(State.Idle);
-        
     }
     
+    public void ChangeMyStateProcedure(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
+    {
+#if UNITY_EDITOR
+        PrintDebug("GameManager - ", "RPC TO CHANGE STATE");
+#endif
+        int stateIndex = parameters.Get("stateIndex", 0);
+        ChangeState((byte)stateIndex);
+    }
+    
+    public void CallChangeMyState(State state)
+    {
+        ProcedureParameters parameters = new ProcedureParameters();
+        parameters.Set("stateIndex", (int)state);
+        Multiplayer.InvokeRemoteProcedure("ChangeMyStateProcedure", UserId.All, parameters);
+        ChangeState((byte)state);
+    }
+
     void Update()
     {
         _currentState.Update();
@@ -197,4 +217,13 @@ public class GameManager : MonoBehaviour
             Debug.Log("<color=olive>" + text + "</color><color=teal>" + debugData.ToString() + "</color>");
     }
 #endif
+    public override void AssembleData(Writer writer, byte LOD = 100)
+    {
+  
+    }
+
+    public override void DisassembleData(Reader reader, byte LOD = 100)
+    {
+
+    }
 }
