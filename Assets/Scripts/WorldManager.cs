@@ -66,12 +66,13 @@ public class WorldManager : MonoBehaviour
 
     public void StartShrinkGrid()
     {
-        isGameRunning = true;
-        playfieldSize = playfieldStartSize;
-        safeZoneRadius = worldWidth;
 
         if (isGameRunning)
             return;
+
+        isGameRunning = true;
+        playfieldSize = playfieldStartSize;
+        safeZoneRadius = worldWidth;        
 
         SetHexShape(); //cuts the sphere into square hexgrid. 
         InvokeRepeating(nameof(ShrinkGrid), shrinkRepeatTimer, shrinkRepeatTimer);        
