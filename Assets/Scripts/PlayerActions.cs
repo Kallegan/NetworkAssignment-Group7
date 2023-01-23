@@ -88,7 +88,10 @@ public class PlayerActions : AttributesSync
     }
     private void Shoot()
     {
-        GameObject proj = spawner.Spawn(0, transform.position + transform.forward * 2f, transform.rotation);
+        Vector3 spawnPosition = transform.position + (transform.forward * 2f);
+        Quaternion spawnRotation = transform.rotation;
+        
+        GameObject proj = spawner.Spawn(0, spawnPosition, spawnRotation);
         
         if (!proj.TryGetComponent(out SynchronizedProjectile p)) 
             return;
