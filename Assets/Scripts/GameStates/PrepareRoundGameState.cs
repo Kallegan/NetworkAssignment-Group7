@@ -8,9 +8,7 @@ public class PrepareRoundGameState : GameState
 {
     private const float DelayBetweenChecksSeconds = 2f;
     private float _nextCheck = DelayBetweenChecksSeconds;
-    
-    private bool _canStart;
-    
+
     private const float DelayBeforeStartSeconds = 5f;
     private float _startCountdown = DelayBeforeStartSeconds;
     
@@ -40,18 +38,27 @@ public class PrepareRoundGameState : GameState
 #endif
         if (GameManager.Instance.CheckIfEnoughPlayers())
         {
-            //GameManager.Instance.ChangeState(GameManager.State.StartRound);
-            
+            TryToStart();
         }
-            
         else
             GameManager.Instance.ChangeState(GameManager.State.LookingForPlayers);
     }
 
     private void TryToStart()
     {
-        
+        bool canStart = true;
+        List<User> users = GameManager.Instance.Users;
+        foreach (var user in users)
+        {
+            ushort index = user.Index;
+            GameObject player = Multiplayer.Instance.GetAvatar(index).gameObject;
+            PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
+            if (playerStateSync.currentGameState == (byte)GameManager.State.PrepareRound)
+                GameManager.Instance.ChangeState(GameManager.State.StartRound);
+            else
+#if UNITY_EDITOR
+                GameManager.Instance.PrintDebug("GameManager - ", "UNABLE TO START (PEOPLE NOT SYNCED).");
+#endif
+        }
     }
-
 }
- 
