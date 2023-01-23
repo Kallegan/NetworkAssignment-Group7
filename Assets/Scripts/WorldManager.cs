@@ -70,10 +70,11 @@ public class WorldManager : MonoBehaviour
         playfieldSize = playfieldStartSize;
         safeZoneRadius = worldWidth;
 
-        SetHexShape(); //cuts the sphere into square hexgrid. 
-        InvokeRepeating(nameof(ShrinkGrid), shrinkRepeatTimer, shrinkRepeatTimer);
+        if (isGameRunning)
+            return;
 
-        Debug.Log("GRID IS SHRINKING");
+        SetHexShape(); //cuts the sphere into square hexgrid. 
+        InvokeRepeating(nameof(ShrinkGrid), shrinkRepeatTimer, shrinkRepeatTimer);        
     }
 
 
