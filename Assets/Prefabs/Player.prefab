@@ -386,6 +386,7 @@ MonoBehaviour:
     NeverString: Never
     RealtimeString: Realtime
   currentGameState: 0
+  isAlive: 1
 --- !u!1 &4706027095896428391
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSmoothing: 1
   anim: {fileID: 7112471908007226232}
-  Coefficent: 100
+  Coefficent: 500
 --- !u!114 &596002553679409354
 MonoBehaviour:
   m_ObjectHideFlags: 0

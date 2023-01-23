@@ -38,9 +38,29 @@ public class PlayerAnimator : MonoBehaviour
         
 
         prevDelta = velocityDelta;
-        
+        Debug.Log("Strafe Direction" + CalculateDirection(positionDelta));
+        Debug.Log("Velocity Magnitude: " + velocityDelta);
+        anim.SetFloat("StrafeX", CalculateDirection(positionDelta));
 
-       
+        
+    }
+
+    float CalculateDirection(Vector3 velocity)
+    {
+        if (velocity.magnitude > 0.01)
+        {
+            float ForwardCosAngle = Vector3.Dot(transform.forward, velocity.normalized);
+            float ForwardDeltaDegree = Mathf.Rad2Deg * Mathf.Acos(ForwardCosAngle);
+
+            float RightCosangle = Vector3.Dot(transform.right, velocity.normalized);
+            if (RightCosangle < 0)
+            {
+                ForwardDeltaDegree *= -1;
+            }
+
+            return ForwardDeltaDegree;
+        }
+        return 0.0f;
     }
 
     private void LateUpdate()
