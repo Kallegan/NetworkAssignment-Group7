@@ -12,12 +12,15 @@ public class PlayerAnimator : MonoBehaviour
     private RigidbodySynchronizable rbSync;
     private Rigidbody rb;
 
-    private float smoothVelocityMagnitude;
 
     private Vector3 lastPosition;
     private float velocityDelta;
     private float prevDelta;
     private float smoothVelocityDelta;
+
+    private float prevAngle;
+    private float turnAngle;
+    private float smoothedTurnAngle;
 
     [SerializeField] float Coefficent = 1;
 
@@ -38,11 +41,16 @@ public class PlayerAnimator : MonoBehaviour
         
 
         prevDelta = velocityDelta;
-        Debug.Log("Strafe Direction" + CalculateDirection(positionDelta));
-        Debug.Log("Velocity Magnitude: " + velocityDelta);
-        anim.SetFloat("StrafeX", CalculateDirection(positionDelta));
 
+        turnAngle = CalculateDirection(positionDelta);
+        Debug.Log("Strafe Direction" + turnAngle);
+        Debug.Log("Velocity Magnitude: " + velocityDelta);
         
+
+        prevAngle = turnAngle;
+
+
+
     }
 
     float CalculateDirection(Vector3 velocity)
@@ -67,7 +75,10 @@ public class PlayerAnimator : MonoBehaviour
     {
 
         //This is jittery
-        float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing, 0, Time.deltaTime);
+        float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing, 0.01f, Time.deltaTime);
+
+        float SmoothedTurn = Mathf.SmoothDampAngle(prevAngle, turnAngle, ref smoothedTurnAngle, 0.01f);
+        anim.SetFloat("StrafeX", SmoothedTurn);
         anim.SetFloat("VelocityMagnitude", SmoothedVelocity * Coefficent);
     }
 }
