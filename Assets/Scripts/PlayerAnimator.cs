@@ -40,16 +40,19 @@ public class PlayerAnimator : MonoBehaviour
 
         
 
-        prevDelta = velocityDelta;
+        //prevDelta = velocityDelta;
+        prevDelta = prevDelta * 0.2f + velocityDelta * 0.8f;
+
+        
+        prevAngle = turnAngle;
 
         turnAngle = CalculateDirection(positionDelta);
         Debug.Log("Strafe Direction" + turnAngle);
         Debug.Log("Velocity Magnitude: " + velocityDelta);
-        
 
-        prevAngle = turnAngle;
+        anim.SetFloat("VelocityMagnitude", velocityDelta * Coefficent);
 
-
+        //anim.SetFloat("StrafeX", turnAngle);
 
     }
 
@@ -73,12 +76,13 @@ public class PlayerAnimator : MonoBehaviour
 
     private void LateUpdate()
     {
+        
 
         //This is jittery
         float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing, 0.01f, Time.deltaTime);
 
         float SmoothedTurn = Mathf.SmoothDampAngle(prevAngle, turnAngle, ref smoothedTurnAngle, 0.01f);
-        anim.SetFloat("StrafeX", SmoothedTurn);
-        anim.SetFloat("VelocityMagnitude", SmoothedVelocity * Coefficent);
+        
+        
     }
 }
