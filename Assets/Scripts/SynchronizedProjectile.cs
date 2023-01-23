@@ -44,7 +44,6 @@ public class SynchronizedProjectile : Synchronizable
     
     private void Update()
     {
-        /*
         if (_oldDirection != _direction | _oldSpeed != _speed)
         {
             Commit();
@@ -54,7 +53,6 @@ public class SynchronizedProjectile : Synchronizable
         
         transform.position += _direction * (_speed * Time.deltaTime);
         SyncUpdate();
-        */
     }
     
     public override void AssembleData(Writer writer, byte LOD = 100)
