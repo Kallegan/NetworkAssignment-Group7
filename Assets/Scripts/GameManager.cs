@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Alteruna;
+using Alteruna.Trinity;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
 
-public class GameManager : MonoBehaviour
+public class GameManager : AttributesSync
 {
     [SerializeField] private bool _showDebugLogs = true;
 
@@ -58,14 +59,29 @@ public class GameManager : MonoBehaviour
         _instance = this;
         _multiplayer = Multiplayer.Instance;
     }
-
+    
+   
+    
     void Start()
     {
+        Multiplayer.RegisterRemoteProcedure("ChangeMyState", ChangeMyStateProcedure);
         _currentState = _idleGameState;
         ChangeState(State.Idle);
-        
     }
     
+    public void ChangeMyStateProcedure(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
+    {
+        byte stateIndex = (byte)parameters.Get("stateIndex", (byte)0);
+        ChangeState(stateIndex);
+    }
+    
+    public void CallChangeMyState(State state)
+    {
+        ProcedureParameters parameters = new ProcedureParameters();
+        parameters.Set("stateIndex", (byte)state);
+        Multiplayer.InvokeRemoteProcedure("ChangeMyStateProcedure", UserId.All, parameters);
+    }
+
     void Update()
     {
         _currentState.Update();

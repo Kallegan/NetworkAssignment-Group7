@@ -8,14 +8,10 @@ public class PrepareRoundGameState : GameState
 {
     private const float DelayBetweenChecksSeconds = 2f;
     private float _nextCheck = DelayBetweenChecksSeconds;
-
-    private const float DelayBeforeStartSeconds = 5f;
-    private float _startCountdown = DelayBeforeStartSeconds;
     
     // ReSharper disable Unity.PerformanceAnalysis
     public override void Update()
     {
-
         if (_nextCheck <= 0)
         {
             CheckIfCanStart();
@@ -28,7 +24,6 @@ public class PrepareRoundGameState : GameState
     public override void Run()
     {
         _nextCheck = DelayBetweenChecksSeconds;
-        _startCountdown = DelayBeforeStartSeconds;
     }
 
     private void CheckIfCanStart()
@@ -38,6 +33,8 @@ public class PrepareRoundGameState : GameState
 #endif
         if (GameManager.Instance.CheckIfEnoughPlayers())
         {
+            if (Multiplayer.Instance.Me.Index != 0)
+                return;
             TryToStart();
         }
         else
@@ -58,7 +55,7 @@ public class PrepareRoundGameState : GameState
         }
         if (canStart)
         {
-            GameManager.Instance.ChangeState(GameManager.State.StartRound);
+            GameManager.Instance.CallChangeMyState(GameManager.State.StartRound);
         }
         else
         {
