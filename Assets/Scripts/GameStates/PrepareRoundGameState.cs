@@ -43,6 +43,9 @@ public class PrepareRoundGameState : GameState
 
     private void TryToStart()
     {
+#if UNITY_EDITOR
+        GameManager.Instance.PrintDebug("GameManager - ", "TRYING TO START");
+#endif
         bool canStart = true;
         List<User> users = GameManager.Instance.Users;
         foreach (var user in users)

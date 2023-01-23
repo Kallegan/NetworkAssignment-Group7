@@ -71,6 +71,9 @@ public class GameManager : AttributesSync
     
     public void ChangeMyStateProcedure(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
+#if UNITY_EDITOR
+        PrintDebug("GameManager - ", "RPC TO CHANGE STATE");
+#endif
         int stateIndex = parameters.Get("stateIndex", 0);
         ChangeState((byte)stateIndex);
     }
