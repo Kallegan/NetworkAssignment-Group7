@@ -64,7 +64,7 @@ public class GameManager : Synchronizable
     
     void Start()
     {
-        Multiplayer.RegisterRemoteProcedure("ChangeMyState", ChangeMyStateProcedure);
+        Multiplayer.RegisterRemoteProcedure("ChangeMyStateProcedure", ChangeMyStateProcedure);
         _currentState = _idleGameState;
         ChangeState(State.Idle);
     }
