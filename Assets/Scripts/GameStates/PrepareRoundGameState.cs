@@ -28,9 +28,6 @@ public class PrepareRoundGameState : GameState
 
     private void CheckIfCanStart()
     {
-#if UNITY_EDITOR
-        GameManager.Instance.PrintDebug("GameManager - ", "Checking if can start.");
-#endif
         if (GameManager.Instance.CheckIfEnoughPlayers())
         {
             if (Multiplayer.Instance.Me.Index != 0)
@@ -46,17 +43,8 @@ public class PrepareRoundGameState : GameState
 #if UNITY_EDITOR
         GameManager.Instance.PrintDebug("GameManager - ", "TRYING TO START");
 #endif
-        bool canStart = true;
-        List<User> users = GameManager.Instance.Users;
-        foreach (var user in users)
-        {
-            ushort index = user.Index;
-            GameObject player = GameObject.FindGameObjectWithTag("Player"); //Multiplayer.Instance.GetAvatar(index).gameObject;
-            PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
-            if (playerStateSync.currentGameState != (byte)GameManager.State.PrepareRound)
-                canStart = false;
-        }
-        if (canStart)
+
+        if (GameManager.Instance.CheckIfEveryoneSameState())
         {
             GameManager.Instance.CallChangeMyState(GameManager.State.StartRound);
         }

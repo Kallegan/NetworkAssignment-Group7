@@ -59,9 +59,7 @@ public class GameManager : Synchronizable
         _instance = this;
         _multiplayer = Multiplayer.Instance;
     }
-    
-   
-    
+
     void Start()
     {
         Multiplayer.RegisterRemoteProcedure("ChangeMyStateProcedure", ChangeMyStateProcedure);
@@ -87,7 +85,7 @@ public class GameManager : Synchronizable
         ChangeState(stateIndex);
     }
 
-    void Update()
+    private void Update()
     {
         _currentState.Update();
     }
@@ -101,7 +99,6 @@ public class GameManager : Synchronizable
 #endif
     }
     
-
     public int AmountOfPlayersInRoom()
     {
         UpdateUsersInRoomList();
@@ -208,6 +205,21 @@ public class GameManager : Synchronizable
                 playerStateSync.SyncMyState();
             }
         }
+    }
+
+    public bool CheckIfEveryoneSameState()
+    {
+        bool allSameState = true;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (var player in players)
+        {
+            PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
+            if (playerStateSync.currentGameState != (byte)State.PrepareRound)
+                allSameState = false;
+        }
+        
+        return allSameState;
     }
     
     // DEBUG PRINT
