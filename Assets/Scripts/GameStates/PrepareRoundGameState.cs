@@ -48,7 +48,7 @@ public class PrepareRoundGameState : GameState
         foreach (var user in users)
         {
             ushort index = user.Index;
-            GameObject player = Multiplayer.Instance.GetAvatar(index).gameObject;
+            GameObject player = GameObject.FindGameObjectWithTag("Player"); //Multiplayer.Instance.GetAvatar(index).gameObject;
             PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
             if (playerStateSync.currentGameState != (byte)GameManager.State.PrepareRound)
                 canStart = false;
