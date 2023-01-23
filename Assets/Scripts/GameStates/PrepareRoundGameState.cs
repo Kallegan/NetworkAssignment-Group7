@@ -53,11 +53,17 @@ public class PrepareRoundGameState : GameState
             ushort index = user.Index;
             GameObject player = Multiplayer.Instance.GetAvatar(index).gameObject;
             PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
-            if (playerStateSync.currentGameState == (byte)GameManager.State.PrepareRound)
-                GameManager.Instance.ChangeState(GameManager.State.StartRound);
-            else
+            if (playerStateSync.currentGameState != (byte)GameManager.State.PrepareRound)
+                canStart = false;
+        }
+        if (canStart)
+        {
+            GameManager.Instance.ChangeState(GameManager.State.StartRound);
+        }
+        else
+        {
 #if UNITY_EDITOR
-                GameManager.Instance.PrintDebug("GameManager - ", "UNABLE TO START (PEOPLE NOT SYNCED).");
+            GameManager.Instance.PrintDebug("GameManager - ", "UNABLE TO START (PEOPLE NOT SYNCED).");
 #endif
         }
     }
