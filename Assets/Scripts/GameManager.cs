@@ -105,6 +105,8 @@ public class GameManager : MonoBehaviour
             ChangeState(State.LookingForPlayers);
         
 #if UNITY_EDITOR
+        ushort MyId = Multiplayer.Instance.Me.Index;
+        PrintDebug("GameManager - My ID: ", MyId);
         PrintDebug("GameManager - Joined room: ", _multiplayer.CurrentRoom.Name);
 #endif
     }
@@ -113,6 +115,8 @@ public class GameManager : MonoBehaviour
     {
         SyncTheStates();
 #if UNITY_EDITOR
+        ushort MyId = Multiplayer.Instance.Me.Index;
+        PrintDebug("GameManager - My ID: ", MyId);
         PrintDebug("GameManager - ", "Other player joined the room.");
 #endif
     }
@@ -128,6 +132,8 @@ public class GameManager : MonoBehaviour
     public void OtherLeftRoom()
     {
 #if UNITY_EDITOR
+        ushort MyId = Multiplayer.Instance.Me.Index;
+        PrintDebug("GameManager - My ID: ", MyId);
         PrintDebug("GameManager - ", "Other player left the room.");
 #endif
     }

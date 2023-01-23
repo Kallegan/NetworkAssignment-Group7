@@ -30,7 +30,6 @@ public class PrepareRoundGameState : GameState
     public override void Run()
     {
         _nextCheck = DelayBetweenChecksSeconds;
-        //_canStart = false;
         _startCountdown = DelayBeforeStartSeconds;
     }
 
@@ -40,12 +39,19 @@ public class PrepareRoundGameState : GameState
         GameManager.Instance.PrintDebug("GameManager - ", "Checking if can start.");
 #endif
         if (GameManager.Instance.CheckIfEnoughPlayers())
-            //_canStart = true;
-            GameManager.Instance.ChangeState(GameManager.State.StartRound);
+        {
+            //GameManager.Instance.ChangeState(GameManager.State.StartRound);
+            
+        }
+            
         else
             GameManager.Instance.ChangeState(GameManager.State.LookingForPlayers);
     }
 
+    private void TryToStart()
+    {
+        
+    }
 
 }
  
