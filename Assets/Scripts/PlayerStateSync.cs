@@ -1,12 +1,12 @@
 using Alteruna;
 using UnityEngine;
 
-public class PlayerGameStateSync : Synchronizable
+public class PlayerStateSync : Synchronizable
 {
 
     public byte currentGameState;
     private byte _oldGameState;
-    
+
     public override void AssembleData(Writer writer, byte LOD = 100)
     {
 #if UNITY_EDITOR

@@ -170,8 +170,8 @@ public class GameManager : MonoBehaviour
         if (avatar != null)
         {
             GameObject player = avatar.gameObject;
-            PlayerGameStateSync playerGameStateSync = player.GetComponentInChildren<PlayerGameStateSync>();
-                playerGameStateSync.currentGameState = (byte)_state;
+            PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
+                playerStateSync.currentGameState = (byte)_state;
         }
     }
 
@@ -183,8 +183,8 @@ public class GameManager : MonoBehaviour
             GameObject player = avatar.GameObject();
             if (player != null)
             {
-                PlayerGameStateSync playerGameStateSync = player.GetComponentInChildren<PlayerGameStateSync>();
-                playerGameStateSync.SyncMyState();
+                PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
+                playerStateSync.SyncMyState();
             }
         }
     }

@@ -1,5 +1,4 @@
-using System;
-using UnityEngine;
+using Alteruna;
 
 public class StartRoundGameState : GameState
 {
@@ -11,7 +10,7 @@ public class StartRoundGameState : GameState
     {
         WorldManager.Instance.StartShrinkGrid();
 #if UNITY_EDITOR
-        GameManager.Instance.PrintDebug("GameManager - ", "Game started! Shrinking map");
+        GameManager.Instance.PrintDebug("GameManager - ", "Game started! Shrinking of map enabled");
 #endif
     }
 }
