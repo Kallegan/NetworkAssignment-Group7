@@ -72,6 +72,8 @@ public class WorldManager : MonoBehaviour
 
         SetHexShape(); //cuts the sphere into square hexgrid. 
         InvokeRepeating(nameof(ShrinkGrid), shrinkRepeatTimer, shrinkRepeatTimer);
+
+        Debug.Log("GRID IS SHRINKING");
     }
 
 
@@ -117,9 +119,7 @@ public class WorldManager : MonoBehaviour
         if (playfieldSize > levelMinSize)
                 playfieldSize -= shrinkAmount;       
         
-        SetHexShape();
-
-        Debug.Log("GRID IS SHRINKING");
+        SetHexShape();        
     }
 
     private void SetHexShape()
