@@ -83,6 +83,7 @@ public class GameManager : Synchronizable
         ProcedureParameters parameters = new ProcedureParameters();
         parameters.Set("stateIndex", (int)state);
         Multiplayer.InvokeRemoteProcedure("ChangeMyStateProcedure", UserId.All, parameters);
+        ChangeState((byte)state);
     }
 
     void Update()
