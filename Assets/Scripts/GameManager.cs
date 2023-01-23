@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
 
-public class GameManager : AttributesSync
+public class GameManager : Synchronizable
 {
     [SerializeField] private bool _showDebugLogs = true;
 
@@ -216,4 +216,13 @@ public class GameManager : AttributesSync
             Debug.Log("<color=olive>" + text + "</color><color=teal>" + debugData.ToString() + "</color>");
     }
 #endif
+    public override void AssembleData(Writer writer, byte LOD = 100)
+    {
+  
+    }
+
+    public override void DisassembleData(Reader reader, byte LOD = 100)
+    {
+
+    }
 }
