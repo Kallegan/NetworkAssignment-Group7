@@ -68,12 +68,10 @@ public class WorldManager : MonoBehaviour
     {
         isGameRunning = true;
         playfieldSize = playfieldStartSize;
-        safeZoneRadius = worldWidth;
+        safeZoneRadius = worldWidth;        
 
         SetHexShape(); //cuts the sphere into square hexgrid. 
-        InvokeRepeating(nameof(ShrinkGrid), shrinkRepeatTimer, shrinkRepeatTimer);
-
-        Debug.Log("GRID IS SHRINKING");
+        InvokeRepeating(nameof(ShrinkGrid), shrinkRepeatTimer, shrinkRepeatTimer);        
     }
 
 
@@ -116,6 +114,7 @@ public class WorldManager : MonoBehaviour
 
     private void ShrinkGrid()
     {
+        
         if (playfieldSize > levelMinSize)
                 playfieldSize -= shrinkAmount;       
         
