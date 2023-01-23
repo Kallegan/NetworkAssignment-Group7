@@ -32,14 +32,19 @@ public class SynchronizedProjectile : Synchronizable
     public void Init(UInt16 fromIndex)
     {
         _ownerIndex = fromIndex;
+#if UNITY_EDITOR
         GameManager.Instance.PrintDebug("Projectile owner index: ", _ownerIndex);
+#endif
+
     }
     
     public void RemoteGetOwnerIndex(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
         UInt16 fromIndex = parameters.Get("playerIndex", (UInt16) 0);
         _ownerIndex = fromIndex;
-        GameManager.Instance.PrintDebug("Projectile owner index: ", _ownerIndex + " , This Player: " + Multiplayer.Me.Index );
+#if UNITY_EDITOR
+        GameManager.Instance.PrintDebug("Projectile owner index: ", _ownerIndex + " , This Player: " + Multiplayer.Me.Index);
+#endif
     }
     
     private void Update()
