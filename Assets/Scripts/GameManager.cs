@@ -71,14 +71,14 @@ public class GameManager : AttributesSync
     
     public void ChangeMyStateProcedure(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
-        byte stateIndex = (byte)parameters.Get("stateIndex", (byte)0);
-        ChangeState(stateIndex);
+        int stateIndex = parameters.Get("stateIndex", 0);
+        ChangeState((byte)stateIndex);
     }
     
     public void CallChangeMyState(State state)
     {
         ProcedureParameters parameters = new ProcedureParameters();
-        parameters.Set("stateIndex", (byte)state);
+        parameters.Set("stateIndex", (int)state);
         Multiplayer.InvokeRemoteProcedure("ChangeMyStateProcedure", UserId.All, parameters);
     }
 
