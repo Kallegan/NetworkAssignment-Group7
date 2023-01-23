@@ -66,9 +66,6 @@ public class WorldManager : MonoBehaviour
 
     public void StartShrinkGrid()
     {
-        if(isGameRunning)
-         ResetHexGrid(); //tempfix for shrinkgrid called multiple times.
-
         isGameRunning = true;
         playfieldSize = playfieldStartSize;
         safeZoneRadius = worldWidth;        
