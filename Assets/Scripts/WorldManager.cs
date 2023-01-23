@@ -61,7 +61,7 @@ public class WorldManager : MonoBehaviour
     void Start()
     {
         GenerateHexGrid();
-        StartShrinkGrid();        
+        //StartShrinkGrid();        
     }
 
     public void StartShrinkGrid()
@@ -116,13 +116,12 @@ public class WorldManager : MonoBehaviour
     {
         if (playfieldSize > levelMinSize)
                 playfieldSize -= shrinkAmount;
-        else//temp for testing
-        {
-            ResetHexGrid();
-            StartShrinkGrid();
-        }
-            
-
+        // else//temp for testing
+        // {
+        //     ResetHexGrid();
+        //     StartShrinkGrid();
+        // }
+        
         SetHexShape();
     }
 
