@@ -61,7 +61,7 @@ public class WorldManager : MonoBehaviour
     void Start()
     {
         GenerateHexGrid();
-        //StartShrinkGrid();        
+        //StartShrinkGrid();
     }
 
     public void StartShrinkGrid()

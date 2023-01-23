@@ -30,9 +30,7 @@ public class DamageableComponent : AttributesSync
     {
         if (!avatar.IsMe)
             return;
-        Health = MaxHealth;
-
-        
+        Health = MaxHealth;       
     }
 
     // Update is called once per frame
@@ -101,7 +99,8 @@ public class DamageableComponent : AttributesSync
     [SynchronizableMethod]
     private void Die()
     {
-        Destroy(transform.parent.gameObject);
+        transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive = false;
+        Destroy(transform.parent.gameObject); //temp remove when we have something cooler       
     }
 }
 /*
