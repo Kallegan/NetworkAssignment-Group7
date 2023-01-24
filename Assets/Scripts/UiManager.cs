@@ -37,6 +37,8 @@ public class UiManager : AttributesSync
         for (int i = 0; i < 10; i++)
             playerNames.Insert(i, "");
 
+        playerName = Alteruna.NameGenerator.GenerateStatic();
+        
         Multiplayer.RegisterRemoteProcedure("UpdateNameListRemote", UpdateNameListRemote);
         Multiplayer.RegisterRemoteProcedure("UpdateLobbyUiRemote", UpdateLobbyUiRemote);
     }
@@ -85,7 +87,6 @@ public class UiManager : AttributesSync
     {
         // Generate Name
         UInt16 myIndex = Alteruna.Multiplayer.Instance.Me.Index;
-        playerName = Alteruna.NameGenerator.GenerateStatic();
         playerNames.Insert(myIndex, playerName);
         
         ProcedureParameters parameters = new ProcedureParameters();
