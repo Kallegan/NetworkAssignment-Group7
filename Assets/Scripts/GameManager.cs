@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Alteruna;
 using Alteruna.Trinity;
-using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
@@ -13,8 +11,7 @@ public class GameManager : AttributesSync
     [SerializeField] private bool _showDebugLogs = true;
 
     [Header("Game Settings")]
-    [SerializeField] public int _minUsersToStart = 2;
-    private int _minUsersHostToStart = 0;
+    [SerializeField] private int _minUsersToStart = 2;
 
     private Multiplayer _multiplayer;
     private static GameManager _instance;
@@ -63,8 +60,6 @@ public class GameManager : AttributesSync
     void Start()
     {
         Multiplayer.RegisterRemoteProcedure("ChangeMyStateProcedure", ChangeMyStateProcedure);
-        Multiplayer.RegisterRemoteProcedure("RequestGameSettingsProcedure", RequestGameSettingsProcedure);
-        Multiplayer.RegisterRemoteProcedure("GetGameSettingsProcedure", GetGameSettingsProcedure);
         _currentState = _idleGameState;
         ChangeState(State.Idle);
     }
@@ -87,31 +82,6 @@ public class GameManager : AttributesSync
         ChangeState(stateIndex);
     }
     
-    public void RequestGameSettingsProcedure(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
-    {
-#if UNITY_EDITOR
-        PrintDebug("GameManager - RPC REQUEST GAME SETTINGS BY: ", fromUser);
-        PrintDebug("GameManager - ME RUNNING FUNCTION: ", Multiplayer.Instance.Me.Index);
-#endif
-        SendGameSettings(fromUser);
-    }
-
-    private void SendGameSettings(ushort toUser)
-    {
-        ProcedureParameters parameters = new ProcedureParameters();
-        parameters.Set("minUsersToStart", _minUsersToStart);
-        Multiplayer.InvokeRemoteProcedure("GetGameSettingsProcedure", toUser, parameters);
-    }
-
-    public void GetGameSettingsProcedure(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
-    {
-#if UNITY_EDITOR
-        PrintDebug("GameManager - ", "RPC TO GET GAME SETTINGS");
-#endif
-        int minUsersToStart = parameters.Get("minUsersToStart", 0);
-        _minUsersHostToStart = minUsersToStart;
-    }
-
     private void Update()
     {
         _currentState.Update();
@@ -160,26 +130,7 @@ public class GameManager : AttributesSync
     public bool CheckIfEnoughPlayers()
     {
         int amountOfPlayersInRoom = AmountOfPlayersInRoom();
-        
-        bool enoughPlayers = false;
-
-        if (_minUsersHostToStart > 0)
-        {
-            enoughPlayers = amountOfPlayersInRoom >= _minUsersHostToStart;
-        }
-        else
-        {
-            if (Multiplayer.Instance.Me.Index == 0)
-                _minUsersHostToStart = _minUsersToStart;
-            else
-            {
-#if UNITY_EDITOR
-                PrintDebug("GameManager - ME IS INDEX: ", Multiplayer.Instance.Me.Index);
-#endif
-                Debug.Log("TEST");
-                //Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", (uint)0);
-            }
-        }
+        bool enoughPlayers = amountOfPlayersInRoom >= _minUsersToStart;
         
 #if UNITY_EDITOR
         PrintDebug("GameManager - Check if enough players: ", enoughPlayers);
@@ -189,8 +140,6 @@ public class GameManager : AttributesSync
     }
     public void JoinedRoom()
     {
-        _minUsersHostToStart = 0;
-
         if (_state == State.Idle)
             ChangeState(State.LookingForPlayers);
         
@@ -210,8 +159,7 @@ public class GameManager : AttributesSync
     public void LeftRoom()
     {
         ChangeState(State.Idle);
-        _minUsersHostToStart = 0;
-        
+
 #if UNITY_EDITOR
         PrintDebug("GameManager - ", "Left room.");
 #endif
