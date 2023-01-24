@@ -86,7 +86,7 @@ public class UiManager : AttributesSync
         // Generate Name
         UInt16 myIndex = Alteruna.Multiplayer.Instance.Me.Index;
         playerName = Alteruna.NameGenerator.GenerateStatic();
-        //playerNames.Insert(myIndex, playerName);
+        playerNames.Insert(myIndex, playerName);
         
         ProcedureParameters parameters = new ProcedureParameters();
         parameters.Set("fromPlayerIndex", myIndex);
