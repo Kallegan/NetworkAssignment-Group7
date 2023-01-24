@@ -171,7 +171,7 @@ public class GameManager : Synchronizable
             if (Multiplayer.Instance.Me.Index != 0)
             {
                 ProcedureParameters parameters = new ProcedureParameters();
-                Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", Multiplayer.GetUser(0).Index,
+                Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", Multiplayer.GetUser(0),
                     parameters);
             }
             else
