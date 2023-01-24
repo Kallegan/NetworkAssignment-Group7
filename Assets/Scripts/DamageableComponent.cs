@@ -54,10 +54,9 @@ public class DamageableComponent : AttributesSync
         if (WorldManager.Instance.TakeWorldDamage(transform.parent.position) && !RecentlyDamaged)
             TakeWorldDamage();
 
-        if (PlayerMovement.stunned)
-        {           
-            StunEffect.transform.position = transform.position + stunVFXOffset;
-        }      
+                   
+        StunEffect.transform.position = transform.position + stunVFXOffset;
+              
             
     }
 

@@ -37,7 +37,8 @@ public class UiManager : AttributesSync
         for (int i = 0; i < 10; i++)
             playerNames.Insert(i, "");
 
-        playerName = Alteruna.NameGenerator.GenerateStatic();
+        //playerName = Alteruna.NameGenerator.GenerateStatic();
+        //Multiplayer.Instance.SetUsername(playerName);
         
         Multiplayer.RegisterRemoteProcedure("UpdateNameListRemote", UpdateNameListRemote);
         Multiplayer.RegisterRemoteProcedure("UpdateLobbyUiRemote", UpdateLobbyUiRemote);
@@ -69,8 +70,8 @@ public class UiManager : AttributesSync
 
     public void SetLobbyName()
     {
-        var name = Alteruna.Multiplayer.Instance.CurrentRoom.Name;
-        _lobbyHeader.text = name;
+        var name =  Alteruna.Multiplayer.Instance.CurrentRoom.Name;
+        _lobbyHeader.text = "Room: " + name;
     }
     
     public void LeaveRoom()
@@ -85,20 +86,18 @@ public class UiManager : AttributesSync
 
     public void OnPlayerJoinedRoomLocal()
     {
-        // Generate Name
         UInt16 myIndex = Alteruna.Multiplayer.Instance.Me.Index;
-        playerNames.Insert(myIndex, playerName);
+        //playerNames.Insert(myIndex, playerName);
         
+        // Create RPC-params 
         ProcedureParameters parameters = new ProcedureParameters();
         parameters.Set("fromPlayerIndex", myIndex);
         parameters.Set("otherPlayerName", playerName);
-
-        UpdateLobbyUiLocal();
         
         if (Multiplayer.Instance.CurrentRoom.Users.Count == 0)
             return;
         
-        Multiplayer.InvokeRemoteProcedure("UpdateNameListRemote", UserId.AllInclusive, parameters);
+        //Multiplayer.InvokeRemoteProcedure("UpdateNameListRemote", UserId.AllInclusive, parameters);
         Multiplayer.InvokeRemoteProcedure("UpdateLobbyUiRemote", UserId.AllInclusive, parameters);
     }
 
@@ -107,22 +106,36 @@ public class UiManager : AttributesSync
         UInt16 myIndex = Alteruna.Multiplayer.Instance.Me.Index;
         _playerPanels[myIndex].GetComponentInChildren<TextMeshProUGUI>().text = playerName;
         _playerPanels[myIndex].SetActive(true);
-        
     }
     
     public void UpdateNameListRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
+        /*
         UInt16 fromPlayerIndex = parameters.Get("fromPlayerIndex", (UInt16)0);
         string otherPlayerName = parameters.Get("otherPlayerName", "");
         playerNames.Insert(fromPlayerIndex, otherPlayerName);
+        */
+        foreach (var user in GameManager.Instance.GetUserListInRoom())
+        {
+            playerNames.Insert(user.Index, user.Name);
+        }
     }
     
     public void UpdateLobbyUiRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
+        foreach (var user in GameManager.Instance.GetUserListInRoom())
+        {
+            _playerPanels[user.Index].GetComponentInChildren<TextMeshProUGUI>().text = user.Name;
+            _playerPanels[user.Index].SetActive(true);
+        }
+
+        /*
+        
         for (int i = 0; i <  Multiplayer.Instance.CurrentRoom.Users.Count; i++)
         {
             _playerPanels[i].GetComponentInChildren<TextMeshProUGUI>().text = playerNames[i];
             _playerPanels[i].SetActive(true);
         }
+        */
     }
 }
