@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2992603711930217575}
   - component: {fileID: 2992603711930217572}
+  - component: {fileID: 971613084935417749}
   m_Layer: 0
   m_Name: UiManager
   m_TagString: Untagged
@@ -44,6 +45,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6e7b1817c2b0d4aa560da0f869085c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menu: {fileID: 0}
-  _lobby: {fileID: 0}
-  _alteruna: {fileID: 0}
+  Multiplayer: {fileID: 0}
+  UID: {fileID: 0}
+  Reliability: 1
+  _startGameButton: {fileID: 0}
+  _lobbyHeader: {fileID: 0}
+  _playerPanels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  playerNames: []
+  playerName: 
+--- !u!114 &971613084935417749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2992603711930217573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1709514741, guid: 0ae8d181602a00248a82f64a684a1c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  a: d9e57dd4-7a74-49da-a57b-82943ab7de75
