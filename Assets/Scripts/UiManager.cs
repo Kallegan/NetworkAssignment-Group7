@@ -34,7 +34,9 @@ public class UiManager : AttributesSync
     private void Start()
     {
         playerNames = new List<string>();
-        
+        for (int i = 0; i < 10; i++)
+            playerNames.Insert(i, "");
+
         Multiplayer.RegisterRemoteProcedure("UpdateNameListRemote", UpdateNameListRemote);
         Multiplayer.RegisterRemoteProcedure("UpdateLobbyUiRemote", UpdateLobbyUiRemote);
     }
