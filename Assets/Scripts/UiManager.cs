@@ -84,21 +84,34 @@ public class UiManager : AttributesSync
         // Generate Name
         UInt16 myIndex = Alteruna.Multiplayer.Instance.Me.Index;
         playerName = Alteruna.NameGenerator.GenerateStatic();
-        playerNames[myIndex] = playerName;
+        playerNames.Insert(myIndex, playerName);
         
         ProcedureParameters parameters = new ProcedureParameters();
         parameters.Set("fromPlayerIndex", myIndex);
         parameters.Set("otherPlayerName", playerName);
+
+        UpdateLobbyUiLocal();
+        
+        if (Multiplayer.Instance.CurrentRoom.Users.Count == 0)
+            return;
         
         Multiplayer.InvokeRemoteProcedure("UpdateNameListRemote", UserId.All, parameters);
         Multiplayer.InvokeRemoteProcedure("UpdateLobbyUiRemote", UserId.All, parameters);
     }
 
+    public void UpdateLobbyUiLocal()
+    {
+        UInt16 myIndex = Alteruna.Multiplayer.Instance.Me.Index;
+        _playerPanels[myIndex].GetComponentInChildren<TextMeshProUGUI>().text = playerName;
+        _playerPanels[myIndex].SetActive(true);
+        
+    }
+    
     public void UpdateNameListRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
         UInt16 fromPlayerIndex = parameters.Get("fromPlayerIndex", (UInt16)0);
         string otherPlayerName = parameters.Get("otherPlayerName", "");
-        playerNames[fromPlayerIndex] = otherPlayerName;
+        playerNames.Insert(fromPlayerIndex, otherPlayerName);
     }
     
     public void UpdateLobbyUiRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
