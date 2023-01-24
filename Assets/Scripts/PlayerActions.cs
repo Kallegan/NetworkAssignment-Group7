@@ -52,19 +52,13 @@ public class PlayerActions : AttributesSync
         if (Input.GetMouseButtonDown(0))
             if (canAttack)
                 Shoot();
-
-        if (Input.GetMouseButtonDown(1))
+        
+        if (Input.GetMouseButton(1) && canDeflect)
         {
-            OnTryDeflect?.Invoke(); //This is kind of borked
-            Multiplayer.InvokeRemoteProcedure("DeflectRemote", UserId.All);
-
-        }
-            
-
-        if (Input.GetMouseButton(1))
-        {
-            if (TryDeflect())
-                OnDeflect();
+            if (CheckDeflectable())
+                OnDeflectSuccess();
+            else
+                OnDeflectMiss();
         }
         
         if (!canAttack)
@@ -87,40 +81,42 @@ public class PlayerActions : AttributesSync
             }
         }
     }
-
-    bool TryDeflect()
+    
+    bool CheckDeflectable()
     {
-        if (canDeflect && curDeflectable)
+        if (curDeflectable)
             return true;
         
-        canDeflect = false;
         return false;
     }
 
-    void OnDeflect()
+    void OnDeflectSuccess()
     {
+        OnTryDeflect?.Invoke(); //This is kind of borked
+        Multiplayer.InvokeRemoteProcedure("DeflectRemote", UserId.All);
+        
         Vector3 direction = transform.parent.forward;
         curDeflectable.OnDeflect(direction.normalized);
         curDeflectable = null;
+        
+        canDeflect = false;
     }
+    
+    void OnDeflectMiss()
+    {
+
+        OnTryDeflect?.Invoke(); //This is kind of borked
+        Multiplayer.InvokeRemoteProcedure("DeflectRemote", UserId.All);
+        
+        canDeflect = false;
+    }
+    
     private void Shoot()
     {
         OnShoot?.Invoke();
         Multiplayer.InvokeRemoteProcedure("ShootRemote", UserId.All);
-
-        Vector3 spawnPosition = transform.position + (transform.forward * 2f);
-        Quaternion spawnRotation = transform.rotation;
         
-        GameObject proj = spawner.Spawn(0, spawnPosition, spawnRotation);
-        
-        if (!proj.TryGetComponent(out SynchronizedProjectile p)) 
-            return;
-       
-        UInt16 playerIndex = avatar.Possessor.Index;
-        
-        ProcedureParameters parameters = new ProcedureParameters();
-        parameters.Set("playerIndex", (UInt16)Multiplayer.Instance.Me.Index);
-        Multiplayer.InvokeRemoteProcedure("RemoteGetOwnerIndex", UserId.All, parameters);
+        GameObject proj = spawner.Spawn(0, transform.position + transform.forward * 2f, transform.rotation);
         
         canAttack = false;
     }
