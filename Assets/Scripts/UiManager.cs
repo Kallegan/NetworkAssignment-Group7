@@ -65,6 +65,8 @@ public class UiManager : AttributesSync
     {
         var name = Alteruna.Multiplayer.Instance.CurrentRoom.Name;
         _lobbyHeader.text = name;
+        
+        OnPlayerJoinedRoomLocal();
     }
     
     public void LeaveRoom()
