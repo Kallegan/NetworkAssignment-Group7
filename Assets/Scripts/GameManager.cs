@@ -161,23 +161,22 @@ public class GameManager : Synchronizable
         int amountOfPlayersInRoom = AmountOfPlayersInRoom();
         
         bool enoughPlayers = false;
-        bool iAmHost = Multiplayer.Instance.Me.Index == 0;
-        
-        if (iAmHost)
-            enoughPlayers = amountOfPlayersInRoom >= _minUsersToStart;
+
+        if (_minUsersHostToStart > 0)
+        {
+            enoughPlayers = amountOfPlayersInRoom >= _minUsersHostToStart;
+        }
         else
         {
-            if (_minUsersHostToStart > 0)
-            {
-                enoughPlayers = amountOfPlayersInRoom >= _minUsersHostToStart;
-            }
-            else
+            if (Multiplayer.Instance.Me.Index != 0)
             {
                 ProcedureParameters parameters = new ProcedureParameters();
-                Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", Multiplayer.GetUser(0).Index, parameters);
+                Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", Multiplayer.GetUser(0).Index,
+                    parameters);
             }
+            else
+                _minUsersHostToStart = _minUsersToStart;
         }
-        
         
 #if UNITY_EDITOR
         PrintDebug("GameManager - Check if enough players: ", enoughPlayers);
@@ -187,10 +186,7 @@ public class GameManager : Synchronizable
     }
     public void JoinedRoom()
     {
-        if (Multiplayer.Instance.Me.Index == 0)
-            _minUsersHostToStart = _minUsersToStart;
-        else
-            _minUsersHostToStart = 0;
+        _minUsersHostToStart = 0;
 
         if (_state == State.Idle)
             ChangeState(State.LookingForPlayers);
@@ -211,6 +207,7 @@ public class GameManager : Synchronizable
     public void LeftRoom()
     {
         ChangeState(State.Idle);
+        _minUsersHostToStart = 0;
         
 #if UNITY_EDITOR
         PrintDebug("GameManager - ", "Left room.");
