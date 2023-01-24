@@ -642,6 +642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSmoothing: 1
   anim: {fileID: 7112471908007226232}
+  playerActions: {fileID: 0}
   Coefficent: 500
 --- !u!114 &596002553679409354
 MonoBehaviour:
@@ -1278,8 +1279,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976107073796411645}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9282bd57a5249fb4ab94bcfb04f73723, type: 2}
+  m_Avatar: {fileID: 9000000, guid: ad548c5ad2c696a4d9f3c9670aca1b66, type: 3}
+  m_Controller: {fileID: 9100000, guid: a95cf47ec4386a04c8c0472f0f14a7dd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
