@@ -37,8 +37,8 @@ public class UiManager : AttributesSync
         for (int i = 0; i < 10; i++)
             playerNames.Insert(i, "");
 
-        playerName = Alteruna.NameGenerator.GenerateStatic();
-        Multiplayer.Instance.SetUsername(playerName);
+        //playerName = Alteruna.NameGenerator.GenerateStatic();
+        //Multiplayer.Instance.SetUsername(playerName);
         
         Multiplayer.RegisterRemoteProcedure("UpdateNameListRemote", UpdateNameListRemote);
         Multiplayer.RegisterRemoteProcedure("UpdateLobbyUiRemote", UpdateLobbyUiRemote);
@@ -87,7 +87,7 @@ public class UiManager : AttributesSync
     public void OnPlayerJoinedRoomLocal()
     {
         UInt16 myIndex = Alteruna.Multiplayer.Instance.Me.Index;
-        playerNames.Insert(myIndex, playerName);
+        //playerNames.Insert(myIndex, playerName);
         
         // Create RPC-params 
         ProcedureParameters parameters = new ProcedureParameters();
