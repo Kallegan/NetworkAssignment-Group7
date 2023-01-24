@@ -14,6 +14,7 @@ public class GameManager : Synchronizable
 
     [Header("Game Settings")]
     [SerializeField] public int _minUsersToStart = 2;
+    private int _minUsersToStartHost = 0;
 
     private Multiplayer _multiplayer;
     private static GameManager _instance;
@@ -30,7 +31,6 @@ public class GameManager : Synchronizable
     }
     
     private List<User> _users;
-    public List<User> Users {get => _users;}
 
     private State _state;
     public enum State
@@ -65,6 +65,8 @@ public class GameManager : Synchronizable
         Multiplayer.RegisterRemoteProcedure("ChangeMyStateProcedure", ChangeMyStateProcedure);
         _currentState = _idleGameState;
         ChangeState(State.Idle);
+        if (Multiplayer.Instance.Me.Index == 0)
+            _minUsersToStartHost = _minUsersToStart;
     }
     
     public void ChangeMyStateProcedure(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
@@ -98,6 +100,13 @@ public class GameManager : Synchronizable
         PrintDebug("GameManager - Users in room: ", _users.Count);
 #endif
     }
+
+    public List<User> GetUserListInRoom()
+    {
+        UpdateUsersInRoomList();
+
+        return _users;
+    }
     
     public int AmountOfPlayersInRoom()
     {
@@ -109,7 +118,24 @@ public class GameManager : Synchronizable
     public bool CheckIfEnoughPlayers()
     {
         int amountOfPlayersInRoom = AmountOfPlayersInRoom();
-        bool enoughPlayers = amountOfPlayersInRoom >= _minUsersToStart;
+        
+        bool enoughPlayers = false;
+        bool iAmHost = Multiplayer.Instance.Me.Index == 0;
+        
+        if (iAmHost)
+            enoughPlayers = amountOfPlayersInRoom >= _minUsersToStart;
+        else
+        {
+            if (_minUsersToStartHost > 0)
+            {
+                enoughPlayers = amountOfPlayersInRoom >= _minUsersToStartHost;
+            }
+            else
+            {
+                //TODO update _minUsersToStartHost on all clients
+            }
+        }
+        
         
 #if UNITY_EDITOR
         PrintDebug("GameManager - Check if enough players: ", enoughPlayers);
