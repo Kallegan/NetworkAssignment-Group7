@@ -39,6 +39,8 @@ public class PlayerActions : AttributesSync
         curAttackCoolDown = attackCoolDown;
         curDeflectCoolDown = deflectCoolDown;
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
+
+        Multiplayer.RegisterRemoteProcedure("ShootRemote", ShootRemote);
     }
     
     private void Update()
@@ -98,6 +100,7 @@ public class PlayerActions : AttributesSync
     private void Shoot()
     {
         OnShoot?.Invoke();
+        Multiplayer.InvokeRemoteProcedure("ShootRemote", UserId.All);
 
         Vector3 spawnPosition = transform.position + (transform.forward * 2f);
         Quaternion spawnRotation = transform.rotation;
@@ -114,5 +117,10 @@ public class PlayerActions : AttributesSync
         Multiplayer.InvokeRemoteProcedure("RemoteGetOwnerIndex", UserId.All, parameters);
         
         canAttack = false;
+    }
+
+    private void ShootRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
+    {
+        OnShoot?.Invoke();
     }
 }
