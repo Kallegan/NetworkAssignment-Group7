@@ -175,7 +175,7 @@ public class GameManager : Synchronizable
 #endif
                 Debug.Log("TEST");
                 ProcedureParameters parameters = new ProcedureParameters();
-                Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", Multiplayer.GetUser(0),
+                Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", (uint)0,
                     parameters);
             }
             else
