@@ -62,6 +62,7 @@ MonoBehaviour:
   UID: {fileID: 0}
   Reliability: 1
   HealthBar: {fileID: 4279380657899205574}
+  StunEmitter: {fileID: 2064213882054109332, guid: 4cf4ebcbda3bc594fb84717cdacec4cd, type: 3}
   WorldDamageImmunityTime: 0.5
   WorldDamage: 1
   MaxHealth: 10
