@@ -41,6 +41,7 @@ public class PlayerActions : AttributesSync
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
 
         Multiplayer.RegisterRemoteProcedure("ShootRemote", ShootRemote);
+        Multiplayer.RegisterRemoteProcedure("DeflectRemote", DeflectRemote);
     }
     
     private void Update()
@@ -122,5 +123,10 @@ public class PlayerActions : AttributesSync
     private void ShootRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
         OnShoot?.Invoke();
+    }
+
+    private void DeflectRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
+    {
+        OnTryDeflect?.Invoke();
     }
 }
