@@ -23,6 +23,8 @@ public class PlayerActions : AttributesSync
     private float curDeflectCoolDown;
     private bool canDeflect = true;
 
+    public delegate void ShootDelegate();
+    public event ShootDelegate OnShoot;
     
     private void Awake()
     {
