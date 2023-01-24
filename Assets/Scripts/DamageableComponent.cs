@@ -7,6 +7,7 @@ public class DamageableComponent : AttributesSync
     private Alteruna.Avatar avatar;
     [SerializeField] Transform HealthBar;
     [SerializeField] ParticleSystem StunEmitter;
+    private ParticleSystem StunEffect;
 
     [SerializeField] private float WorldDamageImmunityTime = 0.5f;
     [SerializeField] private int WorldDamage = 1;
@@ -33,7 +34,8 @@ public class DamageableComponent : AttributesSync
 
     private void Start()
     {
-        
+        StunEffect = Instantiate(StunEmitter, transform.position + stunVFXOffset, stunVFXRotation);
+        StunEffect.Stop();
         if (!avatar.IsMe)
             return;
         Health = MaxHealth;        
@@ -51,7 +53,18 @@ public class DamageableComponent : AttributesSync
 
         if (WorldManager.Instance.TakeWorldDamage(transform.parent.position) && !RecentlyDamaged)
             TakeWorldDamage();
+
+        if (PlayerMovement.stunned)
+        {
+            StunEffect.Play();
+            StunEffect.transform.position = transform.position + stunVFXOffset;
+        }
+        else
+            StunEffect.Stop();
+            
     }
+
+    
 
     private void TakeWorldDamage()
     {
@@ -80,9 +93,9 @@ public class DamageableComponent : AttributesSync
     {
         TakeDamage(damageAmount);
         // Todo: deal with stuntime in a better way
-        PlayerMovement.SetAsStunned(0.5f); 
+        PlayerMovement.SetAsStunned(0.5f);       
 
-        Instantiate(StunEmitter, transform.position + stunVFXOffset, stunVFXRotation);
+
         //PlayerMovement.velocity = knockbackDirection.normalized;
     }
     void TakeDamage(int damageAmount)
