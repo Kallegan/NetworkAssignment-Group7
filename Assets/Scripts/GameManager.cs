@@ -177,7 +177,7 @@ public class GameManager : AttributesSync
                 PrintDebug("GameManager - ME IS INDEX: ", Multiplayer.Instance.Me.Index);
 #endif
                 Debug.Log("TEST");
-                Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", (uint)0);
+                //Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", (uint)0);
             }
         }
         
