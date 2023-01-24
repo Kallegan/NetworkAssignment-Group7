@@ -14,7 +14,7 @@ public class GameManager : Synchronizable
 
     [Header("Game Settings")]
     [SerializeField] public int _minUsersToStart = 2;
-    private int _minUsersToStartHost = 0;
+    private int _minUsersHostToStart = 0;
 
     private Multiplayer _multiplayer;
     private static GameManager _instance;
@@ -63,10 +63,19 @@ public class GameManager : Synchronizable
     void Start()
     {
         Multiplayer.RegisterRemoteProcedure("ChangeMyStateProcedure", ChangeMyStateProcedure);
+        Multiplayer.RegisterRemoteProcedure("RequestGameSettingsProcedure", RequestGameSettingsProcedure);
+        Multiplayer.RegisterRemoteProcedure("GetGameSettingsProcedure", GetGameSettingsProcedure);
         _currentState = _idleGameState;
         ChangeState(State.Idle);
-        if (Multiplayer.Instance.Me.Index == 0)
-            _minUsersToStartHost = _minUsersToStart;
+    }
+    
+    public void CallChangeMyState(State state)
+    {
+        byte stateIndex = (byte)state;
+        ProcedureParameters parameters = new ProcedureParameters();
+        parameters.Set("stateIndex", stateIndex);
+        Multiplayer.InvokeRemoteProcedure("ChangeMyStateProcedure", UserId.All, parameters);
+        ChangeState(stateIndex);
     }
     
     public void ChangeMyStateProcedure(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
@@ -78,13 +87,28 @@ public class GameManager : Synchronizable
         ChangeState(stateIndex);
     }
     
-    public void CallChangeMyState(State state)
+    public void RequestGameSettingsProcedure(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
-        byte stateIndex = (byte)state;
+#if UNITY_EDITOR
+        PrintDebug("GameManager - RPC REQUEST GAME SETTINGS BY: ", fromUser);
+#endif
+        SendGameSettings(fromUser);
+    }
+
+    private void SendGameSettings(ushort toUser)
+    {
         ProcedureParameters parameters = new ProcedureParameters();
-        parameters.Set("stateIndex", stateIndex);
-        Multiplayer.InvokeRemoteProcedure("ChangeMyStateProcedure", UserId.All, parameters);
-        ChangeState(stateIndex);
+        parameters.Set("minUsersToStart", _minUsersToStart);
+        Multiplayer.InvokeRemoteProcedure("GetGameSettingsProcedure", Multiplayer.GetUser(toUser), parameters);
+    }
+
+    public void GetGameSettingsProcedure(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
+    {
+#if UNITY_EDITOR
+        PrintDebug("GameManager - ", "RPC TO GET GAME SETTINGS");
+#endif
+        int minUsersToStart = parameters.Get("minUsersToStart", 0);
+        _minUsersHostToStart = minUsersToStart;
     }
 
     private void Update()
@@ -126,13 +150,14 @@ public class GameManager : Synchronizable
             enoughPlayers = amountOfPlayersInRoom >= _minUsersToStart;
         else
         {
-            if (_minUsersToStartHost > 0)
+            if (_minUsersHostToStart > 0)
             {
-                enoughPlayers = amountOfPlayersInRoom >= _minUsersToStartHost;
+                enoughPlayers = amountOfPlayersInRoom >= _minUsersHostToStart;
             }
             else
             {
-                //TODO update _minUsersToStartHost on all clients
+                ProcedureParameters parameters = new ProcedureParameters();
+                Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", Multiplayer.GetUser(0).Index, parameters);
             }
         }
         
@@ -145,6 +170,11 @@ public class GameManager : Synchronizable
     }
     public void JoinedRoom()
     {
+        if (Multiplayer.Instance.Me.Index == 0)
+            _minUsersHostToStart = _minUsersToStart;
+        else
+            _minUsersHostToStart = 0;
+
         if (_state == State.Idle)
             ChangeState(State.LookingForPlayers);
         
@@ -164,6 +194,7 @@ public class GameManager : Synchronizable
     public void LeftRoom()
     {
         ChangeState(State.Idle);
+        
 #if UNITY_EDITOR
         PrintDebug("GameManager - ", "Left room.");
 #endif
