@@ -19,7 +19,7 @@ public class PlayerActions : AttributesSync
     [SerializeField] private BoxCollider deflectArea;
     public SynchronizedProjectile curDeflectable = null;
     
-    [SerializeField] private float deflectCoolDown = 0.5f;
+    [SerializeField] private float deflectCoolDown = 5.0f;
     private float curDeflectCoolDown;
     private bool canDeflect = true;
 
@@ -53,7 +53,7 @@ public class PlayerActions : AttributesSync
             if (canAttack)
                 Shoot();
         
-        if (Input.GetMouseButton(1) && canDeflect)
+        if (Input.GetMouseButtonDown(1) && canDeflect)
         {
             if (CheckDeflectable())
                 OnDeflectSuccess();
@@ -98,16 +98,14 @@ public class PlayerActions : AttributesSync
         Vector3 direction = transform.parent.forward;
         curDeflectable.OnDeflect(direction.normalized);
         curDeflectable = null;
-        
-        canDeflect = false;
+        canDeflect = true;
     }
     
     void OnDeflectMiss()
     {
-
         OnTryDeflect?.Invoke(); //This is kind of borked
         Multiplayer.InvokeRemoteProcedure("DeflectRemote", UserId.All);
-        
+        curDeflectable = null;
         canDeflect = false;
     }
     

@@ -287,10 +287,10 @@ MonoBehaviour:
   UID: {fileID: 0}
   Reliability: 1
   spawner: {fileID: 7973682003673400592, guid: bdcf3332f5c38474ea67b18f2853ea97, type: 3}
-  attackCoolDown: 0.5
+  attackCoolDown: 2
   deflectArea: {fileID: 3263929097021584910}
   curDeflectable: {fileID: 0}
-  deflectCoolDown: 0.5
+  deflectCoolDown: 2
 --- !u!1 &3937227739541676012
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,8 +773,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7.88, y: 3.99, z: 9}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4.18, y: 1.97, z: 3.58}
+  m_Center: {x: 0, y: 0, z: 1.8}
 --- !u!114 &8536820268506545127
 MonoBehaviour:
   m_ObjectHideFlags: 0
