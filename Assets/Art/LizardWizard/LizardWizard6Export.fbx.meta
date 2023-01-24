@@ -1,9 +1,24 @@
 fileFormatVersion: 2
-guid: 10559f3819be04b4fb9f36cfb5de4d8e
+guid: ad548c5ad2c696a4d9f3c9670aca1b66
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EyeMaterial
+    second: {fileID: 2100000, guid: 2f8ed2d5b7e390549a32ed4f9fd8f5a6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SkinMaterial.002
+    second: {fileID: 2100000, guid: 1dbdc386a75da38458cbd36dc08c83e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SkinMaterial.003
+    second: {fileID: 2100000, guid: 78c490b75d61e8247989cb903174ed12, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -97,7 +112,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0

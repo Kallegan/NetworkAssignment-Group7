@@ -42,7 +42,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2992603711930217573}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f6e7b1817c2b0d4aa560da0f869085c, type: 3}
+  m_Script: {fileID: 11500000, guid: c53b7ed1afdb740489fedbe95ea7973f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Multiplayer: {fileID: 0}
@@ -50,15 +50,7 @@ MonoBehaviour:
   Reliability: 1
   _startGameButton: {fileID: 0}
   _lobbyHeader: {fileID: 0}
-  _playerPanels:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _playerPanels: []
   playerNames: []
   playerName: 
 --- !u!114 &971613084935417749

@@ -10,6 +10,7 @@ public class PlayerAnimator : MonoBehaviour
 
     [SerializeField] private Animator anim;
     private RigidbodySynchronizable rbSync;
+    [SerializeField] private PlayerActions playerActions;
     private Rigidbody rb;
 
 
@@ -34,6 +35,16 @@ public class PlayerAnimator : MonoBehaviour
     private void Start()
     {
         //Bind event to play spell cast animation here
+        if (playerActions)
+        {
+            playerActions.OnShoot += PlayShootAnimation;
+            playerActions.OnTryDeflect += PlayDeflectAnimation;
+        }
+        else
+        {
+            Debug.Log("PlayerActions is not set for the Animator script");
+        }
+        
     }
 
     // Update is called once per frame
@@ -52,8 +63,6 @@ public class PlayerAnimator : MonoBehaviour
         prevAngle = turnAngle;
 
         turnAngle = CalculateDirection(positionDelta);
-        Debug.Log("Strafe Direction" + turnAngle);
-        Debug.Log("Velocity Magnitude: " + velocityDelta);
 
         anim.SetFloat("VelocityMagnitude", velocityDelta * Coefficent);
 
@@ -92,8 +101,19 @@ public class PlayerAnimator : MonoBehaviour
     }
 
     //Plays animation once on action layer. Like an Unreal Engine montage
-    private void PlayAction(string ActionName) 
+    private void PlayAction(string ActionName, float time) 
     {
-        anim.Play(ActionName, 1, -1);
+        anim.Play(ActionName, 1, time);
+    }
+
+    private void PlayShootAnimation()
+    {
+        //PlayAction("Shoot", 0.15f);
+        anim.CrossFade("Shoot", 0.1f, 1, 0);
+    }
+
+    private void PlayDeflectAnimation()
+    {
+        anim.CrossFade("Deflect", 0.1f, 1, 0.0f);
     }
 }

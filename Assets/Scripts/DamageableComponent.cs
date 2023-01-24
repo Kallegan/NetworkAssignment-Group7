@@ -14,8 +14,7 @@ public class DamageableComponent : AttributesSync
     [SerializeField] private float MaxHealth = 10;
     [SynchronizableField] private float Health = 10;
 
-    private PlayerMovement PlayerMovement;
-    private Quaternion stunVFXRotation;
+    private PlayerMovement PlayerMovement;    
     private Vector3 stunVFXOffset;
 
     private Camera cam;
@@ -27,14 +26,14 @@ public class DamageableComponent : AttributesSync
         cam = Camera.main;
         PlayerMovement = transform.parent.GetComponent<PlayerMovement>();
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
-        stunVFXRotation = new Quaternion(70, 90, 90, 0);
+        
         stunVFXOffset = new Vector3(0, 2, 0);
 
     }
 
     private void Start()
     {
-        StunEffect = Instantiate(StunEmitter, transform.position + stunVFXOffset, stunVFXRotation);
+        StunEffect = Instantiate(StunEmitter, transform.position, transform.rotation);
         StunEffect.Stop();
         if (!avatar.IsMe)
             return;
@@ -54,13 +53,9 @@ public class DamageableComponent : AttributesSync
         if (WorldManager.Instance.TakeWorldDamage(transform.parent.position) && !RecentlyDamaged)
             TakeWorldDamage();
 
-        if (PlayerMovement.stunned)
-        {
-            StunEffect.Play();
-            StunEffect.transform.position = transform.position + stunVFXOffset;
-        }
-        else
-            StunEffect.Stop();
+                   
+        StunEffect.transform.position = transform.position + stunVFXOffset;
+              
             
     }
 
@@ -102,6 +97,7 @@ public class DamageableComponent : AttributesSync
     {
         Health -= damageAmount;
         BroadcastRemoteMethod("UpdateHealthBar");
+        BroadcastRemoteMethod("HitVFX");
         if (Health <= 0)
         {
             BroadcastRemoteMethod("Die");
@@ -122,6 +118,12 @@ public class DamageableComponent : AttributesSync
     {
         transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive = false;
         Destroy(transform.parent.gameObject); //temp remove when we have something cooler       
+    }
+
+    [SynchronizableMethod]
+    private void HitVFX()
+    {
+        StunEffect.Play();
     }
 }
 /*
