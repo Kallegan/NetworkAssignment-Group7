@@ -25,6 +25,9 @@ public class PlayerActions : AttributesSync
 
     public delegate void ShootDelegate();
     public event ShootDelegate OnShoot;
+
+    public delegate void DeflectDelegate();
+    public event DeflectDelegate OnTryDeflect;
     
     private void Awake()
     {
@@ -46,7 +49,10 @@ public class PlayerActions : AttributesSync
         if (Input.GetMouseButtonDown(0))
             if (canAttack)
                 Shoot();
-       
+
+        if (Input.GetMouseButtonDown(1))
+            OnTryDeflect?.Invoke(); //This is kind of borked
+
         if (Input.GetMouseButton(1))
         {
             if (TryDeflect())
@@ -91,6 +97,8 @@ public class PlayerActions : AttributesSync
     }
     private void Shoot()
     {
+        OnShoot?.Invoke();
+
         Vector3 spawnPosition = transform.position + (transform.forward * 2f);
         Quaternion spawnRotation = transform.rotation;
         

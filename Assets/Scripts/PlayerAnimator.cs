@@ -38,6 +38,7 @@ public class PlayerAnimator : MonoBehaviour
         if (playerActions)
         {
             playerActions.OnShoot += PlayShootAnimation;
+            playerActions.OnTryDeflect += PlayDeflectAnimation;
         }
         else
         {
@@ -100,13 +101,19 @@ public class PlayerAnimator : MonoBehaviour
     }
 
     //Plays animation once on action layer. Like an Unreal Engine montage
-    private void PlayAction(string ActionName) 
+    private void PlayAction(string ActionName, float time) 
     {
-        anim.Play(ActionName, 1, -1);
+        anim.Play(ActionName, 1, time);
     }
 
     private void PlayShootAnimation()
     {
-        PlayAction("Shoot");
+        //PlayAction("Shoot", 0.15f);
+        anim.CrossFade("Shoot", 0.1f, 1, 0);
+    }
+
+    private void PlayDeflectAnimation()
+    {
+        anim.CrossFade("Deflect", 0.1f, 1, 0.0f);
     }
 }
