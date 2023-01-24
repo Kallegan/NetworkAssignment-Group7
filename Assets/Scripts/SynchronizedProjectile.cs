@@ -87,6 +87,19 @@ public class SynchronizedProjectile : Synchronizable
             _spawner.Despawn(gameObject);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.gameObject.CompareTag("Player"))
+            return;
+        
+        var damageable = other.gameObject.GetComponentInChildren<DamageableComponent>();
+        if (damageable)
+            damageable.OnHit(1, _direction);
+
+        DestroySelf();
+    }
+
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         var damageable = collision.gameObject.GetComponentInChildren<DamageableComponent>();
@@ -95,4 +108,5 @@ public class SynchronizedProjectile : Synchronizable
 
         DestroySelf();
     }
+    */
 }
