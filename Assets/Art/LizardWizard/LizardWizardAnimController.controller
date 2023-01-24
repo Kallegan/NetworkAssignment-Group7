@@ -89,17 +89,17 @@ BlendTree:
     m_DirectBlendParameter: VelocityMagnitude
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 472652cb2ec0c244ca724f3b197bb22c, type: 2}
+    m_Motion: {fileID: 7400000, guid: 896c7c53dfd0d554a9a00884d2ad257a, type: 2}
     m_Threshold: 0.45454547
-    m_Position: {x: -140, y: 90}
+    m_Position: {x: -135, y: 90}
     m_TimeScale: 2
     m_CycleOffset: 0
     m_DirectBlendParameter: StrafeX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 472652cb2ec0c244ca724f3b197bb22c, type: 2}
+    m_Motion: {fileID: 7400000, guid: 1e14a2bbbe8186d42a3e4462aa9ff03e, type: 2}
     m_Threshold: 0.5
-    m_Position: {x: 140, y: 90}
+    m_Position: {x: 135, y: 90}
     m_TimeScale: 2
     m_CycleOffset: 0
     m_DirectBlendParameter: StrafeX
@@ -295,6 +295,12 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1836509252330389033}
     m_Position: {x: 290, y: 110, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8460225630979843144}
+    m_Position: {x: 270, y: 220, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8205235845109488066}
+    m_Position: {x: 280, y: 290, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -305,3 +311,55 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1836509252330389033}
+--- !u!1102 &8205235845109488066
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Anim_JogBackLeft
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 1e14a2bbbe8186d42a3e4462aa9ff03e, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &8460225630979843144
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Anim_JogBackRight
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 896c7c53dfd0d554a9a00884d2ad257a, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
