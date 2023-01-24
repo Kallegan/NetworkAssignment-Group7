@@ -116,6 +116,23 @@ public class GameManager : Synchronizable
         _currentState.Update();
     }
 
+    public void StartRound()
+    {
+        if (CheckIfEnoughPlayers() && CheckIfEveryoneSameState())
+        {
+#if UNITY_EDITOR
+            PrintDebug("GameManager - ", "STARTING GAME");
+#endif
+            CallChangeMyState(State.StartRound);
+        }
+        else
+        {
+#if UNITY_EDITOR
+            PrintDebug("GameManager - ", "UNABLE TO START GAME");
+#endif
+        }
+        UiManager.Instance.CanStart(false);
+    }
     public void UpdateUsersInRoomList()
     {
         _users = _multiplayer.GetUsers();

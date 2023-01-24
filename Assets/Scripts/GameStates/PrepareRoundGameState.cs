@@ -32,26 +32,25 @@ public class PrepareRoundGameState : GameState
         {
             if (Multiplayer.Instance.Me.Index != 0)
                 return;
-            TryToStart();
+            StartButtonEnable();
         }
         else
             GameManager.Instance.ChangeState(GameManager.State.LookingForPlayers);
     }
 
-    private void TryToStart()
+    private void StartButtonEnable()
     {
 #if UNITY_EDITOR
-        GameManager.Instance.PrintDebug("GameManager - ", "TRYING TO START");
+        GameManager.Instance.PrintDebug("GameManager - ", "TRYING TO ENABLE START BUTTON");
 #endif
 
         if (GameManager.Instance.CheckIfEveryoneSameState())
-        {
-            GameManager.Instance.CallChangeMyState(GameManager.State.StartRound);
-        }
+            UiManager.Instance.CanStart(true);
         else
         {
+            UiManager.Instance.CanStart(false);
 #if UNITY_EDITOR
-            GameManager.Instance.PrintDebug("GameManager - ", "UNABLE TO START (PEOPLE NOT SYNCED).");
+            GameManager.Instance.PrintDebug("GameManager - ", "UNABLE TO ENABLE START BUTTON (PEOPLE NOT SYNCED).");
 #endif
         }
     }
