@@ -7,6 +7,9 @@ public class TestScript : MonoBehaviour
 {
     public void DebugHello()
     {
-        Debug.Log("Hello This Is My Cool Index: " + Multiplayer.Instance.Me.Index);
+        if (Multiplayer.Instance.Me.Index != 0)
+        {
+            Debug.Log("Index not zero");
+        }
     }
 }
