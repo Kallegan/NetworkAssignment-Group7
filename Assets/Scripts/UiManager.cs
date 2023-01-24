@@ -98,8 +98,8 @@ public class UiManager : AttributesSync
         if (Multiplayer.Instance.CurrentRoom.Users.Count == 0)
             return;
         
-        Multiplayer.InvokeRemoteProcedure("UpdateNameListRemote", UserId.All, parameters);
-        Multiplayer.InvokeRemoteProcedure("UpdateLobbyUiRemote", UserId.All, parameters);
+        Multiplayer.InvokeRemoteProcedure("UpdateNameListRemote", UserId.AllInclusive, parameters);
+        Multiplayer.InvokeRemoteProcedure("UpdateLobbyUiRemote", UserId.AllInclusive, parameters);
     }
 
     public void UpdateLobbyUiLocal()
