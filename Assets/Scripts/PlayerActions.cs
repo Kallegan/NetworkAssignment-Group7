@@ -56,7 +56,7 @@ public class PlayerActions : AttributesSync
         if (Input.GetMouseButtonDown(1))
         {
             OnTryDeflect?.Invoke(); //This is kind of borked
-            Multiplayer.InvokeRemoteProcedure("ShootRemote", UserId.All);
+            Multiplayer.InvokeRemoteProcedure("DeflectRemote", UserId.All);
 
         }
             
