@@ -68,9 +68,9 @@ public class UiManager : AttributesSync
         Multiplayer.Instance.CurrentRoom.Leave();
     }
 
-    public void CanStart()
+    public void CanStart(bool canStart)
     {
-        _startGameButton.interactable = true;
+        _startGameButton.interactable = canStart;
     }
 
     public void OnPlayerJoinedRoomLocal()
