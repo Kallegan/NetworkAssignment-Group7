@@ -5,7 +5,8 @@ using UnityEngine;
 public class DamageableComponent : AttributesSync
 {
     private Alteruna.Avatar avatar;
-    [SerializeField] Transform HealthBar;    
+    [SerializeField] Transform HealthBar;
+    [SerializeField] ParticleSystem StunEmitter;
 
     [SerializeField] private float WorldDamageImmunityTime = 0.5f;
     [SerializeField] private int WorldDamage = 1;
@@ -28,9 +29,12 @@ public class DamageableComponent : AttributesSync
 
     private void Start()
     {
+        
         if (!avatar.IsMe)
             return;
-        Health = MaxHealth;       
+        Health = MaxHealth;
+
+        
     }
 
     // Update is called once per frame
@@ -74,7 +78,13 @@ public class DamageableComponent : AttributesSync
     {
         TakeDamage(damageAmount);
         // Todo: deal with stuntime in a better way
-        PlayerMovement.SetAsStunned(0.5f); 
+        PlayerMovement.SetAsStunned(0.5f);
+
+        Vector3 stunVFXOffset = new Vector3(0, 2, 0);
+        Quaternion stunVFXORotation = new Quaternion(70, 90, 90, 0);
+
+
+        Instantiate(StunEmitter, transform.position + stunVFXOffset, stunVFXORotation);
         //PlayerMovement.velocity = knockbackDirection.normalized;
     }
     void TakeDamage(int damageAmount)

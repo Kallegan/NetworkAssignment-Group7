@@ -62,6 +62,7 @@ MonoBehaviour:
   UID: {fileID: 0}
   Reliability: 1
   HealthBar: {fileID: 4279380657899205574}
+  StunEmitter: {fileID: 2064213882054109332, guid: 4cf4ebcbda3bc594fb84717cdacec4cd, type: 3}
   WorldDamageImmunityTime: 0.5
   WorldDamage: 1
   MaxHealth: 10
@@ -529,7 +530,7 @@ Transform:
   - {fileID: 486393822965779015}
   - {fileID: 3238621714589657169}
   - {fileID: 4908537470049283084}
-  - {fileID: 556145747508580555}
+  - {fileID: 6557874722555240785}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1289,7 +1290,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!1001 &1950722789171542105
+--- !u!1001 &5163323948911872451
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1299,6 +1300,10 @@ PrefabInstance:
     - target: {fileID: 2064213882054109329, guid: 4cf4ebcbda3bc594fb84717cdacec4cd, type: 3}
       propertyPath: m_Name
       value: StunVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064213882054109329, guid: 4cf4ebcbda3bc594fb84717cdacec4cd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2064213882054109330, guid: 4cf4ebcbda3bc594fb84717cdacec4cd, type: 3}
       propertyPath: m_RootOrder
@@ -1310,7 +1315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2064213882054109330, guid: 4cf4ebcbda3bc594fb84717cdacec4cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.709
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2064213882054109330, guid: 4cf4ebcbda3bc594fb84717cdacec4cd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1346,8 +1351,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cf4ebcbda3bc594fb84717cdacec4cd, type: 3}
---- !u!4 &556145747508580555 stripped
+--- !u!4 &6557874722555240785 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2064213882054109330, guid: 4cf4ebcbda3bc594fb84717cdacec4cd, type: 3}
-  m_PrefabInstance: {fileID: 1950722789171542105}
+  m_PrefabInstance: {fileID: 5163323948911872451}
   m_PrefabAsset: {fileID: 0}
