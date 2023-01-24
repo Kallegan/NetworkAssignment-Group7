@@ -169,7 +169,9 @@ public class GameManager : AttributesSync
         }
         else
         {
-            if (Multiplayer.Instance.Me.Index != 0)
+            if (Multiplayer.Instance.Me.Index == 0)
+                _minUsersHostToStart = _minUsersToStart;
+            else
             {
 #if UNITY_EDITOR
                 PrintDebug("GameManager - ME IS INDEX: ", Multiplayer.Instance.Me.Index);
@@ -177,8 +179,6 @@ public class GameManager : AttributesSync
                 Debug.Log("TEST");
                 Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", (uint)0);
             }
-            else
-                _minUsersHostToStart = _minUsersToStart;
         }
         
 #if UNITY_EDITOR
