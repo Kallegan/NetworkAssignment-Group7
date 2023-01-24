@@ -33,7 +33,7 @@ Shader "Ultimate 10+ Shaders/Plasma"
 {
     Properties
     {
-        [HDR] _Color ("Color", Color) = (1,1,1,1)
+        [HDR] _Color ("Color", Color) = (1,1,1,1)        
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Normal("Normal map", 2D) = "bump" {}
 
@@ -48,7 +48,7 @@ Shader "Ultimate 10+ Shaders/Plasma"
 		Blend SrcAlpha OneMinusSrcAlpha
         LOD 100
         Cull [_Cull]
-        Lighting Off
+        Lighting On
         ZWrite On
         
         CGPROGRAM

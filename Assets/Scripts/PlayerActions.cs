@@ -30,7 +30,8 @@ public class PlayerActions : AttributesSync
     public event DeflectDelegate OnTryDeflect;
 
     public GameObject deflectShield;
-    
+
+
     private void Awake()
     {
         spawner = FindObjectOfType<Spawner>();
@@ -46,7 +47,7 @@ public class PlayerActions : AttributesSync
         Multiplayer.RegisterRemoteProcedure("DeflectRemote", DeflectRemote);
 
         deflectShield = Instantiate(deflectShield);
-        deflectShield.transform.position = new Vector3(transform.position.x, transform.parent.position.y -1000, transform.position.z);
+        deflectShield.transform.position = new Vector3(0, -1000, 0);
     }
     
     private void Update()
@@ -61,10 +62,7 @@ public class PlayerActions : AttributesSync
         if (Input.GetMouseButtonDown(1) && canDeflect)
         {
             if (CheckDeflectable())
-            {
-                deflectShield.transform.position = transform.parent.position;
-                deflectShield.transform.rotation = transform.parent.rotation;
-                
+            {    
                 OnDeflectSuccess();
             }                
             else
@@ -115,6 +113,8 @@ public class PlayerActions : AttributesSync
         curDeflectable.OnDeflect(direction.normalized);
         curDeflectable = null;
         canDeflect = true;
+
+
     }
     
     void OnDeflectMiss()
@@ -123,6 +123,9 @@ public class PlayerActions : AttributesSync
         Multiplayer.InvokeRemoteProcedure("DeflectRemote", UserId.All);
         curDeflectable = null;
         canDeflect = false;
+
+        ShowReflectVFX();
+        deflectShield.GetComponent<MaterialPropertyBlockPlasma>().SuccessDeflect();
     }
     
     private void Shoot()
@@ -142,6 +145,18 @@ public class PlayerActions : AttributesSync
 
     private void DeflectRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
-        OnTryDeflect?.Invoke();
+        OnTryDeflect?.Invoke();    
+    }
+
+
+    private void ShowReflectVFX()
+    {
+        deflectShield.transform.rotation = transform.parent.rotation;
+        deflectShield.transform.position = transform.parent.position + transform.parent.forward * 2;
+    }
+
+    private void HideRelfectVFX()
+    {
+        deflectShield.transform.position = new Vector3(0, -1000, 0);
     }
 }
