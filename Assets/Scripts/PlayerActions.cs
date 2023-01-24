@@ -28,6 +28,8 @@ public class PlayerActions : AttributesSync
 
     public delegate void DeflectDelegate();
     public event DeflectDelegate OnTryDeflect;
+
+    public GameObject deflectShield;
     
     private void Awake()
     {
@@ -42,6 +44,9 @@ public class PlayerActions : AttributesSync
 
         Multiplayer.RegisterRemoteProcedure("ShootRemote", ShootRemote);
         Multiplayer.RegisterRemoteProcedure("DeflectRemote", DeflectRemote);
+
+        deflectShield = Instantiate(deflectShield);
+        deflectShield.transform.position = new Vector3(transform.position.x, transform.parent.position.y -1000, transform.position.z);
     }
     
     private void Update()
@@ -56,11 +61,19 @@ public class PlayerActions : AttributesSync
         if (Input.GetMouseButtonDown(1) && canDeflect)
         {
             if (CheckDeflectable())
+            {
+                deflectShield.transform.position = transform.parent.position;
+                deflectShield.transform.rotation = transform.parent.rotation;
+                
                 OnDeflectSuccess();
+            }                
             else
+            {
                 OnDeflectMiss();
+            }               
         }
-        
+
+
         if (!canAttack)
         {
             curAttackCoolDown -= Time.deltaTime;
@@ -78,9 +91,12 @@ public class PlayerActions : AttributesSync
             {
                 canDeflect = true;
                 curDeflectCoolDown = deflectCoolDown;
-            }
+                                
+            }    
         }
     }
+
+    
     
     bool CheckDeflectable()
     {

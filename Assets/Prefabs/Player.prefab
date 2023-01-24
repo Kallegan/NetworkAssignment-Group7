@@ -291,6 +291,7 @@ MonoBehaviour:
   deflectArea: {fileID: 3263929097021584910}
   curDeflectable: {fileID: 0}
   deflectCoolDown: 2
+  deflectShield: {fileID: 189550469714239105, guid: 894625f9a8ce7c34d962c2b1a2d75d53, type: 3}
 --- !u!1 &3937227739541676012
 GameObject:
   m_ObjectHideFlags: 0
