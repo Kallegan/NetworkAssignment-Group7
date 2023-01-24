@@ -55,12 +55,9 @@ public class DamageableComponent : AttributesSync
             TakeWorldDamage();
 
         if (PlayerMovement.stunned)
-        {
-            StunEffect.Play();
+        {           
             StunEffect.transform.position = transform.position + stunVFXOffset;
-        }
-        else
-            StunEffect.Stop();
+        }      
             
     }
 
@@ -102,6 +99,7 @@ public class DamageableComponent : AttributesSync
     {
         Health -= damageAmount;
         BroadcastRemoteMethod("UpdateHealthBar");
+        BroadcastRemoteMethod("HitVFX");
         if (Health <= 0)
         {
             BroadcastRemoteMethod("Die");
@@ -122,6 +120,12 @@ public class DamageableComponent : AttributesSync
     {
         transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive = false;
         Destroy(transform.parent.gameObject); //temp remove when we have something cooler       
+    }
+
+    [SynchronizableMethod]
+    private void HitVFX()
+    {
+        StunEffect.Play();
     }
 }
 /*
