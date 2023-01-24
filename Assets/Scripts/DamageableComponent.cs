@@ -14,6 +14,8 @@ public class DamageableComponent : AttributesSync
     [SynchronizableField] private float Health = 10;
 
     private PlayerMovement PlayerMovement;
+    private Quaternion stunVFXRotation;
+    private Vector3 stunVFXOffset;
 
     private Camera cam;
     private bool RecentlyDamaged = false;
@@ -24,6 +26,8 @@ public class DamageableComponent : AttributesSync
         cam = Camera.main;
         PlayerMovement = transform.parent.GetComponent<PlayerMovement>();
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
+        stunVFXRotation = new Quaternion(70, 90, 90, 0);
+        stunVFXOffset = new Vector3(0, 2, 0);
 
     }
 
@@ -32,9 +36,7 @@ public class DamageableComponent : AttributesSync
         
         if (!avatar.IsMe)
             return;
-        Health = MaxHealth;
-
-        
+        Health = MaxHealth;        
     }
 
     // Update is called once per frame
@@ -78,13 +80,9 @@ public class DamageableComponent : AttributesSync
     {
         TakeDamage(damageAmount);
         // Todo: deal with stuntime in a better way
-        PlayerMovement.SetAsStunned(0.5f);
+        PlayerMovement.SetAsStunned(0.5f); 
 
-        Vector3 stunVFXOffset = new Vector3(0, 2, 0);
-        Quaternion stunVFXORotation = new Quaternion(70, 90, 90, 0);
-
-
-        Instantiate(StunEmitter, transform.position + stunVFXOffset, stunVFXORotation);
+        Instantiate(StunEmitter, transform.position + stunVFXOffset, stunVFXRotation);
         //PlayerMovement.velocity = knockbackDirection.normalized;
     }
     void TakeDamage(int damageAmount)
