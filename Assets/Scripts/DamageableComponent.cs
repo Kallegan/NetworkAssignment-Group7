@@ -6,6 +6,7 @@ public class DamageableComponent : AttributesSync
 {
     private Alteruna.Avatar avatar;
     [SerializeField] Transform HealthBar;
+    [SerializeField] Transform StunLocation;
     [SerializeField] ParticleSystem StunEmitter;
     private ParticleSystem StunEffect;
 
@@ -33,7 +34,7 @@ public class DamageableComponent : AttributesSync
 
     private void Start()
     {
-        StunEffect = Instantiate(StunEmitter, transform.position, transform.rotation);
+        StunEffect = Instantiate(StunEmitter, transform.position, StunLocation.transform.rotation);
         StunEffect.Stop();
         if (!avatar.IsMe)
             return;
