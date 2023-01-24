@@ -170,6 +170,9 @@ public class GameManager : Synchronizable
         {
             if (Multiplayer.Instance.Me.Index != 0)
             {
+#if UNITY_EDITOR
+                PrintDebug("GameManager - ME IS INDEX: ", Multiplayer.Instance.Me.Index);
+#endif
                 ProcedureParameters parameters = new ProcedureParameters();
                 Multiplayer.InvokeRemoteProcedure("RequestGameSettingsProcedure", Multiplayer.GetUser(0),
                     parameters);
