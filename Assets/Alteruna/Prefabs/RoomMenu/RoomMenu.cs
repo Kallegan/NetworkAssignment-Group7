@@ -71,6 +71,11 @@ public class RoomMenu : CommunicationBridge
 			for (int i = 0; i < multiplayer.AvailableRooms.Count; i++)
 			{
 				Room room = multiplayer.AvailableRooms[i];
+				
+				if (Multiplayer.InRoom && room.ID == Multiplayer.CurrentRoom.ID)
+				{
+					continue;
+				}
 
 				GameObject entry;
 				if (room.Local)
