@@ -35,7 +35,10 @@ public class PrepareRoundGameState : GameState
             StartButtonEnable();
         }
         else
+        {
+            UiManager.Instance.CanStart(false);
             GameManager.Instance.ChangeState(GameManager.State.LookingForPlayers);
+        }
     }
 
     private void StartButtonEnable()
