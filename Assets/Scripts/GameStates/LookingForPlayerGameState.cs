@@ -23,6 +23,7 @@ public class LookingForPlayerGameState : GameState
     public override void Run()
     {
         GameManager.Instance.ChangeIfInRound(false);
+        GameManager.Instance.ChangeIfAlive(true);
         _nextCheck = DelayBetweenChecksSeconds;
     }
 

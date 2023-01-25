@@ -46,7 +46,7 @@ public class StartRoundGameState : GameState
         foreach (var player in players)
         {
             PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
-            if (playerStateSync.inRound)
+            if (playerStateSync.inRound && playerStateSync.isAlive)
                 playersAlive++;
         }
 

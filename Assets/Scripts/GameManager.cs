@@ -243,6 +243,20 @@ public class GameManager : AttributesSync
             }
         }
     }
+    
+    public void ChangeIfAlive(bool pulse)
+    {
+        Avatar avatar = _multiplayer.GetAvatar();
+        if (avatar != null)
+        {
+            GameObject player = avatar.GameObject();
+            if (player != null)
+            {
+                PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
+                playerStateSync.isAlive = pulse;
+            }
+        }
+    }
 
     public bool CheckIfEveryoneSameState(State state)
     {
