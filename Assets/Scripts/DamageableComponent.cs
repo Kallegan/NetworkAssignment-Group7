@@ -59,9 +59,7 @@ public class DamageableComponent : AttributesSync
               
             
     }
-
     
-
     private void TakeWorldDamage()
     {
         if (RecentlyDamaged)
@@ -96,6 +94,9 @@ public class DamageableComponent : AttributesSync
     }
     void TakeDamage(int damageAmount)
     {
+        if (avatar.IsMe)
+            cam.GetComponent<CameraShaker>().Shake(0.8f, 0.15f);
+        
         Health -= damageAmount;
         BroadcastRemoteMethod("UpdateHealthBar");
         BroadcastRemoteMethod("HitVFX");
