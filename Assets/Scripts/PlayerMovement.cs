@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     
     public bool stunned = false;
     private float stunTime;
+
+    private PlayerStateSync platerState;
+    
     
     private void Awake()
     {
@@ -30,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
+
+        platerState = transform.GetComponentInChildren<PlayerStateSync>();
     }
     
     
@@ -37,6 +42,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!avatar.IsMe) // ?
             return;
+
+        if (!platerState.isAlive)
+        {
+            transform.rotation = new Quaternion(90, 0, 0, 0);
+            return;
+        }
+            
         // LookRotation
         LookAtMouseWorldPos();
         
@@ -45,7 +57,9 @@ public class PlayerMovement : MonoBehaviour
         stunTime -= Time.deltaTime; 
         if (stunTime <= 0) 
             stunned = false;
-        
+
+       
+
     }
 
     public void SetAsStunned(float duration)
@@ -57,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (!avatar.IsMe) return;
-        if (stunned) return;
+        if (stunned || !platerState.isAlive) return;
 
         _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         rb.AddForce(_moveDir * _moveSpeed);

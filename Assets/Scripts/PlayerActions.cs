@@ -52,7 +52,7 @@ public class PlayerActions : AttributesSync
     
     private void Update()
     {
-        if (!avatar.IsMe)
+        if (!avatar.IsMe || !transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive)
             return;
 
         if (Input.GetMouseButtonDown(0))
