@@ -80,7 +80,7 @@ public class DamageableComponent : AttributesSync
         yield return new WaitForSeconds(WorldDamageImmunityTime);
 
         RecentlyDamaged = false;
-        OnHit(WorldDamage, Vector3.zero);
+        TakeDamage(WorldDamage);
     }
         
     
@@ -99,7 +99,6 @@ public class DamageableComponent : AttributesSync
     void TakeDamage(int damageAmount)
     {
        
-        
      
         if(Health > 0)
             Health -= damageAmount;
