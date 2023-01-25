@@ -21,13 +21,16 @@ public class DamageableComponent : AttributesSync
     private Camera _cam;
     private CameraShaker _camShaker;
     private bool RecentlyDamaged = false;
-   
+
+    private PlayerStateSync platerState;
+
 
     private void Awake()
     {
         _cam = Camera.main;
         _camShaker = _cam.GetComponent<CameraShaker>();
         PlayerMovement = transform.parent.GetComponent<PlayerMovement>();
+        platerState = transform.parent.GetComponentInChildren<PlayerStateSync>();
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
         
         stunVFXOffset = new Vector3(0, 2, 0);
@@ -123,7 +126,7 @@ public class DamageableComponent : AttributesSync
     [SynchronizableMethod]
     private void Die()
     {
-        transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive = false;
+        platerState.isAlive = false;
                
     }
 
@@ -136,7 +139,7 @@ public class DamageableComponent : AttributesSync
     [SynchronizableMethod]
     public void ResetPlayerHealth()
     {
-        transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive = true;
+        platerState.isAlive = true;
         Health = MaxHealth;
     }
 
