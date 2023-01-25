@@ -76,12 +76,22 @@ public class UiManager : AttributesSync
 
     public void UpdateLobbyUi()
     {
-        Multiplayer.InvokeRemoteProcedure("UpdateLobbyUiRemote", UserId.AllInclusive);
+        var userCount = GameManager.Instance.GetUserListInRoom().Count;
+        if (userCount > 1)
+            Multiplayer.InvokeRemoteProcedure("UpdateLobbyUiRemote", UserId.AllInclusive);
+        else
+            UpdateLobbyUiLocal();
+    }
+    
+    public void UpdateLobbyUiLocal()
+    {
+        _playerPanels[Multiplayer.Instance.Me.Index].GetComponentInChildren<TextMeshProUGUI>().text = Multiplayer.Instance.Me.Name;
+        _playerPanels[Multiplayer.Instance.Me.Index].SetActive(true);
     }
     
     public void UpdateLobbyUiRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
-        GameManager.Instance.PrintDebug("Ui-Manager", "Updating ui, my user id: " + Multiplayer.Instance.Me.Index);
+        
         foreach (var user in GameManager.Instance.GetUserListInRoom())
         {
             _playerPanels[user.Index].GetComponentInChildren<TextMeshProUGUI>().text = user.Name;
