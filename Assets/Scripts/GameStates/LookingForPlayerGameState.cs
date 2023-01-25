@@ -25,6 +25,9 @@ public class LookingForPlayerGameState : GameState
         GameManager.Instance.ChangeIfInRound(false);
         GameManager.Instance.ChangeIfAlive(true);
         _nextCheck = DelayBetweenChecksSeconds;
+        
+        UiManager.Instance.ShowLobby(true);
+        UiManager.Instance.ShowMainMenu(false);
     }
 
     private void CheckIfPlayersFound()

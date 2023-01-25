@@ -33,7 +33,9 @@ public class StartRoundGameState : GameState
         _finishRound = false;
         _nextCheck = DelayBetweenChecksSeconds;
         WorldManager.Instance.StartShrinkGrid();
-        UiManager.Instance.ToggleUiOff();
+        
+        UiManager.Instance.ShowLobby(false);
+        
 #if UNITY_EDITOR
         GameManager.Instance.PrintDebug("GameManager - ", "Game started! Shrinking of map enabled");
 #endif

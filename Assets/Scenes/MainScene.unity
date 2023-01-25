@@ -351,6 +351,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2992603711930217572, guid: cd356f0ad1c96cd4b94fbda49c22ff3e, type: 3}
+      propertyPath: _lobby
+      value: 
+      objectReference: {fileID: 1014258129}
+    - target: {fileID: 2992603711930217572, guid: cd356f0ad1c96cd4b94fbda49c22ff3e, type: 3}
+      propertyPath: _mainMenu
+      value: 
+      objectReference: {fileID: 1307550784}
+    - target: {fileID: 2992603711930217572, guid: cd356f0ad1c96cd4b94fbda49c22ff3e, type: 3}
       propertyPath: _uiCanvas
       value: 
       objectReference: {fileID: 117750059}
@@ -358,6 +366,10 @@ PrefabInstance:
       propertyPath: _lobbyHeader
       value: 
       objectReference: {fileID: 911611836}
+    - target: {fileID: 2992603711930217572, guid: cd356f0ad1c96cd4b94fbda49c22ff3e, type: 3}
+      propertyPath: _alterunaSearch
+      value: 
+      objectReference: {fileID: 681257882}
     - target: {fileID: 2992603711930217572, guid: cd356f0ad1c96cd4b94fbda49c22ff3e, type: 3}
       propertyPath: _startGameButton
       value: 
@@ -542,6 +554,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1307550784 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4621891085071972478, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
+  m_PrefabInstance: {fileID: 1803333053}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1356394176
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,7 +1174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4621891085541351809, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4621891085541351809, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1236,6 +1253,14 @@ PrefabInstance:
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 824314293}
@@ -1249,20 +1274,48 @@ PrefabInstance:
       objectReference: {fileID: 824314293}
     - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: HidePanel
+      value: ShowAlterunaSearch
       objectReference: {fileID: 0}
     - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: ShowPanel
+      value: ShowMainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: ShowPanel
       objectReference: {fileID: 0}
     - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 681257882}
+      objectReference: {fileID: 2064429271}
+    - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621891085545307634, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621891085659258711, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 824314293}
+    - target: {fileID: 4621891085659258711, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitApplication
+      objectReference: {fileID: 0}
     - target: {fileID: 4621891085734940747, guid: 6df9188f5c589ad49b525f84af1db682, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1626,66 +1679,6 @@ MonoBehaviour:
       - m_Target: {fileID: 492439495}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: JoinedRoom
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 824314293}
-        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: ShowPanel
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1014258129}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 824314293}
-        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: HidePanel
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 681257882}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 824314293}
-        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: HidePanel
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2064429271}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 824314293}
-        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: SetLobbyName
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 824314293}
-        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: UpdateLobbyUi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

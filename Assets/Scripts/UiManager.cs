@@ -9,10 +9,15 @@ using Application = UnityEngine.Application;
 
 public class UiManager : AttributesSync
 {
+    [SerializeField] private GameObject _uiCanvas;
+    [SerializeField] private GameObject _mainMenu;
+    [SerializeField] private GameObject _alterunaSearch;
+    [SerializeField] private GameObject _lobby;
+    
+    // Lobby references
     [SerializeField] private Button _startGameButton;
     [SerializeField] private TextMeshProUGUI _lobbyHeader;
     [SerializeField] private GameObject[] _playerPanels;
-    [SerializeField] private GameObject _uiCanvas;
     
     private static UiManager _instance;
     
@@ -29,14 +34,6 @@ public class UiManager : AttributesSync
             return _instance;
         }
     }
-    public void ToggleUiOn()
-    {
-        _uiCanvas.SetActive(true);
-    }    
-    public void ToggleUiOff()
-    {
-        _uiCanvas.SetActive(false);
-    }
     
     private void Awake()
     {
@@ -51,6 +48,33 @@ public class UiManager : AttributesSync
     private void Start()
     {
         Multiplayer.RegisterRemoteProcedure("UpdateLobbyUiRemote", UpdateLobbyUiRemote);
+    }
+    
+    public void ShowMainMenu(bool active)
+    {
+        _mainMenu.SetActive(active);
+    }
+    
+    public void ShowLobby(bool active)
+    {
+        _lobby.SetActive(active);
+        if (active)
+            UpdateLobbyUi();
+    }
+
+    public void ShowAlterunaSearch(bool active)
+    {
+        _alterunaSearch.SetActive(active);
+    }
+    
+    public void ToggleUiOn()
+    {
+        _uiCanvas.SetActive(true);
+    }    
+    
+    public void ToggleUiOff()
+    {
+        _uiCanvas.SetActive(false);
     }
     
     public void SetLobbyName()
@@ -82,7 +106,7 @@ public class UiManager : AttributesSync
     {
         _startGameButton.interactable = canStart;
     }
-
+    
     public void UpdateLobbyUi()
     {
         var userCount = GameManager.Instance.GetUserListInRoom().Count;

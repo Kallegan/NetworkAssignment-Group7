@@ -20,7 +20,6 @@ public class RestartGameState : GameState
     {
         _countdown = Delay;
         WorldManager.Instance.ResetHexGrid();
-        UiManager.Instance.ToggleUiOn();
-
+        UiManager.Instance.ShowLobby(true);
     }
 }
