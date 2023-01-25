@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _friction = 10f;
     
     private Camera cam;
-    private Rigidbody rb;
+    public Rigidbody rb;
     
     private Vector3 _moveDir;
     private Vector3 _velocity;
