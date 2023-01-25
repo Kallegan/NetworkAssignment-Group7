@@ -20,6 +20,8 @@ public class DamageableComponent : AttributesSync
 
     private Camera _cam;
     private CameraShaker _camShaker;
+    private Spawner _spawner;
+    
     private bool RecentlyDamaged = false;
 
     private PlayerStateSync platerState;
@@ -32,6 +34,7 @@ public class DamageableComponent : AttributesSync
         PlayerMovement = transform.parent.GetComponent<PlayerMovement>();
         platerState = transform.parent.GetComponentInChildren<PlayerStateSync>();
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
+        _spawner = FindObjectOfType<Spawner>();
         
         stunVFXOffset = new Vector3(0, 2, 0);
 
@@ -84,20 +87,19 @@ public class DamageableComponent : AttributesSync
     }
         
     
-    public void OnHit(int damageAmount, Vector3 knockbackDirection)
+    public void OnHit(int damageAmount, Vector3 knockbackDirection, GameObject fromObject)
     {
+        if (!avatar.IsMe) return;
+        
         if (platerState.currentGameState == (byte)GameManager.State.StartRound)
             TakeDamage(damageAmount);
         
-        // Todo: deal with stuntime in a better way
         PlayerMovement.SetAsStunned(0.5f);
-        if (avatar.IsMe)
-            PlayerMovement.rb.AddForce(knockbackDirection * 300);
+        PlayerMovement.rb.AddForce(knockbackDirection * 300);
+        _spawner.Despawn(fromObject);
     }
     void TakeDamage(int damageAmount)
     {
-       
-     
         if(Health > 0)
             Health -= damageAmount;
 

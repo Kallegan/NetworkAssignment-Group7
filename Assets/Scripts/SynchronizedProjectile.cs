@@ -7,6 +7,8 @@ using Vector3 = UnityEngine.Vector3;
 
 public class SynchronizedProjectile : Synchronizable
 {
+    [SerializeField, Range(0, 5)] float DeflectionSpeedMultiplier = 1.5f;
+
     public Spawner _spawner;
     public UInt16 _ownerIndex;
 
@@ -78,15 +80,9 @@ public class SynchronizedProjectile : Synchronizable
     public void OnDeflect(Vector3 newDirection)
     {
         _direction = newDirection;
-        _speed *= 1.1f;
+        _speed *= DeflectionSpeedMultiplier;
     }
-
-    private void DestroySelf()
-    {
-        if (Multiplayer.Instance.Me.Index == _ownerIndex)
-            _spawner.Despawn(gameObject);
-    }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         var otherGo = other.gameObject;
@@ -96,11 +92,17 @@ public class SynchronizedProjectile : Synchronizable
         var damageable = otherGo.GetComponentInChildren<DamageableComponent>();
         Vector3 direction = (otherGo.transform.position - transform.position).normalized;
         if (damageable)
-            damageable.OnHit(1, direction * _speed);
-
-        DestroySelf();
+            damageable.OnHit(1, direction * _speed, this.gameObject);
     }
-
+    
+    /*
+    private void DestroySelf()
+    {
+        if (Multiplayer.Instance.Me.Index == _ownerIndex)
+            _spawner.Despawn(userindex, gameObject);
+    }
+    */
+    
     /*
     private void OnCollisionEnter(Collision collision)
     {
