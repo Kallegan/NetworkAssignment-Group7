@@ -80,20 +80,19 @@ public class DamageableComponent : AttributesSync
         yield return new WaitForSeconds(WorldDamageImmunityTime);
 
         RecentlyDamaged = false;
-        OnHit(WorldDamage);
+        OnHit(WorldDamage, Vector3.zero);
     }
-
-    public void OnHit(int damageAmount)
-    {
-        TakeDamage(damageAmount);        
-    }
+        
     
     public void OnHit(int damageAmount, Vector3 knockbackDirection)
     {
-        TakeDamage(damageAmount);
+        if (platerState.currentGameState == (byte)GameManager.State.StartRound)
+            TakeDamage(damageAmount);
+        
         // Todo: deal with stuntime in a better way
-        PlayerMovement.SetAsStunned(0.5f);       
-
+        PlayerMovement.SetAsStunned(0.5f);
+        PlayerMovement.rb.AddForce(knockbackDirection * 300);
+        
 
         //PlayerMovement.velocity = knockbackDirection.normalized;
     }
