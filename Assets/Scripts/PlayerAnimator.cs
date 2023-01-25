@@ -69,11 +69,10 @@ public class PlayerAnimator : MonoBehaviour
 
         //anim.SetFloat("VelocityMagnitude", velocityDelta * Coefficent);
 
-        
-        
 
         //Use doubled values if we arent the avatar as the animator value flashes to 0 every other frame for some reason. Awful workaround
-        if (!avatar.IsMe)
+        
+        if (!avatar.IsMe) //TODO: This changes sometimes for seemingly no reason. Perhaps cache this value to ensure it isnt changing!
         {
             anim.SetFloat("StrafeX", turnAngle * 1, 0.2f, Time.deltaTime);
             anim.SetFloat("VelocityMagnitude", velSync.VelocityMagnitude * 20, 0.2f, Time.deltaTime);
