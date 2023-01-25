@@ -29,7 +29,7 @@ public class PlayerActions : AttributesSync
     public delegate void DeflectDelegate();
     public event DeflectDelegate OnTryDeflect;
 
-    public GameObject deflectShield;
+    //public GameObject deflectShield;
 
 
     private void Awake()
@@ -46,8 +46,8 @@ public class PlayerActions : AttributesSync
         Multiplayer.RegisterRemoteProcedure("ShootRemote", ShootRemote);
         Multiplayer.RegisterRemoteProcedure("DeflectRemote", DeflectRemote);
 
-        deflectShield = Instantiate(deflectShield);
-        deflectShield.transform.position = new Vector3(0, -1000, 0);
+        //deflectShield = Instantiate(deflectShield);
+        //deflectShield.transform.position = new Vector3(0, -1000, 0);
     }
     
     private void Update()
@@ -113,8 +113,6 @@ public class PlayerActions : AttributesSync
         curDeflectable.OnDeflect(direction.normalized);
         curDeflectable = null;
         canDeflect = true;
-
-
     }
     
     void OnDeflectMiss()
@@ -124,8 +122,8 @@ public class PlayerActions : AttributesSync
         curDeflectable = null;
         canDeflect = false;
 
-        ShowReflectVFX();
-        deflectShield.GetComponent<MaterialPropertyBlockPlasma>().SuccessDeflect();
+        //ShowReflectVFX();
+        //deflectShield.GetComponent<MaterialPropertyBlockPlasma>().SuccessDeflect();
     }
     
     private void Shoot()
@@ -151,12 +149,12 @@ public class PlayerActions : AttributesSync
 
     private void ShowReflectVFX()
     {
-        deflectShield.transform.rotation = transform.parent.rotation;
-        deflectShield.transform.position = transform.parent.position + transform.parent.forward * 2;
+        //deflectShield.transform.rotation = transform.parent.rotation;
+        //deflectShield.transform.position = transform.parent.position + transform.parent.forward * 2;
     }
 
     private void HideRelfectVFX()
     {
-        deflectShield.transform.position = new Vector3(0, -1000, 0);
+        //deflectShield.transform.position = new Vector3(0, -1000, 0);
     }
 }
