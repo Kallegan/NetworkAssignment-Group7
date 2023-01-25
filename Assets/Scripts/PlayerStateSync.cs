@@ -9,6 +9,9 @@ public class PlayerStateSync : Synchronizable
     public bool isAlive = true;
     private bool _oldIsAlive = true;
 
+    public bool inRound = false;
+    private bool _oldInRound = false;
+
     public override void AssembleData(Writer writer, byte LOD = 100)
     {
 #if UNITY_EDITOR
@@ -16,6 +19,7 @@ public class PlayerStateSync : Synchronizable
 #endif
         writer.Write(currentGameState);
         writer.Write(isAlive);
+        writer.Write(inRound);
     }
 
     public override void DisassembleData(Reader reader, byte LOD = 100)
@@ -25,10 +29,11 @@ public class PlayerStateSync : Synchronizable
 #endif
         currentGameState = reader.ReadByte();
         isAlive = reader.ReadBool();
+        inRound = reader.ReadBool();
 
         _oldIsAlive = isAlive;
-
-        _oldGameState = currentGameState;         
+        _oldGameState = currentGameState;
+        _oldInRound = inRound;
     }
 
     private void Update()
@@ -37,12 +42,10 @@ public class PlayerStateSync : Synchronizable
         {
             _oldGameState = currentGameState;
             _oldIsAlive = isAlive;
+            _oldInRound = inRound;
             
             Commit();           
         }
-
-
-        
         base.SyncUpdate();
     }
 

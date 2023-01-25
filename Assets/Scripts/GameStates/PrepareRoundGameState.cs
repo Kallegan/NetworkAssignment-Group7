@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Alteruna;
 using Unity.VisualScripting;
 using UnityEngine;
-using Avatar = UnityEngine.Avatar;
+using Avatar = Alteruna.Avatar;
 
 public class PrepareRoundGameState : GameState
 {
@@ -23,6 +23,7 @@ public class PrepareRoundGameState : GameState
 
     public override void Run()
     {
+        GameManager.Instance.ChangeIfInRound(true);
         _nextCheck = DelayBetweenChecksSeconds;
     }
 

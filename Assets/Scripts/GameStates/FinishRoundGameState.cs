@@ -1,13 +1,15 @@
+using Alteruna;
+using Unity.VisualScripting;
 using UnityEngine;
+using Avatar = Alteruna.Avatar;
 
 public class FinishRoundGameState : GameState
 {
     public override void Update()
-    {
-    }
+    { }
 
     public override void Run()
     {
-       WorldManager.Instance.ResetHexGrid();
+        GameManager.Instance.ChangeState(GameManager.State.Restart);
     }
 }
