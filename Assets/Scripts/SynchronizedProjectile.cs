@@ -7,6 +7,8 @@ using Vector3 = UnityEngine.Vector3;
 
 public class SynchronizedProjectile : Synchronizable
 {
+    [SerializeField, Range(0, 5)] float DeflectionSpeedMultiplier = 1.5f;
+
     public Spawner _spawner;
     public UInt16 _ownerIndex;
 
@@ -78,7 +80,7 @@ public class SynchronizedProjectile : Synchronizable
     public void OnDeflect(Vector3 newDirection)
     {
         _direction = newDirection;
-        _speed *= 1.1f;
+        _speed *= DeflectionSpeedMultiplier;
     }
     
     private void OnTriggerEnter(Collider other)
