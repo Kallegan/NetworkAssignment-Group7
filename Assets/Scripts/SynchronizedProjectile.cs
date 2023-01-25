@@ -89,12 +89,14 @@ public class SynchronizedProjectile : Synchronizable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Player"))
+        var otherGo = other.gameObject;
+        if (!otherGo.CompareTag("Player"))
             return;
         
-        var damageable = other.gameObject.GetComponentInChildren<DamageableComponent>();
+        var damageable = otherGo.GetComponentInChildren<DamageableComponent>();
+        Vector3 direction = (otherGo.transform.position - transform.position).normalized;
         if (damageable)
-            damageable.OnHit(1, _direction);
+            damageable.OnHit(1, direction * _speed);
 
         DestroySelf();
     }
