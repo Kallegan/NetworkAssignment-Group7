@@ -46,6 +46,7 @@ public class GameManager : AttributesSync
     private readonly PrepareRoundGameState _prepareRoundGameState = new PrepareRoundGameState();
     private readonly StartRoundGameState _startRoundGameState = new StartRoundGameState();
     private readonly FinishRoundGameState _finishRoundGameState = new FinishRoundGameState();
+    private readonly RestartGameState _restartGameState = new RestartGameState();
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -192,7 +193,7 @@ public class GameManager : AttributesSync
             State.PrepareRound => _prepareRoundGameState,
             State.StartRound => _startRoundGameState,
             State.FinishRound => _finishRoundGameState,
-            State.Restart => _prepareRoundGameState,
+            State.Restart => _restartGameState,
             _ => _currentState
         };
         _currentState.Run();
@@ -228,6 +229,20 @@ public class GameManager : AttributesSync
             }
         }
     }
+    
+    public void ChangeIfInRound(bool inRound)
+    {
+        Avatar avatar = _multiplayer.GetAvatar();
+        if (avatar != null)
+        {
+            GameObject player = avatar.GameObject();
+            if (player != null)
+            {
+                PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
+                playerStateSync.inRound = inRound;
+            }
+        }
+    }
 
     public bool CheckIfEveryoneSameState(State state)
     {
@@ -243,6 +258,8 @@ public class GameManager : AttributesSync
         
         return allSameState;
     }
+    
+    
     
     // DEBUG PRINT
 #if UNITY_EDITOR

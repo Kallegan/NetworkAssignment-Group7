@@ -1,5 +1,6 @@
 using Alteruna;
 using UnityEngine;
+using Avatar = Alteruna.Avatar;
 
 public class LookingForPlayerGameState : GameState
 {
@@ -21,6 +22,7 @@ public class LookingForPlayerGameState : GameState
 
     public override void Run()
     {
+        GameManager.Instance.ChangeIfInRound(false);
         _nextCheck = DelayBetweenChecksSeconds;
     }
 

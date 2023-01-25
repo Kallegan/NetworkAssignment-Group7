@@ -1,5 +1,6 @@
 using Alteruna;
 using UnityEngine;
+using Avatar = Alteruna.Avatar;
 
 public class StartRoundGameState : GameState
 {
@@ -45,14 +46,14 @@ public class StartRoundGameState : GameState
         foreach (var player in players)
         {
             PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
-            if (playerStateSync.isAlive)
+            if (playerStateSync.inRound)
                 playersAlive++;
+        }
 
-            if (playersAlive > 1) continue;
-            
+        if (playersAlive < 2)
+        {
+            _finishRound = true; 
             _nextCheck = 1.0f;
-            _finishRound = true;
-            break;
         }
     }
 
