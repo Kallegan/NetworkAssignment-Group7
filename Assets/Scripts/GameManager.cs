@@ -254,6 +254,11 @@ public class GameManager : AttributesSync
             {
                 PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
                 playerStateSync.isAlive = pulse;
+                if (pulse)
+                {
+                    DamageableComponent damageableComponent = player.GetComponentInChildren<DamageableComponent>(); 
+                    damageableComponent.ResetPlayerHealth();
+                }
             }
         }
     }
