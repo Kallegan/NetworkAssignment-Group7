@@ -34,6 +34,7 @@ public class DamageableComponent : AttributesSync
         PlayerMovement = transform.parent.GetComponent<PlayerMovement>();
         platerState = transform.parent.GetComponentInChildren<PlayerStateSync>();
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
+        _spawner = FindObjectOfType<Spawner>();
         
         stunVFXOffset = new Vector3(0, 2, 0);
 

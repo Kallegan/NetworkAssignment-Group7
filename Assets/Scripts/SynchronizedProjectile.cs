@@ -90,16 +90,17 @@ public class SynchronizedProjectile : Synchronizable
         var damageable = otherGo.GetComponentInChildren<DamageableComponent>();
         Vector3 direction = (otherGo.transform.position - transform.position).normalized;
         if (damageable)
-            damageable.OnHit(1, direction * _speed, gameObject);
-
-        
-        DestroySelf();
+            damageable.OnHit(1, direction * _speed, this.gameObject);
     }
+    
+    /*
     private void DestroySelf()
     {
         if (Multiplayer.Instance.Me.Index == _ownerIndex)
-            _spawner.Despawn(gameObject);
+            _spawner.Despawn(userindex, gameObject);
     }
+    */
+    
     /*
     private void OnCollisionEnter(Collision collision)
     {
