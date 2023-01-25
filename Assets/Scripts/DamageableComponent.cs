@@ -91,10 +91,8 @@ public class DamageableComponent : AttributesSync
         
         // Todo: deal with stuntime in a better way
         PlayerMovement.SetAsStunned(0.5f);
-        PlayerMovement.rb.AddForce(knockbackDirection * 300);
-        
-
-        //PlayerMovement.velocity = knockbackDirection.normalized;
+        if (avatar.IsMe)
+            PlayerMovement.rb.AddForce(knockbackDirection * 300);
     }
     void TakeDamage(int damageAmount)
     {
