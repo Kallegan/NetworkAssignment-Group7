@@ -4,7 +4,7 @@ using UnityEngine;
 using Avatar = Alteruna.Avatar;
 using Vector3 = UnityEngine.Vector3;
 
-public class PlayerMovement : Synchronizable
+public class PlayerMovement : MonoBehaviour
 {
     private Avatar avatar;
     //[SerializeField] private CharacterController controller;
@@ -16,8 +16,6 @@ public class PlayerMovement : Synchronizable
     
     private Vector3 _moveDir;
     private Vector3 _velocity;
-    private float _velMagnitude;
-    private float _oldVelMagnitude;
     
     public bool stunned = false;
     private float stunTime;
@@ -31,7 +29,6 @@ public class PlayerMovement : Synchronizable
 
     private void Start()
     {
-        _oldVelMagnitude = _velMagnitude;
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
     }
     
@@ -40,18 +37,9 @@ public class PlayerMovement : Synchronizable
     {
         if (!avatar.IsMe) // ?
             return;
-
-        
-        if (_oldVelMagnitude != _velMagnitude)
-        {
-            _oldVelMagnitude = _velMagnitude;
-            Commit();
-        }
-        
         // LookRotation
         LookAtMouseWorldPos();
         
-        SyncUpdate();
         // Stun
         if (!stunned) return;
         stunTime -= Time.deltaTime; 
@@ -73,8 +61,6 @@ public class PlayerMovement : Synchronizable
 
         _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         rb.AddForce(_moveDir * _moveSpeed);
-
-        _velMagnitude = rb.velocity.magnitude;
     }
     
     private void LookAtMouseWorldPos()
@@ -88,16 +74,5 @@ public class PlayerMovement : Synchronizable
             Vector3 pointToLook = cameraRay.GetPoint(rayLength);
             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
         }
-    }
-    
-    public override void AssembleData(Writer writer, byte LOD = 100)
-    {
-      writer.Write(_velMagnitude);
-    }
-
-    public override void DisassembleData(Reader reader, byte LOD = 100)
-    {
-        _velMagnitude = reader.ReadFloat();
-        _oldVelMagnitude = _velMagnitude;
     }
 }
