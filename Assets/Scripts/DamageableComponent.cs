@@ -96,9 +96,11 @@ public class DamageableComponent : AttributesSync
     }
     void TakeDamage(int damageAmount)
     {
-        Health -= damageAmount;
+        if (Health > 0)
+            Health -= damageAmount;
         BroadcastRemoteMethod("UpdateHealthBar");
         BroadcastRemoteMethod("HitVFX");
+
         if (Health <= 0)
         {
             BroadcastRemoteMethod("Die");
@@ -108,7 +110,7 @@ public class DamageableComponent : AttributesSync
     [SynchronizableMethod]
     void UpdateHealthBar()
     {
-        if (!avatar.IsMe || Health < 0)
+        if (!avatar.IsMe)
             return;
         
         Vector3 healthScale = new Vector3((Health / MaxHealth) * 2, HealthBar.localScale.y, HealthBar.localScale.z);
