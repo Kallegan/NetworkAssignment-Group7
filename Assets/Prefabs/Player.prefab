@@ -646,6 +646,7 @@ MonoBehaviour:
   MovementSmoothing: 1
   anim: {fileID: 3826740030778385151}
   playerActions: {fileID: 4344514513490154824}
+  velSync: {fileID: 8197801117012482499}
   Coefficent: 500
 --- !u!114 &596002553679409354
 MonoBehaviour:

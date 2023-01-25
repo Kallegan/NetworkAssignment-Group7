@@ -6,6 +6,7 @@ public class VelocityRemoteSync : Synchronizable
     private Rigidbody rb;
     private float _velMagnitude;
     private float _oldVelMagnitude;
+    public float VelocityMagnitude { get { return _velMagnitude; } }
     
     // Start is called before the first frame update
 

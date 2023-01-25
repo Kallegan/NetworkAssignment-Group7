@@ -11,6 +11,7 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private Animator anim;
     private RigidbodySynchronizable rbSync;
     [SerializeField] private PlayerActions playerActions;
+    [SerializeField] private VelocityRemoteSync velSync;
     private Rigidbody rb;
 
 
@@ -64,7 +65,9 @@ public class PlayerAnimator : MonoBehaviour
 
         turnAngle = CalculateDirection(positionDelta);
 
-        anim.SetFloat("VelocityMagnitude", velocityDelta * Coefficent);
+        //anim.SetFloat("VelocityMagnitude", velocityDelta * Coefficent);
+        Debug.Log(velSync.VelocityMagnitude);
+        anim.SetFloat("VelocityMagnitude", velSync.VelocityMagnitude * 10);
 
         anim.SetFloat("StrafeX", turnAngle);
 
