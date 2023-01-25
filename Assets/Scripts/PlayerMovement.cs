@@ -1,9 +1,10 @@
 using System;
+using Alteruna;
 using UnityEngine;
 using Avatar = Alteruna.Avatar;
 using Vector3 = UnityEngine.Vector3;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Synchronizable
 {
     private Avatar avatar;
     //[SerializeField] private CharacterController controller;
@@ -15,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     
     private Vector3 _moveDir;
     private Vector3 _velocity;
+    private float _velMagnitude;
+    private float _oldVelMagnitude;
     
     public bool stunned = false;
     private float stunTime;
@@ -28,31 +31,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        _oldVelMagnitude = _velMagnitude;
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
     }
+    
     
     private void Update()
     {
         if (!avatar.IsMe) // ?
             return;
-        /*
-        _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-        _velocity += _moveDir * _moveSpeed * Time.deltaTime;
-        _velocity = Vector3.MoveTowards(_velocity, Vector3.zero, _friction * Time.deltaTime);
-        controller.Move(_velocity * Time.deltaTime);
-        */
+
         
-        
-        //controller.Move(_moveDir * _moveSpeed * Time.deltaTime);
+        if (_oldVelMagnitude != _velMagnitude)
+        {
+            _oldVelMagnitude = _velMagnitude;
+            Commit();
+        }
         
         // LookRotation
         LookAtMouseWorldPos();
         
+        SyncUpdate();
         // Stun
         if (!stunned) return;
         stunTime -= Time.deltaTime; 
         if (stunTime <= 0) 
             stunned = false;
+        
     }
 
     public void SetAsStunned(float duration)
@@ -68,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
 
         _moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         rb.AddForce(_moveDir * _moveSpeed);
+
+        _velMagnitude = rb.velocity.magnitude;
     }
     
     private void LookAtMouseWorldPos()
@@ -81,5 +88,16 @@ public class PlayerMovement : MonoBehaviour
             Vector3 pointToLook = cameraRay.GetPoint(rayLength);
             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
         }
+    }
+    
+    public override void AssembleData(Writer writer, byte LOD = 100)
+    {
+      writer.Write(_velMagnitude);
+    }
+
+    public override void DisassembleData(Reader reader, byte LOD = 100)
+    {
+        _velMagnitude = reader.ReadFloat();
+        _oldVelMagnitude = _velMagnitude;
     }
 }
