@@ -56,7 +56,7 @@ public class PlayerActions : AttributesSync
     private void Update()
     {
         if (!avatar.IsMe || !platerState.isAlive)
-            return;
+            return;       
 
         if (Input.GetMouseButtonDown(0))
             if (canAttack)
