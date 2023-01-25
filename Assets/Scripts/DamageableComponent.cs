@@ -18,13 +18,15 @@ public class DamageableComponent : AttributesSync
     private PlayerMovement PlayerMovement;    
     private Vector3 stunVFXOffset;
 
-    private Camera cam;
+    private Camera _cam;
+    private CameraShaker _camShaker;
     private bool RecentlyDamaged = false;
    
 
     private void Awake()
     {
-        cam = Camera.main;
+        _cam = Camera.main;
+        _camShaker = _cam.GetComponent<CameraShaker>();
         PlayerMovement = transform.parent.GetComponent<PlayerMovement>();
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
         
@@ -49,7 +51,7 @@ public class DamageableComponent : AttributesSync
         HealthBar.localScale = healthScale;
 
         //turns healthbars to player camera.
-        HealthBar.transform.LookAt(HealthBar.transform.position + cam.transform.rotation * Vector3.forward);
+        HealthBar.transform.LookAt(HealthBar.transform.position + _cam.transform.rotation * Vector3.forward);
 
         if (WorldManager.Instance.TakeWorldDamage(transform.parent.position) && !RecentlyDamaged)
             TakeWorldDamage();
@@ -95,7 +97,7 @@ public class DamageableComponent : AttributesSync
     void TakeDamage(int damageAmount)
     {
         if (avatar.IsMe)
-            cam.GetComponent<CameraShaker>().Shake(0.8f, 0.15f);
+            _camShaker.Shake(0.8f, 0.15f);
         
         if(Health > 0)
             Health -= damageAmount;
