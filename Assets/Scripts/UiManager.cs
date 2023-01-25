@@ -43,6 +43,10 @@ public class UiManager : AttributesSync
         Multiplayer.RegisterRemoteProcedure("UpdateLobbyUiRemote", UpdateLobbyUiRemote);
     }
     
+    public void SetLobbyName()
+    {
+        _lobbyHeader.text = Multiplayer.Instance.CurrentRoom.Name +"'s Room";
+    }
 
     public void ShowPanel(GameObject panel)
     {
@@ -57,11 +61,6 @@ public class UiManager : AttributesSync
     public void QuitApplication()
     {
         Application.Quit();
-    }
-
-    public void SetLobbyName()
-    {
-        _lobbyHeader.text = Multiplayer.Instance.CurrentRoom.Name +"'s Room";
     }
     
     public void LeaveRoom()
@@ -83,15 +82,14 @@ public class UiManager : AttributesSync
             UpdateLobbyUiLocal();
     }
     
-    public void UpdateLobbyUiLocal()
+    private void UpdateLobbyUiLocal()
     {
         _playerPanels[Multiplayer.Instance.Me.Index].GetComponentInChildren<TextMeshProUGUI>().text = Multiplayer.Instance.Me.Name;
         _playerPanels[Multiplayer.Instance.Me.Index].SetActive(true);
     }
     
-    public void UpdateLobbyUiRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
+    private void UpdateLobbyUiRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
-        
         foreach (var user in GameManager.Instance.GetUserListInRoom())
         {
             _playerPanels[user.Index].GetComponentInChildren<TextMeshProUGUI>().text = user.Name;
