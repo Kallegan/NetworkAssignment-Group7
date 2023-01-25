@@ -89,7 +89,7 @@ public class GameManager : AttributesSync
 
     public void StartRound()
     {
-        if (CheckIfEnoughPlayers() && CheckIfEveryoneSameState())
+        if (CheckIfEnoughPlayers() && CheckIfEveryoneSameState(State.PrepareRound))
         {
 #if UNITY_EDITOR
             PrintDebug("GameManager - ", "STARTING GAME");
@@ -229,7 +229,7 @@ public class GameManager : AttributesSync
         }
     }
 
-    public bool CheckIfEveryoneSameState()
+    public bool CheckIfEveryoneSameState(State state)
     {
         bool allSameState = true;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -237,7 +237,7 @@ public class GameManager : AttributesSync
         foreach (var player in players)
         {
             PlayerStateSync playerStateSync = player.GetComponentInChildren<PlayerStateSync>();
-            if (playerStateSync.currentGameState != (byte)State.PrepareRound)
+            if (playerStateSync.currentGameState != (byte)state)
                 allSameState = false;
         }
         
