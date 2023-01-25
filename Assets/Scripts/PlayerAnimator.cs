@@ -72,7 +72,7 @@ public class PlayerAnimator : MonoBehaviour
         
         
 
-        //
+        //Use doubled values if we arent the avatar as the animator value flashes to 0 every other frame for some reason. Awful workaround
         if (!avatar.IsMe)
         {
             anim.SetFloat("StrafeX", turnAngle * 1, 0.2f, Time.deltaTime);
