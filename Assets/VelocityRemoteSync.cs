@@ -7,7 +7,8 @@ public class VelocityRemoteSync : Synchronizable
     private float _velMagnitude;
     private float _oldVelMagnitude;
     public float VelocityMagnitude { get { return _velMagnitude; } }
-    
+    public float OldVelocityMagnitude { get { return _oldVelMagnitude; } }
+
     // Start is called before the first frame update
 
     private void Awake()
