@@ -16,6 +16,7 @@ public class UiManager : AttributesSync
     
     private static UiManager _instance;
     
+    private GameManager.State _currentState;
     public static UiManager Instance
     {
         get
@@ -28,6 +29,23 @@ public class UiManager : AttributesSync
         }
     }
 
+    /*
+    private void UpdateUi(GameManager.State state)
+    {
+        switch(state)
+        {
+            case: 
+            GameManager.State.Idle
+            GameManager.State.LookingForPlayers => _lookingForPlayerGameState,
+            GameManager.State.PrepareRound => _prepareRoundGameState,
+            GameManager.State.StartRound => _startRoundGameState,
+            GameManager.State.FinishRound => _finishRoundGameState,
+            GameManager.State.Restart => _restartGameState,
+            _ => _currentState
+        };
+    }
+
+*/
     private void Awake()
     {
         if (_instance != null && _instance != this)
