@@ -11,12 +11,13 @@ public class UiManager : AttributesSync
 {
     [SerializeField] private Button _startGameButton;
     [SerializeField] private TextMeshProUGUI _lobbyHeader;
-
     [SerializeField] private GameObject[] _playerPanels;
+    [SerializeField] private GameObject _uiCanvas;
     
     private static UiManager _instance;
     
     private GameManager.State _currentState;
+    
     public static UiManager Instance
     {
         get
@@ -28,24 +29,15 @@ public class UiManager : AttributesSync
             return _instance;
         }
     }
-
-    /*
-    private void UpdateUi(GameManager.State state)
+    public void ToggleUiOn()
     {
-        switch(state)
-        {
-            case: 
-            GameManager.State.Idle
-            GameManager.State.LookingForPlayers => _lookingForPlayerGameState,
-            GameManager.State.PrepareRound => _prepareRoundGameState,
-            GameManager.State.StartRound => _startRoundGameState,
-            GameManager.State.FinishRound => _finishRoundGameState,
-            GameManager.State.Restart => _restartGameState,
-            _ => _currentState
-        };
+        _uiCanvas.SetActive(true);
+    }    
+    public void ToggleUiOff()
+    {
+        _uiCanvas.SetActive(false);
     }
-
-*/
+    
     private void Awake()
     {
         if (_instance != null && _instance != this)
