@@ -97,7 +97,9 @@ public class DamageableComponent : AttributesSync
         if (avatar.IsMe)
             cam.GetComponent<CameraShaker>().Shake(0.8f, 0.15f);
         
-        Health -= damageAmount;
+        if(Health > 0)
+            Health -= damageAmount;
+
         BroadcastRemoteMethod("UpdateHealthBar");
         BroadcastRemoteMethod("HitVFX");
         if (Health <= 0)
