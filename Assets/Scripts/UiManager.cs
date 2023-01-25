@@ -11,7 +11,7 @@ public class UiManager : AttributesSync
 {
     [SerializeField] private GameObject _uiCanvas;
     [SerializeField] private GameObject _mainMenu;
-    [SerializeField] private GameObject _alterunaSearch;
+    [SerializeField] private List<GameObject> _alterunaSearch;
     [SerializeField] private GameObject _lobby;
     
     // Lobby references
@@ -64,7 +64,8 @@ public class UiManager : AttributesSync
 
     public void ShowAlterunaSearch(bool active)
     {
-        _alterunaSearch.SetActive(active);
+        foreach (var go in _alterunaSearch)
+            go.SetActive(active);
     }
     
     public void ToggleUiOn()

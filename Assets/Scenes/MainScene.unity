@@ -379,6 +379,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2992603711930217572, guid: cd356f0ad1c96cd4b94fbda49c22ff3e, type: 3}
+      propertyPath: _alterunaSearch.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992603711930217572, guid: cd356f0ad1c96cd4b94fbda49c22ff3e, type: 3}
       propertyPath: _playerPanels.Array.data[0]
       value: 
       objectReference: {fileID: 1416620361}
@@ -410,6 +414,14 @@ PrefabInstance:
       propertyPath: _playerPanels.Array.data[7]
       value: 
       objectReference: {fileID: 1803333055}
+    - target: {fileID: 2992603711930217572, guid: cd356f0ad1c96cd4b94fbda49c22ff3e, type: 3}
+      propertyPath: _alterunaSearch.Array.data[0]
+      value: 
+      objectReference: {fileID: 681257882}
+    - target: {fileID: 2992603711930217572, guid: cd356f0ad1c96cd4b94fbda49c22ff3e, type: 3}
+      propertyPath: _alterunaSearch.Array.data[1]
+      value: 
+      objectReference: {fileID: 2064429271}
     - target: {fileID: 2992603711930217573, guid: cd356f0ad1c96cd4b94fbda49c22ff3e, type: 3}
       propertyPath: m_Name
       value: UiManager

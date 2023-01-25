@@ -27,6 +27,7 @@ public class LookingForPlayerGameState : GameState
         _nextCheck = DelayBetweenChecksSeconds;
         
         UiManager.Instance.ShowLobby(true);
+        UiManager.Instance.ShowAlterunaSearch(false);
         UiManager.Instance.ShowMainMenu(false);
     }
 
