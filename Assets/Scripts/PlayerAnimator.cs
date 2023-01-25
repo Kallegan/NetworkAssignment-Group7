@@ -66,10 +66,10 @@ public class PlayerAnimator : MonoBehaviour
         turnAngle = CalculateDirection(positionDelta);
 
         //anim.SetFloat("VelocityMagnitude", velocityDelta * Coefficent);
-        Debug.Log(velSync.VelocityMagnitude);
-        anim.SetFloat("VelocityMagnitude", velSync.VelocityMagnitude * 10);
-
-        anim.SetFloat("StrafeX", turnAngle);
+        
+        ///TODO: Do an Avatar IsMe check to double the value if this isnt the player
+        anim.SetFloat("StrafeX", turnAngle * 2, 0.3f, Time.deltaTime);
+        anim.SetFloat("VelocityMagnitude", velSync.VelocityMagnitude * 10, 0.3f, Time.deltaTime);
 
     }
 
@@ -93,8 +93,8 @@ public class PlayerAnimator : MonoBehaviour
 
     private void LateUpdate()
     {
+        //anim.SetFloat("VelocityMagnitude", velSync.VelocityMagnitude * 2);
         
-
         //This is jittery
         float SmoothedVelocity = Mathf.SmoothDamp(prevDelta, velocityDelta, ref smoothVelocityDelta, MovementSmoothing, 0.01f, Time.deltaTime);
 

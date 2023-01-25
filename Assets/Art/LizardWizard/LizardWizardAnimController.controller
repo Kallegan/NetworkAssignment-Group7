@@ -11,7 +11,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 5776e2ab48d06494980dccc357f4b149, type: 2}
     m_Threshold: 0
-    m_Position: {x: 0, y: 90}
+    m_Position: {x: 0, y: 40}
     m_TimeScale: 1.5
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityMagnitude
@@ -19,7 +19,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 2aacc50c96d271240aaf447f3f401726, type: 2}
     m_Threshold: 0.045454547
-    m_Position: {x: -90, y: 90}
+    m_Position: {x: -90, y: 40}
     m_TimeScale: 1.5
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityMagnitude
@@ -27,7 +27,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 769a401df4ee62442ba887fab8503fb7, type: 2}
     m_Threshold: 0.09090909
-    m_Position: {x: 90, y: 90}
+    m_Position: {x: 90, y: 40}
     m_TimeScale: 1.5
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityMagnitude
@@ -35,7 +35,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 472652cb2ec0c244ca724f3b197bb22c, type: 2}
     m_Threshold: 0.13636364
-    m_Position: {x: 180, y: 90}
+    m_Position: {x: 180, y: 40}
     m_TimeScale: 2
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityMagnitude
@@ -43,7 +43,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 472652cb2ec0c244ca724f3b197bb22c, type: 2}
     m_Threshold: 0.18181819
-    m_Position: {x: -180, y: 90}
+    m_Position: {x: -180, y: 40}
     m_TimeScale: 2
     m_CycleOffset: 0
     m_DirectBlendParameter: VelocityMagnitude
@@ -91,7 +91,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 896c7c53dfd0d554a9a00884d2ad257a, type: 2}
     m_Threshold: 0.45454547
-    m_Position: {x: -135, y: 90}
+    m_Position: {x: -135, y: 40}
     m_TimeScale: 2
     m_CycleOffset: 0
     m_DirectBlendParameter: StrafeX
@@ -99,7 +99,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 1e14a2bbbe8186d42a3e4462aa9ff03e, type: 2}
     m_Threshold: 0.5
-    m_Position: {x: 135, y: 90}
+    m_Position: {x: 135, y: 40}
     m_TimeScale: 2
     m_CycleOffset: 0
     m_DirectBlendParameter: StrafeX
@@ -224,13 +224,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: VelocityMagnitude
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
