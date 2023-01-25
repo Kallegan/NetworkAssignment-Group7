@@ -42,15 +42,7 @@ public class UiManager : AttributesSync
     {
         Multiplayer.RegisterRemoteProcedure("UpdateLobbyUiRemote", UpdateLobbyUiRemote);
     }
-
-    public void ButtonSetActive(Button button)
-    {
-        button.interactable = true;
-    }
-    public void ButtonSetInaAtive(Button button)
-    {
-        button.interactable = false;
-    }
+    
 
     public void ShowPanel(GameObject panel)
     {
@@ -69,8 +61,7 @@ public class UiManager : AttributesSync
 
     public void SetLobbyName()
     {
-        var name =  Alteruna.Multiplayer.Instance.CurrentRoom.Name;
-        _lobbyHeader.text = "Room: " + name;
+        _lobbyHeader.text = Multiplayer.Instance.CurrentRoom.Name +"'s Room";
     }
     
     public void LeaveRoom()
@@ -83,17 +74,14 @@ public class UiManager : AttributesSync
         _startGameButton.interactable = canStart;
     }
 
-    public void OnPlayerJoinedRoomLocal()
+    public void UpdateLobbyUi()
     {
-        if (Multiplayer.Instance.CurrentRoom.Users.Count == 0)
-            return;
-        
-        ProcedureParameters parameters = new ProcedureParameters();
-        Multiplayer.InvokeRemoteProcedure("UpdateLobbyUiRemote", UserId.AllInclusive, parameters);
+        Multiplayer.InvokeRemoteProcedure("UpdateLobbyUiRemote", UserId.AllInclusive);
     }
     
     public void UpdateLobbyUiRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
     {
+        GameManager.Instance.PrintDebug("Ui-Manager", "Updating ui, my user id: " + Multiplayer.Instance.Me.Index);
         foreach (var user in GameManager.Instance.GetUserListInRoom())
         {
             _playerPanels[user.Index].GetComponentInChildren<TextMeshProUGUI>().text = user.Name;
