@@ -456,6 +456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 50
   _friction: 10
+  rb: {fileID: 0}
   stunned: 0
 --- !u!114 &6256759949714837762
 MonoBehaviour:
@@ -469,6 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656a7519a6fbd874b95f520ebde788bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avatar: {fileID: 7780725231177317048}
   MovementSmoothing: 1
   anim: {fileID: 3826740030778385151}
   playerActions: {fileID: 4344514513490154824}
