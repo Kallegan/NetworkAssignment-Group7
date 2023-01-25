@@ -98,18 +98,24 @@ public class DamageableComponent : AttributesSync
     }
     void TakeDamage(int damageAmount)
     {
-        if (avatar.IsMe)
-            _camShaker.Shake(0.8f, 0.15f);
+       
         
+     
         if(Health > 0)
             Health -= damageAmount;
 
         BroadcastRemoteMethod("UpdateHealthBar");
-        BroadcastRemoteMethod("HitVFX");
         if (Health <= 0)
         {
             BroadcastRemoteMethod("Die");
         }
+
+        if (WorldManager.Instance.TakeWorldDamage(transform.parent.position))
+            return;
+
+        if (avatar.IsMe)
+            _camShaker.Shake(0.8f, 0.15f);
+        BroadcastRemoteMethod("HitVFX");       
     }
 
     [SynchronizableMethod]
