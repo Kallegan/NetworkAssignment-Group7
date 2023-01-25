@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3608514643288412033}
   m_Layer: 7
   m_Name: Projectile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -300,5 +300,5 @@ MonoBehaviour:
   _spawner: {fileID: 0}
   _ownerIndex: 0
   _direction: {x: 0, y: 0, z: 0}
-  _speed: 5
+  _speed: 10
   damage: 1
