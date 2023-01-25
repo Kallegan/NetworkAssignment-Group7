@@ -30,6 +30,7 @@ public class PlayerActions : AttributesSync
     public event DeflectDelegate OnTryDeflect;
 
     public GameObject deflectShield;
+    private PlayerStateSync platerState;
 
 
     private void Awake()
@@ -48,12 +49,14 @@ public class PlayerActions : AttributesSync
 
         deflectShield = Instantiate(deflectShield);
         deflectShield.transform.position = new Vector3(0, -10, 0);
+
+        platerState = transform.parent.GetComponentInChildren<PlayerStateSync>();
     }
     
     private void Update()
     {
-        if (!avatar.IsMe || !transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive)
-            return;
+        if (!avatar.IsMe || !platerState.isAlive)
+            return;       
 
         if (Input.GetMouseButtonDown(0))
             if (canAttack)

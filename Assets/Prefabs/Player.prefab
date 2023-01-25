@@ -128,7 +128,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ed259e862d027e14e8563a61ff46d84a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -420,7 +420,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7051877682914781266}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -456,6 +456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 50
   _friction: 10
+  rb: {fileID: 0}
   stunned: 0
 --- !u!114 &6256759949714837762
 MonoBehaviour:
@@ -469,6 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656a7519a6fbd874b95f520ebde788bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avatar: {fileID: 7780725231177317048}
   MovementSmoothing: 1
   anim: {fileID: 3826740030778385151}
   playerActions: {fileID: 4344514513490154824}

@@ -21,13 +21,16 @@ public class DamageableComponent : AttributesSync
     private Camera _cam;
     private CameraShaker _camShaker;
     private bool RecentlyDamaged = false;
-   
+
+    private PlayerStateSync platerState;
+
 
     private void Awake()
     {
         _cam = Camera.main;
         _camShaker = _cam.GetComponent<CameraShaker>();
         PlayerMovement = transform.parent.GetComponent<PlayerMovement>();
+        platerState = transform.parent.GetComponentInChildren<PlayerStateSync>();
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
         
         stunVFXOffset = new Vector3(0, 2, 0);
@@ -77,37 +80,39 @@ public class DamageableComponent : AttributesSync
         yield return new WaitForSeconds(WorldDamageImmunityTime);
 
         RecentlyDamaged = false;
-        OnHit(WorldDamage);
+        TakeDamage(WorldDamage);
     }
-
-    public void OnHit(int damageAmount)
-    {
-        TakeDamage(damageAmount);        
-    }
+        
     
     public void OnHit(int damageAmount, Vector3 knockbackDirection)
     {
-        TakeDamage(damageAmount);
+        if (platerState.currentGameState == (byte)GameManager.State.StartRound)
+            TakeDamage(damageAmount);
+        
         // Todo: deal with stuntime in a better way
-        PlayerMovement.SetAsStunned(0.5f);       
-
-
-        //PlayerMovement.velocity = knockbackDirection.normalized;
+        PlayerMovement.SetAsStunned(0.5f);
+        if (avatar.IsMe)
+            PlayerMovement.rb.AddForce(knockbackDirection * 300);
     }
     void TakeDamage(int damageAmount)
     {
-        if (avatar.IsMe)
-            _camShaker.Shake(0.8f, 0.15f);
-        
+       
+     
         if(Health > 0)
             Health -= damageAmount;
 
         BroadcastRemoteMethod("UpdateHealthBar");
-        BroadcastRemoteMethod("HitVFX");
         if (Health <= 0)
         {
             BroadcastRemoteMethod("Die");
         }
+
+        if (WorldManager.Instance.TakeWorldDamage(transform.parent.position))
+            return;
+
+        if (avatar.IsMe)
+            _camShaker.Shake(0.8f, 0.15f);
+        BroadcastRemoteMethod("HitVFX");       
     }
 
     [SynchronizableMethod]
@@ -123,7 +128,7 @@ public class DamageableComponent : AttributesSync
     [SynchronizableMethod]
     private void Die()
     {
-        transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive = false;
+        platerState.isAlive = false;
                
     }
 
@@ -136,7 +141,7 @@ public class DamageableComponent : AttributesSync
     [SynchronizableMethod]
     public void ResetPlayerHealth()
     {
-        transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive = true;
+        platerState.isAlive = true;
         Health = MaxHealth;
     }
 

@@ -62,6 +62,7 @@ public class WorldManager : MonoBehaviour
     {
         GenerateHexGrid();
        // StartShrinkGrid();  
+       CreateWorldBounds();
     }
 
     public void StartShrinkGrid()
@@ -75,7 +76,17 @@ public class WorldManager : MonoBehaviour
     }
 
 
-    
+    private void CreateWorldBounds()
+    {
+        BoxCollider boxCol = gameObject.AddComponent(typeof(BoxCollider)) as BoxCollider;
+        if (!boxCol)
+            return;
+        
+        boxCol.isTrigger = true;
+        boxCol.size = new Vector3(worldWidth * 2, 40, worldHeight * 2);
+        
+        gameObject.AddComponent<DeSpawnTrigger>();
+    }
 
     private void GenerateHexGrid()
     {
