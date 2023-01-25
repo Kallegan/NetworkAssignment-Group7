@@ -58,6 +58,8 @@ public class PlayerActions : AttributesSync
         if (!avatar.IsMe || !platerState.isAlive)
             return;
 
+        ShowReflectVFX();
+
         if (Input.GetMouseButtonDown(0))
             if (canAttack)
                 Shoot();
@@ -161,6 +163,6 @@ public class PlayerActions : AttributesSync
 
     private void HideRelfectVFX()
     {
-        deflectShield.transform.position = new Vector3(0, -1000, 0);
+        //deflectShield.transform.position = new Vector3(0, -1000, 0);
     }
 }
