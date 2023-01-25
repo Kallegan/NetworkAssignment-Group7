@@ -80,13 +80,7 @@ public class SynchronizedProjectile : Synchronizable
         _direction = newDirection;
         _speed *= 1.1f;
     }
-
-    private void DestroySelf()
-    {
-        if (Multiplayer.Instance.Me.Index == _ownerIndex)
-            _spawner.Despawn(gameObject);
-    }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         var otherGo = other.gameObject;
@@ -96,11 +90,16 @@ public class SynchronizedProjectile : Synchronizable
         var damageable = otherGo.GetComponentInChildren<DamageableComponent>();
         Vector3 direction = (otherGo.transform.position - transform.position).normalized;
         if (damageable)
-            damageable.OnHit(1, direction * _speed);
+            damageable.OnHit(1, direction * _speed, gameObject);
 
+        
         DestroySelf();
     }
-
+    private void DestroySelf()
+    {
+        if (Multiplayer.Instance.Me.Index == _ownerIndex)
+            _spawner.Despawn(gameObject);
+    }
     /*
     private void OnCollisionEnter(Collision collision)
     {
