@@ -108,8 +108,9 @@ public class DamageableComponent : AttributesSync
     [SynchronizableMethod]
     void UpdateHealthBar()
     {
-        if (!avatar.IsMe)
+        if (!avatar.IsMe || Health < 0)
             return;
+        
         Vector3 healthScale = new Vector3((Health / MaxHealth) * 2, HealthBar.localScale.y, HealthBar.localScale.z);
         HealthBar.localScale = healthScale;
     }
@@ -118,7 +119,7 @@ public class DamageableComponent : AttributesSync
     private void Die()
     {
         transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive = false;
-        Destroy(transform.parent.gameObject); //temp remove when we have something cooler       
+               
     }
 
     [SynchronizableMethod]
@@ -126,6 +127,14 @@ public class DamageableComponent : AttributesSync
     {
         StunEffect.Play();
     }
+
+    [SynchronizableMethod]
+    public void ResetPlayerHealth()
+    {
+        transform.parent.GetComponentInChildren<PlayerStateSync>().isAlive = true;
+        Health = MaxHealth;
+    }
+
 }
 /*
  * According to all known laws
