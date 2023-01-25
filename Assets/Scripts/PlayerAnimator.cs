@@ -6,6 +6,8 @@ using Alteruna;
 
 public class PlayerAnimator : MonoBehaviour
 {
+    [SerializeField] private Alteruna.Avatar avatar;
+
     [SerializeField] float MovementSmoothing;
 
     [SerializeField] private Animator anim;
@@ -66,10 +68,24 @@ public class PlayerAnimator : MonoBehaviour
         turnAngle = CalculateDirection(positionDelta);
 
         //anim.SetFloat("VelocityMagnitude", velocityDelta * Coefficent);
+
         
-        ///TODO: Do an Avatar IsMe check to double the value if this isnt the player
-        anim.SetFloat("StrafeX", turnAngle * 2, 0.3f, Time.deltaTime);
-        anim.SetFloat("VelocityMagnitude", velSync.VelocityMagnitude * 10, 0.3f, Time.deltaTime);
+        
+
+        //
+        if (!avatar.IsMe)
+        {
+            anim.SetFloat("StrafeX", turnAngle * 1, 0.2f, Time.deltaTime);
+            anim.SetFloat("VelocityMagnitude", velSync.VelocityMagnitude * 20, 0.2f, Time.deltaTime);
+        }
+        else
+        {
+            anim.SetFloat("StrafeX", turnAngle * 2, 0.2f, Time.deltaTime);
+            anim.SetFloat("VelocityMagnitude", rb.velocity.magnitude * 10, 0.2f, Time.deltaTime);
+        }
+
+        
+       
 
     }
 
