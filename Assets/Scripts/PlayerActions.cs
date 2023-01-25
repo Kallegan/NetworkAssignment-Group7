@@ -21,7 +21,10 @@ public class PlayerActions : AttributesSync
     
     [SerializeField] private float deflectCoolDown = 5.0f;
     private float curDeflectCoolDown;
-    private bool canDeflect = true;
+    private float curShieldUptime;
+    private bool canDeflect = true;   
+
+
 
     public delegate void ShootDelegate();
     public event ShootDelegate OnShoot;
@@ -32,6 +35,14 @@ public class PlayerActions : AttributesSync
     public GameObject deflectShield;
     private PlayerStateSync platerState;
 
+    Vector3 hiddenShieldLocation;
+    Vector3 currentShieldLocation;
+    Vector3 lastShieldLocation;
+    Quaternion currentShieldRotation;
+    Quaternion lastShieldRotation;
+    [SynchronizableField] private bool deflecting = false;
+    [SynchronizableField] private bool deflectSuccess = false;
+
 
     private void Awake()
     {
@@ -40,21 +51,32 @@ public class PlayerActions : AttributesSync
 
     private void Start()
     {
+        platerState = transform.parent.GetComponentInChildren<PlayerStateSync>();
+
         curAttackCoolDown = attackCoolDown;
         curDeflectCoolDown = deflectCoolDown;
+        curShieldUptime = deflectCoolDown;
         avatar = gameObject.GetComponentInParent(typeof(Alteruna.Avatar)) as Alteruna.Avatar;
 
         Multiplayer.RegisterRemoteProcedure("ShootRemote", ShootRemote);
         Multiplayer.RegisterRemoteProcedure("DeflectRemote", DeflectRemote);
 
-        deflectShield = Instantiate(deflectShield);
-        deflectShield.transform.position = new Vector3(0, -10, 0);
-
-        platerState = transform.parent.GetComponentInChildren<PlayerStateSync>();
+        hiddenShieldLocation = new Vector3(-500, -500, 0);
+        deflectShield = Instantiate(deflectShield);        
+        deflectShield.transform.position = hiddenShieldLocation;
     }
     
     private void Update()
     {
+        ShowReflectVFX();
+        currentShieldLocation = transform.parent.position;
+        currentShieldRotation = transform.parent.rotation;
+        if (!deflecting)
+        {
+            lastShieldLocation = currentShieldLocation + transform.parent.forward * 2 * Time.deltaTime;
+            lastShieldRotation = currentShieldRotation;
+        }
+
         if (!avatar.IsMe || !platerState.isAlive)
             return;       
 
@@ -64,16 +86,31 @@ public class PlayerActions : AttributesSync
         
         if (Input.GetMouseButtonDown(1) && canDeflect)
         {
+            deflecting = true;
+
             if (CheckDeflectable())
-            {    
+            {
+                deflectSuccess = true;
                 OnDeflectSuccess();
             }                
             else
             {
+                deflectSuccess = false;                
                 OnDeflectMiss();
             }               
         }
 
+       
+
+
+        curShieldUptime -= Time.deltaTime;
+        if (curShieldUptime <= deflectCoolDown - 1f)
+        {
+            deflecting = false;
+            curShieldUptime = deflectCoolDown;            
+        }
+
+        
 
         if (!canAttack)
         {
@@ -86,22 +123,18 @@ public class PlayerActions : AttributesSync
         }
         
         if (!canDeflect)
-        {
+        {            
             curDeflectCoolDown -= Time.deltaTime;
             if (curDeflectCoolDown <= 0)
             {
+                deflectShield.GetComponent<MaterialPropertyBlockPlasma>().ResetShield();
                 canDeflect = true;
-                curDeflectCoolDown = deflectCoolDown;
-                                
+                curDeflectCoolDown = deflectCoolDown;                                
             }    
-        }
+        }    
+    } 
 
-        if (curDeflectCoolDown <= deflectCoolDown-0.5)
-            HideRelfectVFX();
-    }
 
-    
-    
     bool CheckDeflectable()
     {
         if (curDeflectable)
@@ -118,7 +151,7 @@ public class PlayerActions : AttributesSync
         Vector3 direction = transform.parent.forward;
         curDeflectable.OnDeflect(direction.normalized);
         curDeflectable = null;
-        canDeflect = true;
+        canDeflect = true;       
     }
     
     void OnDeflectMiss()
@@ -126,10 +159,7 @@ public class PlayerActions : AttributesSync
         OnTryDeflect?.Invoke(); //This is kind of borked
         Multiplayer.InvokeRemoteProcedure("DeflectRemote", UserId.All);
         curDeflectable = null;
-        canDeflect = false;
-
-        ShowReflectVFX();
-        deflectShield.GetComponent<MaterialPropertyBlockPlasma>().SuccessDeflect();
+        canDeflect = false;             
     }
     
     private void Shoot()
@@ -155,12 +185,20 @@ public class PlayerActions : AttributesSync
 
     private void ShowReflectVFX()
     {
-        deflectShield.transform.rotation = transform.parent.rotation;
-        deflectShield.transform.position = transform.parent.position + transform.parent.forward * 2;
-    }
+        if (deflecting)
+        {
+            deflectShield.transform.rotation = lastShieldRotation;
+            deflectShield.transform.position = lastShieldLocation;
+        }
+        else
+        {
+            deflectShield.transform.position = hiddenShieldLocation;
+            deflectShield.GetComponent<MaterialPropertyBlockPlasma>().ResetShield();
+        }
 
-    private void HideRelfectVFX()
-    {
-        deflectShield.transform.position = new Vector3(0, -1000, 0);
-    }
+        if (deflectSuccess)
+            deflectShield.GetComponent<MaterialPropertyBlockPlasma>().projectileDeflected = true;
+        else
+            deflectShield.GetComponent<MaterialPropertyBlockPlasma>().deflectionFailed = true;
+    }    
 }
