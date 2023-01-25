@@ -8,6 +8,6 @@ public class FinishRoundGameState : GameState
 
     public override void Run()
     {
-       
+       WorldManager.Instance.ResetHexGrid();
     }
 }
