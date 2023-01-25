@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -19,15 +18,7 @@ public class CameraShaker : MonoBehaviour
         _startPosition = _t.localPosition;
         _shaking = false;
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown("space"))
-        {
-            Shake(0.3f,0.24f);
-        }
-    }
-
+    
     public void Shake(float shakeTime, float strength)
     {
         if (_shaking) return;
