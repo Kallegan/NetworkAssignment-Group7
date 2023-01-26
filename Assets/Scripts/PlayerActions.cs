@@ -191,6 +191,19 @@ public class PlayerActions : AttributesSync
 
     private void ShowReflectVFX()
     {
+        if (deflectSuccess)
+        {
+            shieldLight.enabled = true;
+            shieldLight.color = (Color.cyan);
+            shieldMaterialPropertyBlock.projectileDeflected = true;
+        }
+        else
+        {
+            shieldLight.enabled = true;
+            shieldLight.color = (Color.red);
+            shieldMaterialPropertyBlock.deflectionFailed = true;
+        }
+
         if (deflecting)
         {
             deflectShield.transform.rotation = lastShieldRotation;
@@ -200,19 +213,10 @@ public class PlayerActions : AttributesSync
         {
             deflectShield.transform.position = hiddenShieldLocation;
             shieldMaterialPropertyBlock.ResetShield();
-            shieldLight.color = (Color.black);
+            shieldLight.enabled = false;
         }
         
-        if (deflectSuccess)
-        {
-            shieldLight.color = (Color.cyan);
-            shieldMaterialPropertyBlock.projectileDeflected = true;
-        }            
-        else
-        {
-            shieldLight.color = (Color.red);
-            shieldMaterialPropertyBlock.deflectionFailed = true;
-        }
+       
            
     }    
 }

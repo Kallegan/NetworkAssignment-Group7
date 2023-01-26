@@ -102,7 +102,7 @@ public class DamageableComponent : AttributesSync
             TakeDamage(damageAmount);
         
         PlayerMovement.SetAsStunned(0.5f);
-        PlayerMovement.rb.AddForce(knockbackDirection * 300);
+        PlayerMovement.rb.AddForce(knockbackDirection * 150);
         _spawner.Despawn(fromObject);
     }
     void TakeDamage(int damageAmount)
