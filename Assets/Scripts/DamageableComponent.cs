@@ -83,7 +83,14 @@ public class DamageableComponent : AttributesSync
         yield return new WaitForSeconds(WorldDamageImmunityTime);
 
         RecentlyDamaged = false;
-        TakeDamage(WorldDamage);
+
+        if (!WorldManager.Instance.TakeWorldDamage(transform.parent.position))
+        {
+            yield break;
+        }
+
+        if (platerState.currentGameState == (byte)GameManager.State.StartRound)
+            TakeDamage(WorldDamage);
     }
         
     
