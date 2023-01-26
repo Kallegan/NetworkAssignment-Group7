@@ -315,6 +315,7 @@ MonoBehaviour:
     RealtimeString: Realtime
   currentGameState: 0
   isAlive: 1
+  inRound: 0
 --- !u!1 &7051877682914781266
 GameObject:
   m_ObjectHideFlags: 0

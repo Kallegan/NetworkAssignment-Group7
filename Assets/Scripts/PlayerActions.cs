@@ -200,7 +200,7 @@ public class PlayerActions : AttributesSync
         {
             deflectShield.transform.position = hiddenShieldLocation;
             shieldMaterialPropertyBlock.ResetShield();
-            shieldLight.color = (Color.white);
+            shieldLight.color = (Color.black);
         }
         
         if (deflectSuccess)
