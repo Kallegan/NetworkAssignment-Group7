@@ -25,7 +25,7 @@ public class RestartGameState : GameState
         int i = 0;
         foreach (var player in players)
         {
-            player.transform.position = Multiplayer.Instance.AvatarSpawnLocations[0].position;
+            player.transform.position = Multiplayer.Instance.AvatarSpawnLocations[i].position;
             i++;
         }
         UiManager.Instance.ShowLobby(true);
