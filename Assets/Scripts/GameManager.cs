@@ -278,7 +278,7 @@ public class GameManager : AttributesSync
         return allSameState;
     }
     
-    
+    z
     
     // DEBUG PRINT
 #if UNITY_EDITOR

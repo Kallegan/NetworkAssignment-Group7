@@ -1,3 +1,4 @@
+using Alteruna;
 using UnityEngine;
 
 public class RestartGameState : GameState
@@ -20,6 +21,13 @@ public class RestartGameState : GameState
     {
         _countdown = Delay;
         WorldManager.Instance.ResetHexGrid();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        int i = 0;
+        foreach (var player in players)
+        {
+            player.transform.position = Multiplayer.Instance.AvatarSpawnLocations[0].position;
+            i++;
+        }
         UiManager.Instance.ShowLobby(true);
     }
 }
