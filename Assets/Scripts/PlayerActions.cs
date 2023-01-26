@@ -113,6 +113,7 @@ public class PlayerActions : AttributesSync
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Taunt();
+            Multiplayer.InvokeRemoteProcedure("TauntRemote", UserId.All);
         }
 
        
