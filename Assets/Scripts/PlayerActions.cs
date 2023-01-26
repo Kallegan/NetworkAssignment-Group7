@@ -33,7 +33,9 @@ public class PlayerActions : AttributesSync
     public event DeflectDelegate OnTryDeflect;
 
     public GameObject deflectShield;
-    private PlayerStateSync platerState;
+    private PlayerStateSync playerState;
+    private Light shieldLight;
+    private MaterialPropertyBlockPlasma shieldMaterialPropertyBlock;
 
     Vector3 hiddenShieldLocation;
     Vector3 currentShieldLocation;
@@ -51,7 +53,7 @@ public class PlayerActions : AttributesSync
 
     private void Start()
     {
-        platerState = transform.parent.GetComponentInChildren<PlayerStateSync>();
+        playerState = transform.parent.GetComponentInChildren<PlayerStateSync>();
 
         curAttackCoolDown = attackCoolDown;
         curDeflectCoolDown = deflectCoolDown;
@@ -64,6 +66,10 @@ public class PlayerActions : AttributesSync
         hiddenShieldLocation = new Vector3(-500, -500, 0);
         deflectShield = Instantiate(deflectShield);        
         deflectShield.transform.position = hiddenShieldLocation;
+
+       
+        shieldLight = deflectShield.GetComponentInChildren<Light>();
+        shieldMaterialPropertyBlock = deflectShield.GetComponent<MaterialPropertyBlockPlasma>();
     }
     
     private void Update()
@@ -77,7 +83,7 @@ public class PlayerActions : AttributesSync
             lastShieldRotation = currentShieldRotation;
         }
 
-        if (!avatar.IsMe || !platerState.isAlive)
+        if (!avatar.IsMe || !playerState.isAlive)
             return;       
 
         if (Input.GetMouseButtonDown(0))
@@ -104,7 +110,7 @@ public class PlayerActions : AttributesSync
 
 
         curShieldUptime -= Time.deltaTime;
-        if (curShieldUptime <= deflectCoolDown - 1f)
+        if (curShieldUptime <= deflectCoolDown - 1.5f)
         {
             deflecting = false;
             curShieldUptime = deflectCoolDown;            
@@ -127,7 +133,7 @@ public class PlayerActions : AttributesSync
             curDeflectCoolDown -= Time.deltaTime;
             if (curDeflectCoolDown <= 0)
             {
-                deflectShield.GetComponent<MaterialPropertyBlockPlasma>().ResetShield();
+                shieldMaterialPropertyBlock.ResetShield();
                 canDeflect = true;
                 curDeflectCoolDown = deflectCoolDown;                                
             }    
@@ -193,12 +199,20 @@ public class PlayerActions : AttributesSync
         else
         {
             deflectShield.transform.position = hiddenShieldLocation;
-            deflectShield.GetComponent<MaterialPropertyBlockPlasma>().ResetShield();
+            shieldMaterialPropertyBlock.ResetShield();
+            shieldLight.color = (Color.white);
         }
-
+        
         if (deflectSuccess)
-            deflectShield.GetComponent<MaterialPropertyBlockPlasma>().projectileDeflected = true;
+        {
+            shieldLight.color = (Color.cyan);
+            shieldMaterialPropertyBlock.projectileDeflected = true;
+        }            
         else
-            deflectShield.GetComponent<MaterialPropertyBlockPlasma>().deflectionFailed = true;
+        {
+            shieldLight.color = (Color.red);
+            shieldMaterialPropertyBlock.deflectionFailed = true;
+        }
+           
     }    
 }
