@@ -32,6 +32,9 @@ public class PlayerActions : AttributesSync
     public delegate void DeflectDelegate();
     public event DeflectDelegate OnTryDeflect;
 
+    public delegate void TauntDelegate();
+    public event TauntDelegate OnTaunt;
+
     public GameObject deflectShield;
     private PlayerStateSync playerState;
     private Light shieldLight;
@@ -62,6 +65,7 @@ public class PlayerActions : AttributesSync
 
         Multiplayer.RegisterRemoteProcedure("ShootRemote", ShootRemote);
         Multiplayer.RegisterRemoteProcedure("DeflectRemote", DeflectRemote);
+        Multiplayer.RegisterRemoteProcedure("TauntRemote", TauntRemote);
 
         hiddenShieldLocation = new Vector3(-500, -500, 0);
         deflectShield = Instantiate(deflectShield);        
@@ -106,6 +110,11 @@ public class PlayerActions : AttributesSync
             }               
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Taunt();
+        }
+
        
 
 
@@ -140,6 +149,15 @@ public class PlayerActions : AttributesSync
         }    
     } 
 
+    void Taunt()
+    {
+        OnTaunt?.Invoke();
+    }
+
+    void TauntRemote(ushort fromUser, ProcedureParameters parameters, uint callId, ITransportStreamReader processor)
+    {
+        OnTaunt?.Invoke();
+    }
 
     bool CheckDeflectable()
     {

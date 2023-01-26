@@ -42,6 +42,8 @@ public class PlayerAnimator : MonoBehaviour
         {
             playerActions.OnShoot += PlayShootAnimation;
             playerActions.OnTryDeflect += PlayDeflectAnimation;
+            playerActions.OnTaunt += PlayTauntAnimation;
+
         }
         else
         {
@@ -128,6 +130,11 @@ public class PlayerAnimator : MonoBehaviour
     {
         //PlayAction("Shoot", 0.15f);
         anim.CrossFade("Shoot", 0.1f, 1, 0);
+    }
+
+    private void PlayTauntAnimation()
+    {
+        anim.CrossFade("Taunt", 0.1f, 1, 0);
     }
 
     private void PlayDeflectAnimation()
