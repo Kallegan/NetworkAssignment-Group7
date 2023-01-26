@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!platerState.isAlive)
         {
-            transform.rotation = new Quaternion(90, 0, 0, 0);
+            transform.rotation = new Quaternion(90, 90, 90, 0);
             return;
         }
             
